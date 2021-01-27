@@ -1,0 +1,6 @@
+<?
+$sSectionName = "certgen";
+$arDirProperties = Array(
+
+);
+?>
