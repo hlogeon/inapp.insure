@@ -16,10 +16,10 @@ class CreateCashbacksTable extends Migration
         Schema::create('cashbacks', function (Blueprint $table) {
             $table->id();
             $table->string("image")->nullable();
-            $table->number("public")->default(0);
+            $table->integer("public")->default(0);
             $table->string("name");
             $table->text("description")->nullable();
-            $table->number("sort")->default(500);
+            $table->integer("sort")->default(500);
             $table->timestamps();
         });
     }

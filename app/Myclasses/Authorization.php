@@ -24,6 +24,7 @@ class Authorization
             "status" => $status,
             "data" => $userData
         ]);
+//	->header('Access-Control-Allow-Origin', 'http://172.105.84.217:3000');
     }
 
     public function logout()
