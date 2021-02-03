@@ -48,7 +48,13 @@ class ControllerPersonal extends Controller
         // ])->json();
         $bonuses = FlocktoryCashback::where([
             'deleted_at' => null,
-        ]);
+        ])->get();
+        foreach ($bonuses as $key => $bonus) {
+            $b = $bonus->toJson();
+            $b['activationUrl'] = $b['activation_url'];
+            $b['site'] = ['title' => $b['site_title'], 'domain' => $b['site_domain']];
+            $bonuses[$key] = $b;
+        }
         // $campaigns = $response['campaigns'];
         // $bonuses = [];
         // foreach ($campaigns as $key => $campaign) {
