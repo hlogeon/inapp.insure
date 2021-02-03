@@ -15,6 +15,7 @@ use Carbon\Carbon;
 use App\Myclasses\SmsSender;
 use App\Myclasses\PolisPDF;
 use App\Myclasses\Client;
+use Illuminate\Support\Facades\Http;
 
 class ControllerPersonal extends Controller
 {
@@ -28,6 +29,86 @@ class ControllerPersonal extends Controller
     {
         $user = new User;
         return $user->currentUser();
+    }
+
+    public function getBonusList()
+    {
+        $user = $this->getUser();
+        // if($user->tarrif_id === null) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'data' => [],
+        //     ]);
+        // }
+        $response = Http::get('https://client.flocktory.com/v2/exchange/campaigns', [
+            'token' => env('FLOCKTORY_TOKEN', '36c7afaf0080ddbe1f6c5339045963af'),
+            'site_id' => env('FLOCKTORY_SITE_ID', 3169),
+            'email' => $user->email,
+        ])->json();
+        $campaigns = $response['campaigns'];
+        $bonuses = [];
+        foreach ($campaigns as $key => $campaign) {
+            $bonus = [
+                'id' => $campaign['id'],
+                'favorite' => false,
+                'featured' => false,
+                'popular' => false,
+                'premium' => false,
+                'activated' => false,
+                'activationUrl' => '/api/v1/bonus/accept?id=' . $campaign['id'],
+                'logo' => $campaign['images']['logotype_exchange'],
+                'site' => [
+                    'title' => $campaign['site']['title'],
+                    'domain' => $campaign['site']['domain'],
+                ],
+                'sale' => $campaign['texts']['sale'],
+                'conditions' => $campaign['texts']['conditions'],
+                'siteinfo' => $campaign['texts']['siteinfo'],
+                'agreement' => $campaign['agreement'],
+
+            ];
+            array_push($bonuses, $bonus);
+        }
+
+        return response()->json([
+            'status' => true,
+            'data' => $bonuses
+        ]);
+    }
+
+    public function favoriteBonus(Request $request)
+    {
+        $id = $request->id;
+        $favorite = $request->favorite;
+        $user = $this->getUser();
+
+        return response()->json([
+            'status' => true,
+        ]);
+    }
+
+
+    public function activateBonus(Request $request)
+    {
+        $id = $request['id'];
+        $user = $this->getUser();
+        // if($user->tarrif_id === null) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'data' => [],
+        //     ]);
+        // }
+        $response = Http::get('https://client.flocktory.com/v2/exchange/accept-campaign', [
+            'token' => env('FLOCKTORY_TOKEN', '36c7afaf0080ddbe1f6c5339045963af'),
+            'site_id' => env('FLOCKTORY_SITE_ID', 3169),
+            'email' => $user->email,
+            'campaign_id' => $id,
+
+        ])->json();
+        return response()->json([
+            'status' => true,
+            'data' => $response
+        ]);
     }
 
     public function getPdf($id = null)
