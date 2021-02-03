@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/cashback/static/css/main.b0b972e4.chunk.css",
-    "main.js": "/cashback/static/js/main.383cfd62.chunk.js",
-    "main.js.map": "/cashback/static/js/main.383cfd62.chunk.js.map",
+    "main.js": "/cashback/static/js/main.b5313660.chunk.js",
+    "main.js.map": "/cashback/static/js/main.b5313660.chunk.js.map",
     "runtime-main.js": "/cashback/static/js/runtime-main.e05ce584.js",
     "runtime-main.js.map": "/cashback/static/js/runtime-main.e05ce584.js.map",
-    "static/js/2.f83729e3.chunk.js": "/cashback/static/js/2.f83729e3.chunk.js",
-    "static/js/2.f83729e3.chunk.js.map": "/cashback/static/js/2.f83729e3.chunk.js.map",
+    "static/js/2.98d7198a.chunk.js": "/cashback/static/js/2.98d7198a.chunk.js",
+    "static/js/2.98d7198a.chunk.js.map": "/cashback/static/js/2.98d7198a.chunk.js.map",
     "index.html": "/cashback/index.html",
     "static/css/main.b0b972e4.chunk.css.map": "/cashback/static/css/main.b0b972e4.chunk.css.map",
-    "static/js/2.f83729e3.chunk.js.LICENSE.txt": "/cashback/static/js/2.f83729e3.chunk.js.LICENSE.txt",
+    "static/js/2.98d7198a.chunk.js.LICENSE.txt": "/cashback/static/js/2.98d7198a.chunk.js.LICENSE.txt",
     "static/media/stylesheet.css": "/cashback/static/media/SFRounded-Bold.a45e4281.woff2",
     "static/media/activated.fa9c2e0b.png": "/cashback/static/media/activated.fa9c2e0b.png",
     "static/media/activated.ff558259.svg": "/cashback/static/media/activated.ff558259.svg",
@@ -35,8 +35,8 @@
   },
   "entrypoints": [
     "static/js/runtime-main.e05ce584.js",
-    "static/js/2.f83729e3.chunk.js",
+    "static/js/2.98d7198a.chunk.js",
     "static/css/main.b0b972e4.chunk.css",
-    "static/js/main.383cfd62.chunk.js"
+    "static/js/main.b5313660.chunk.js"
   ]
 }
