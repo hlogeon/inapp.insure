@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Payments;
+use App\Models\FlocktoryCashbacks;
 use App\Models\Polisies;
 use App\Models\Risks;
 use App\Models\Tarrifs;
@@ -40,35 +41,38 @@ class ControllerPersonal extends Controller
         //         'data' => [],
         //     ]);
         // }
-        $response = Http::get('https://client.flocktory.com/v2/exchange/campaigns', [
-            'token' => env('FLOCKTORY_TOKEN', '36c7afaf0080ddbe1f6c5339045963af'),
-            'site_id' => env('FLOCKTORY_SITE_ID', 3169),
-            'email' => $user->email,
-        ])->json();
-        $campaigns = $response['campaigns'];
-        $bonuses = [];
-        foreach ($campaigns as $key => $campaign) {
-            $bonus = [
-                'id' => $campaign['id'],
-                'favorite' => false,
-                'featured' => false,
-                'popular' => false,
-                'premium' => false,
-                'activated' => false,
-                'activationUrl' => '/api/v1/bonus/accept?id=' . $campaign['id'],
-                'logo' => $campaign['images']['logotype_exchange'],
-                'site' => [
-                    'title' => $campaign['site']['title'],
-                    'domain' => $campaign['site']['domain'],
-                ],
-                'sale' => $campaign['texts']['sale'],
-                'conditions' => $campaign['texts']['conditions'],
-                'siteinfo' => $campaign['texts']['siteinfo'],
-                'agreement' => $campaign['agreement'],
+        // $response = Http::get('https://client.flocktory.com/v2/exchange/campaigns', [
+        //     'token' => env('FLOCKTORY_TOKEN', '36c7afaf0080ddbe1f6c5339045963af'),
+        //     'site_id' => env('FLOCKTORY_SITE_ID', 3169),
+        //     'email' => $user->email,
+        // ])->json();
+        $bonuses = FlocktoryCashback::where([
+            'deleted_at' => null,
+        ]);
+        // $campaigns = $response['campaigns'];
+        // $bonuses = [];
+        // foreach ($campaigns as $key => $campaign) {
+        //     $bonus = [
+        //         'id' => $campaign['id'],
+        //         'favorite' => false,
+        //         'featured' => false,
+        //         'popular' => false,
+        //         'premium' => false,
+        //         'activated' => false,
+        //         'activationUrl' => '/api/v1/bonus/accept?id=' . $campaign['id'],
+        //         'logo' => $campaign['images']['logotype_exchange'],
+        //         'site' => [
+        //             'title' => $campaign['site']['title'],
+        //             'domain' => $campaign['site']['domain'],
+        //         ],
+        //         'sale' => $campaign['texts']['sale'],
+        //         'conditions' => $campaign['texts']['conditions'],
+        //         'siteinfo' => $campaign['texts']['siteinfo'],
+        //         'agreement' => $campaign['agreement'],
 
-            ];
-            array_push($bonuses, $bonus);
-        }
+        //     ];
+        //     array_push($bonuses, $bonus);
+        // }
 
         return response()->json([
             'status' => true,
