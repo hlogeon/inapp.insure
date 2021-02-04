@@ -77,16 +77,16 @@ class ControllerPersonal extends Controller
         // }
         $cashback = FlocktoryCashback::find($id);
         if (!$cashback) { abort(502); }
-        $existingLike = FavoriteCashback::where(['user_id' => $user->id, 'cashback_id' => $id])->first();
-        if (!$existingLike) {
+        $like = FavoriteCashback::where(['user_id' => $user->id, 'cashback_id' => $id])->first();
+        if (!$like) {
             $like = FavoriteCashback::create([
                 'user_id' => $user->id,
                 'cashback_id' => $id,
                 'value' => (bool) $favorite,
             ]);
         } else {
-            $existingLike->value = (bool) $favorite->value;
-            $existingLike->save();
+            $like->value = (bool) $favorite;
+            $like->save();
         }
         return response()->json([
             'status' => true,
