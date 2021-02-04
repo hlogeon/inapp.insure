@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Payments;
 use App\Models\FlocktoryCashback;
+use App\Models\FavoriteCashback;
 use App\Models\Polisies;
 use App\Models\Risks;
 use App\Models\Tarrifs;
@@ -35,12 +36,12 @@ class ControllerPersonal extends Controller
     public function getBonusList()
     {
         $user = $this->getUser();
-        if($user->tarrif_id === null) {
-            return response()->json([
-                'status' => false,
-                'data' => [],
-            ]);
-        }
+        // if($user->tarrif_id === null) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'data' => [],
+        //     ]);
+        // }
         $bonuses = FlocktoryCashback::where([
             'deleted_at' => null,
         ])->get();
@@ -49,8 +50,10 @@ class ControllerPersonal extends Controller
             $b = $bonus->toArray();
             $b['activationUrl'] = $b['activation_url'];
             $b['site'] = ['title' => $b['site_title'], 'domain' => $b['site_domain']];
-            if ($like = $favorites->find($bonus->id)) {
-                $b['favorite'] = $like->value;
+            foreach ($favorites as $like) {
+                if ($like->cashback_id == $bonus->id) {
+                    $b['favorite'] = $like->value;
+                }
             }
             $bonuses[$key] = $b;
         }
@@ -66,13 +69,25 @@ class ControllerPersonal extends Controller
         $id = $request->id;
         $favorite = $request->favorite;
         $user = $this->getUser();
+        // if($user->tarrif_id === null) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'data' => [],
+        //     ]);
+        // }
         $cashback = FlocktoryCashback::find($id);
         if (!$cashback) { abort(502); }
-        $like = FavoriteCashback::create([
-            'user_id' => $user->id,
-            'cashback_id' => $id,
-            'value' => (bool) $favorite,
-        ]);
+        $existingLike = FavoriteCashback::where(['user_id' => $user->id, 'cashback_id' => $id])->first();
+        if (!$existingLike) {
+            $like = FavoriteCashback::create([
+                'user_id' => $user->id,
+                'cashback_id' => $id,
+                'value' => (bool) $favorite,
+            ]);
+        } else {
+            $existingLike->value = (bool) $favorite->value;
+            $existingLike->save();
+        }
         return response()->json([
             'status' => true,
             'data' => $like->toArray(),
