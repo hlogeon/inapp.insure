@@ -35,12 +35,12 @@ class ControllerPersonal extends Controller
     public function getBonusList()
     {
         $user = $this->getUser();
-        if($user->tarrif_id === null) {
-            return response()->json([
-                'status' => false,
-                'data' => [],
-            ]);
-        }
+        // if($user->tarrif_id === null) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'data' => [],
+        //     ]);
+        // }
         $bonuses = FlocktoryCashback::where([
             'deleted_at' => null,
         ])->get();
@@ -66,6 +66,12 @@ class ControllerPersonal extends Controller
         $id = $request->id;
         $favorite = $request->favorite;
         $user = $this->getUser();
+        // if($user->tarrif_id === null) {
+        //     return response()->json([
+        //         'status' => false,
+        //         'data' => [],
+        //     ]);
+        // }
         $cashback = FlocktoryCashback::find($id);
         if (!$cashback) { abort(502); }
         $like = FavoriteCashback::create([
