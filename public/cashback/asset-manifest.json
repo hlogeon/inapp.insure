@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/cashback/static/css/main.b0b972e4.chunk.css",
-    "main.js": "/cashback/static/js/main.25ee5769.chunk.js",
-    "main.js.map": "/cashback/static/js/main.25ee5769.chunk.js.map",
+    "main.js": "/cashback/static/js/main.a87e56cc.chunk.js",
+    "main.js.map": "/cashback/static/js/main.a87e56cc.chunk.js.map",
     "runtime-main.js": "/cashback/static/js/runtime-main.e05ce584.js",
     "runtime-main.js.map": "/cashback/static/js/runtime-main.e05ce584.js.map",
     "static/js/2.4917596d.chunk.js": "/cashback/static/js/2.4917596d.chunk.js",
@@ -13,7 +13,6 @@
     "static/media/stylesheet.css": "/cashback/static/media/SFRounded-Bold.a45e4281.woff2",
     "static/media/activated.fa9c2e0b.png": "/cashback/static/media/activated.fa9c2e0b.png",
     "static/media/activated.ff558259.svg": "/cashback/static/media/activated.ff558259.svg",
-    "static/media/bell.79d9e8f4.svg": "/cashback/static/media/bell.79d9e8f4.svg",
     "static/media/bonus.4aaa3b6a.svg": "/cashback/static/media/bonus.4aaa3b6a.svg",
     "static/media/cog.c0a4d02f.svg": "/cashback/static/media/cog.c0a4d02f.svg",
     "static/media/default.97a7a007.png": "/cashback/static/media/default.97a7a007.png",
@@ -23,7 +22,6 @@
     "static/media/facebook.19d1d970.svg": "/cashback/static/media/facebook.19d1d970.svg",
     "static/media/hamburger-default.185bfbd1.svg": "/cashback/static/media/hamburger-default.185bfbd1.svg",
     "static/media/hamburger-times.dd9b2dca.svg": "/cashback/static/media/hamburger-times.dd9b2dca.svg",
-    "static/media/info.d3334ebb.svg": "/cashback/static/media/info.d3334ebb.svg",
     "static/media/instagram.f99af7c6.svg": "/cashback/static/media/instagram.f99af7c6.svg",
     "static/media/logo-mini.7ece534e.svg": "/cashback/static/media/logo-mini.7ece534e.svg",
     "static/media/logo.28840ada.svg": "/cashback/static/media/logo.28840ada.svg",
@@ -37,6 +35,6 @@
     "static/js/runtime-main.e05ce584.js",
     "static/js/2.4917596d.chunk.js",
     "static/css/main.b0b972e4.chunk.css",
-    "static/js/main.25ee5769.chunk.js"
+    "static/js/main.a87e56cc.chunk.js"
   ]
 }
