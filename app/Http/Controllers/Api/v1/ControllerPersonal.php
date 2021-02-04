@@ -35,50 +35,25 @@ class ControllerPersonal extends Controller
     public function getBonusList()
     {
         $user = $this->getUser();
-        // if($user->tarrif_id === null) {
-        //     return response()->json([
-        //         'status' => false,
-        //         'data' => [],
-        //     ]);
-        // }
-        // $response = Http::get('https://client.flocktory.com/v2/exchange/campaigns', [
-        //     'token' => env('FLOCKTORY_TOKEN', '36c7afaf0080ddbe1f6c5339045963af'),
-        //     'site_id' => env('FLOCKTORY_SITE_ID', 3169),
-        //     'email' => $user->email,
-        // ])->json();
+        if($user->tarrif_id === null) {
+            return response()->json([
+                'status' => false,
+                'data' => [],
+            ]);
+        }
         $bonuses = FlocktoryCashback::where([
             'deleted_at' => null,
         ])->get();
+        $favorites = FavoriteCashback::where([ 'user_id' => $user->id ])->get();
         foreach ($bonuses as $key => $bonus) {
-            $b = $bonus->toJson();
+            $b = $bonus->toArray();
             $b['activationUrl'] = $b['activation_url'];
             $b['site'] = ['title' => $b['site_title'], 'domain' => $b['site_domain']];
+            if ($like = $favorites->find($bonus->id)) {
+                $b['favorite'] = $like->value;
+            }
             $bonuses[$key] = $b;
         }
-        // $campaigns = $response['campaigns'];
-        // $bonuses = [];
-        // foreach ($campaigns as $key => $campaign) {
-        //     $bonus = [
-        //         'id' => $campaign['id'],
-        //         'favorite' => false,
-        //         'featured' => false,
-        //         'popular' => false,
-        //         'premium' => false,
-        //         'activated' => false,
-        //         'activationUrl' => '/api/v1/bonus/accept?id=' . $campaign['id'],
-        //         'logo' => $campaign['images']['logotype_exchange'],
-        //         'site' => [
-        //             'title' => $campaign['site']['title'],
-        //             'domain' => $campaign['site']['domain'],
-        //         ],
-        //         'sale' => $campaign['texts']['sale'],
-        //         'conditions' => $campaign['texts']['conditions'],
-        //         'siteinfo' => $campaign['texts']['siteinfo'],
-        //         'agreement' => $campaign['agreement'],
-
-        //     ];
-        //     array_push($bonuses, $bonus);
-        // }
 
         return response()->json([
             'status' => true,
@@ -91,9 +66,16 @@ class ControllerPersonal extends Controller
         $id = $request->id;
         $favorite = $request->favorite;
         $user = $this->getUser();
-
+        $cashback = FlocktoryCashback::find($id);
+        if (!$cashback) { abort(502); }
+        $like = FavoriteCashback::create([
+            'user_id' => $user->id,
+            'cashback_id' => $id,
+            'value' => (bool) $favorite,
+        ]);
         return response()->json([
             'status' => true,
+            'data' => $like->toArray(),
         ]);
     }
 
@@ -108,6 +90,10 @@ class ControllerPersonal extends Controller
         //         'data' => [],
         //     ]);
         // }
+        $cashback = FlocktoryCashback::find($id);
+        if (!$cashback) { abort(502); }
+        $cashback->activations++;
+        $cashback->save();
         $response = Http::get('https://client.flocktory.com/v2/exchange/accept-campaign', [
             'token' => env('FLOCKTORY_TOKEN', '36c7afaf0080ddbe1f6c5339045963af'),
             'site_id' => env('FLOCKTORY_SITE_ID', 3169),
