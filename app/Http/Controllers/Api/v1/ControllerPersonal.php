@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Payments;
 use App\Models\FlocktoryCashback;
+use App\Models\FavoriteCashback;
 use App\Models\Polisies;
 use App\Models\Risks;
 use App\Models\Tarrifs;
