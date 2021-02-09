@@ -19,22 +19,22 @@
 			      </span>
 			      <ul class="profile__list">
 			        <li class="profile__item" v-if="user.cashback <= 0">
-			        	<router-link to="/cashback"  class="profile__link" title="inapp">
+			        	<a href="/cashback" class="profile__link" title="inapp">
 			          <div class="profile-points">
 			            <img src="/images/point.svg" alt="" class="profile-points__img" />
 			            <span class="profile-points__text">
 			              Нет баллов
 			            </span>
 			          </div>
-			          </router-link>
+			          </a>
 			        </li>
 			        <li class="profile__item" v-else>
-			        	<router-link to="/cashback"  class="logo" title="inapp">
+			        	<a href="/cashback"  class="logo" title="inapp">
                  		    <div class="profile-points profile-points--colors">
 			     		      <img src="/images/point.svg" alt="" class="profile-points__img" />
 			     		      <span class="profile-points__text"> <em>{{ user.cashback }}</em> {{ GetNoun(user.cashback, "балл", "балла", "баллов" ) }} </span>
 			     		    </div>
-                 		</router-link>
+								</a>
 			          
 			        </li>
 			        <li class="profile__item" style="display: none;">
