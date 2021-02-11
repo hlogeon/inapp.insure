@@ -106,7 +106,7 @@ class ControllerPersonal extends Controller
         //         'data' => [],
         //     ]);
         // }
-        $cashback = FlocktoryCashback::where('flocktory_id', $campaign['id'])->first();
+        $cashback = FlocktoryCashback::where('flocktory_id', $id)->first();
         if (!$cashback) { abort(502); }
         $cashback->activations++;
         $cashback->save();
