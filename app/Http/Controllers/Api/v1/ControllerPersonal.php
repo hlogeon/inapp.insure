@@ -44,13 +44,13 @@ class ControllerPersonal extends Controller
         // }
         $bonuses = FlocktoryCashback::where([
             'deleted_at' => null,
-        ])->get();
-        $favorites = FavoriteCashback::where([ 'user_id' => $user->id ])->with('cashbackCompany')->get();
+        ])->with('cashbackCompany')->get();
+        $favorites = FavoriteCashback::where([ 'user_id' => $user->id ])->get();
         foreach ($bonuses as $key => $bonus) {
             $b = $bonus->toArray();
             $b['activationUrl'] = $b['activation_url'];
-            $b['site'] = $b['cashbackCompany'];
-            $b['logo'] = $b['cashbackCompany']['logo'];
+            $b['site'] = $b['cashback_company'];
+            $b['logo'] = $b['cashback_company']['logo'];
             foreach ($favorites as $like) {
                 if ($like->cashback_id == $bonus->id) {
                     $b['favorite'] = $like->value;
