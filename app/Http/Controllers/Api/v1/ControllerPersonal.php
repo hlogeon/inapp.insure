@@ -44,12 +44,13 @@ class ControllerPersonal extends Controller
         // }
         $bonuses = FlocktoryCashback::where([
             'deleted_at' => null,
-        ])->get();
+        ])->with('cashbackCompany')->get();
         $favorites = FavoriteCashback::where([ 'user_id' => $user->id ])->get();
         foreach ($bonuses as $key => $bonus) {
             $b = $bonus->toArray();
             $b['activationUrl'] = $b['activation_url'];
-            $b['site'] = ['title' => $b['site_title'], 'domain' => $b['site_domain']];
+            $b['site'] = $b['cashback_company'];
+            $b['logo'] = $b['cashback_company']['logo'];
             foreach ($favorites as $like) {
                 if ($like->cashback_id == $bonus->id) {
                     $b['favorite'] = $like->value;
@@ -105,7 +106,7 @@ class ControllerPersonal extends Controller
         //         'data' => [],
         //     ]);
         // }
-        $cashback = FlocktoryCashback::find($id);
+        $cashback = FlocktoryCashback::where('flocktory_id', $id)->first();
         if (!$cashback) { abort(502); }
         $cashback->activations++;
         $cashback->save();

@@ -52,9 +52,9 @@
             <!-- wrap -->
             <div class="menu-wrap">
               <nav class="nav for-mobile" style="margin-bottom: 20px;">
-                <router-link to="/cashback" class="nav-link">
+                <a href="/cashback" class="nav-link">
                   Кэшбэк
-                </router-link>
+                </a>
                 <router-link to="/account" class="nav-link">
                   Мои полисы
                 </router-link>

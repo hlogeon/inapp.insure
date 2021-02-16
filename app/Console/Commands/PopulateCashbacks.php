@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Http;
 use App\Models\FlocktoryCashback;
+use App\Models\CashbackCompany;
 
 class PopulateCashbacks extends Command
 {
@@ -20,7 +21,7 @@ class PopulateCashbacks extends Command
      *
      * @var string
      */
-    protected $description = 'Some command description';
+    protected $description = 'Pulls cashbacks from flocktory and creates\updates database entries';
 
     /**
      * Create a new command instance.
@@ -45,28 +46,55 @@ class PopulateCashbacks extends Command
             'email' => 'flocktory@inapp.insure',
         ])->json();
         $campaigns = $response['campaigns'];
-        $bonuses = [];
         foreach ($campaigns as $key => $campaign) {
-            $bonus = [
-                'id' => $campaign['id'],
-                'favorite' => false,
-                'featured' => false,
-                'popular' => false,
-                'premium' => false,
-                'activated' => false,
-                'activation_url' => '/api/v1/bonus/accept?id=' . $campaign['id'],
-                'logo' => $campaign['images']['logotype_exchange'],
-                'site_title' => $campaign['site']['title'],
-                'site_domain' => $campaign['site']['domain'],
-                'sale' => $campaign['texts']['sale'],
-                'conditions' => $campaign['texts']['conditions'],
-                'siteinfo' => $campaign['texts']['siteinfo'],
-                'agreement' => $campaign['agreement'],
-
+            $companyData = [
+                'id' => $campaign['site']['id'], 'title' => $campaign['site']['title'],
+                'domain' => $campaign['site']['domain'], 'logo' => $campaign['images']['logotype_exchange'],
             ];
-            FlocktoryCashback::create($bonus);
-            array_push($bonuses, $bonus);
+            $company = $this->findOrCreateCompany($companyData);
+            $cashback = $this->updateOrCreateCashback($campaign, $company);
         }
         return 0;
+    }
+
+    private function updateOrCreateCashback($campaign, $company)
+    {
+        $existing = FlocktoryCashback::where('flocktory_id', $campaign['id'])->first();
+        if ($existing) {
+            $existing->sale = $campaign['texts']['sale'];
+            $existing->siteinfo = $campaign['texts']['siteinfo'];
+            $existing->conditions = $campaign['texts']['conditions'];
+            $existing->agreement = $campaign['agreement'];
+            return $existing->save();
+        }
+        $bonus = [
+            'flocktory_id' => $campaign['id'],
+            'cashback_company_id' => $company->id,
+            'favorite' => false,
+            'featured' => false,
+            'popular' => false,
+            'premium' => false,
+            'activated' => false,
+            'activation_url' => '/api/v1/bonus/accept?id=' . $campaign['id'],
+            'sale' => $campaign['texts']['sale'],
+            'conditions' => $campaign['texts']['conditions'],
+            'siteinfo' => $campaign['texts']['siteinfo'],
+            'agreement' => $campaign['agreement'],
+        ];
+        return FlocktoryCashback::create($bonus);
+    }
+
+    private function findOrCreateCompany($companyData)
+    {
+        $existingCompany = CashbackCompany::where('flocktory_id', $companyData['id'])->first();
+        if ($existingCompany) {
+            return $existingCompany;
+        }
+        return CashbackCompany::create([
+            'flocktory_id' => $companyData['id'],
+            'title' => $companyData['title'],
+            'domain' => $companyData['domain'],
+            'logo' => $companyData['logo'],
+        ]);
     }
 }
