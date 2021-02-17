@@ -46,7 +46,9 @@ class PopulateCashbacks extends Command
             'email' => 'flocktory@inapp.insure',
         ])->json();
         $campaigns = $response['campaigns'];
+        $activeCampaignIds = [];
         foreach ($campaigns as $key => $campaign) {
+            $activeCampaignIds[] = $campaign['id'];
             $companyData = [
                 'id' => $campaign['site']['id'], 'title' => $campaign['site']['title'],
                 'domain' => $campaign['site']['domain'], 'logo' => $campaign['images']['logotype_exchange'],
@@ -54,6 +56,9 @@ class PopulateCashbacks extends Command
             $company = $this->findOrCreateCompany($companyData);
             $cashback = $this->updateOrCreateCashback($campaign, $company);
         }
+        $cashbacksToDelete = FlocktoryCashback::whereNotIn('id', $activeCampaignIds)
+            ->update(['id', $activeCampaignIds]);
+        var_dump($cashbacksToDelete);
         return 0;
     }
 
