@@ -56,9 +56,9 @@ class PopulateCashbacks extends Command
             $company = $this->findOrCreateCompany($companyData);
             $cashback = $this->updateOrCreateCashback($campaign, $company);
         }
-        $cashbacksToDelete = FlocktoryCashback::whereNotIn('id', $activeCampaignIds)
-            ->update(['id', $activeCampaignIds]);
-        var_dump($cashbacksToDelete);
+        $cashbacksToDelete = FlocktoryCashback::whereNotIn('id', $activeCampaignIds);
+        $cashbacksToDelete->update(['deletedAt', new \DateTime()]);
+        var_dump($cashbacksToDelete->get());
         return 0;
     }
 
