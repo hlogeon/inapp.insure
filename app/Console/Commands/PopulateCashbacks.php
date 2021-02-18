@@ -97,7 +97,7 @@ class PopulateCashbacks extends Command
         }
         return CashbackCompany::create([
             'flocktory_id' => $companyData['id'],
-            'title' => $companyData['title'],
+            'title' => $companyData['title'] ? $companyData['title'] : $companyData['domain'],
             'domain' => $companyData['domain'],
             'logo' => $companyData['logo'],
         ]);
