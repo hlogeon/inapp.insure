@@ -4,6 +4,7 @@ namespace App\Myclasses;
 
 
 use App\Models\User;
+use Carbon\Carbon;
 
 class CloudPayment
 {
@@ -12,6 +13,7 @@ class CloudPayment
 
     const API_URL    = 'https://api.cloudpayments.ru/payments/';
     const CHARGE_URL = self::API_URL . 'tokens/charge';
+    const SUBSCRIBE_URL = self::API_URL . 'subscriptions/create';
     const CANCEL_URL = self::API_URL . 'refund';
 
     /**
@@ -60,39 +62,49 @@ class CloudPayment
 
         $reciept = [
             "cloudPayments" => [
-            "CustomerReceipt"=> [
-                "Items"=> [//товарные позиции
-                [
-                    "label"=> "Подписка на страховку", //наименование товара
-                  "price"=> $price, //цена
-                  "quantity"=> 1.00, //количество
-                  "amount"=> $price, //сумма
-                  "vat"=> 0, //ставка НДС
-                ]
-              ],
-              "calculationPlace"=> "my.inapp.insure", //место осуществления расчёта, по умолчанию берется значение из кассы
-              "taxationSystem"=> 2, //система налогообложения; необязательный, если у вас одна система налогообложения
-              //"email"=> "temuch-13@mail.ru", //e-mail покупателя, если нужно отправить письмо с чеком
-              "phone"=> $user->phone, //телефон покупателя в любом формате, если нужно отправить сообщение со ссылкой на чек
-              "isBso"=> false, //чек является бланком строгой отчётности
-              "AgentSign"=> null, //признак агента, тег ОФД 1057
-              "amounts"=>
-                  [
-                      "electronic"=> $price, // Сумма оплаты электронными деньгами
-                  ]
-            ], //онлайн-чек
-          ]
-    ];
-
-        $params = [
-            'Amount' => $price,
-            'AccountId' => $accoun_id,
-            'Token' => $pay_token,
-            'InvoiceId'=>$invoiceId,
-            'JsonData'=> json_encode($reciept)
+                "CustomerReceipt"=> [
+                    "Items"=> [//товарные позиции
+                    [
+                        "label"=> "Подписка на страховку", //наименование товара
+                        "price"=> $price, //цена
+                        "quantity"=> 1.00, //количество
+                        "amount"=> $price, //сумма
+                        "vat"=> 0, //ставка НДС
+                    ]
+                ],
+                    "calculationPlace"=> "my.inapp.insure", //место осуществления расчёта, по умолчанию берется значение из кассы
+                    "taxationSystem"=> 2, //система налогообложения; необязательный, если у вас одна система налогообложения
+                    //"email"=> "temuch-13@mail.ru", //e-mail покупателя, если нужно отправить письмо с чеком
+                    "phone"=> $user->phone, //телефон покупателя в любом формате, если нужно отправить сообщение со ссылкой на чек
+                    "isBso"=> false, //чек является бланком строгой отчётности
+                    "AgentSign"=> null, //признак агента, тег ОФД 1057
+                    "amounts"=> [ "electronic"=> $price], // Сумма оплаты электронными деньгами
+                    ], //онлайн-чек
+            ]
         ];
 
+        $params = [
+            "token" => $pay_token,
+            'accountId' => $accoun_id,
+            'description' => '',
+            'email' => $user->email,
+            'amount' => $price,
+            'currency' => 'RUB',
+            'requireConfirmation' => false,
+            'startDate' => Carbon::now()->toISOString(),
+            'interval' => 'Month',
+            'period' => 1,
+        ];
         return $this->send(self::CHARGE_URL, $params);
+        // $_params = [
+        //     'Amount' => $price,
+        //     'AccountId' => $accoun_id,
+        //     'Token' => $pay_token,
+        //     'InvoiceId'=>$invoiceId,
+        //     'JsonData'=> json_encode($reciept)
+        // ];
+
+        // return $this->send(self::CHARGE_URL, $params);
     }
     
     public function Cancel($paymentId, $amount = 0)
