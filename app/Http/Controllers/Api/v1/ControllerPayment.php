@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api\v1;
 use App\Http\Controllers\Controller;
 use App\Models\Bso;
 use App\Models\BsoIndexes;
+use App\Myclasses\Client;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Payments;
 use App\Models\Polisies;
 use App\Models\Tarrifs;
+use Illuminate\Support\Facades\Log; 
 
 use App\Myclasses\CloudPayment;
 
@@ -64,7 +66,6 @@ class ControllerPayment extends Controller
                 ->orderBy("id", "desc")
                 ->first();
             if ($payment) {
-
 
 
                 $charge = $init->Cancel($payment->TransactionId, 1);
@@ -132,7 +133,6 @@ class ControllerPayment extends Controller
         //dd($result);
         //exit;
 
-        
 
         $req = $request->all();
         if ($req) {
@@ -291,18 +291,24 @@ class ControllerPayment extends Controller
             $token = $user->Token;
 
 
-            if(($tarrif_id && $tarrif_id!='undefined') || $refund) {
-
+            if (($tarrif_id && $tarrif_id != 'undefined') || $refund) {
 
 
                 if (!$payment)
                     $payment = Payments::create([
                         'user_id' => $user->id,
                         'tarrif_id' => $tarrif_id,
+                        'address' => request()->session()->get('address')
                     ]);
 
                 if ($payment) {
                     $order_id = request()->session()->put('order_id', $payment->id);
+                    $data = [
+                        "phone" => request()->session()->get('register_phone'),
+                        "address" => request()->session()->get('register_address'),
+                        "appartment" => request()->session()->get('register_appartment')
+                    ];
+                    $payment->update(["data" => serialize($data)]);
                     if (!empty($token)) {
 
                         $tariff = Tarrifs::find($tarrif_id);
@@ -311,17 +317,19 @@ class ControllerPayment extends Controller
 
                             $cloud = $this->init();
                             $res = $cloud->charge($tariff->price, $user->AccountId, $token, $payment->id);
-
-                            if ($res['Success'])
+                            if ($res['Success'] && $res['Model']['Status'] == 'Active')
                                 $response['payed'] = 1;
-
+                            else {
+                                $response['payed'] = 0;
+                                $response["errors"] = $res['Message'];  //$res['Model']['CardHolderMessage'];
+                            }
                         }
                     }
-
-                    $payment = Payments::find($payment->id);
-                    $response["payment"] = $payment;
+                    if (!isset($response['payed']) || (isset($response['payed']) && $response['payed'] !== 0)) {
+                        $response["payment"] = Payments::find($payment->id);
+                    }
                 }
-            }elseif(!($tarrif_id && $tarrif_id!='undefined'))
+            } elseif (!($tarrif_id && $tarrif_id != 'undefined'))
                 $response['errors'] = "Не указан тариф";
         }
 
@@ -334,9 +342,9 @@ class ControllerPayment extends Controller
     protected function getUser($data)
     {
         if ($data["InvoiceId"] && $data["InvoiceId"] > 0) {
-            $paynent = Payments::find($data["InvoiceId"]);
-            if ($paynent && $paynent->user_id > 0) {
-                return User::find($paynent->user_id);
+            $payment = Payments::find($data["InvoiceId"]);
+            if ($payment && $payment->user_id > 0) {
+                return User::find($payment->user_id);
             }
         }
         return false;
@@ -412,6 +420,22 @@ class ControllerPayment extends Controller
                 $payment->update(['link' => $data['Url']]);
                 return false;
             }
+
+            if (isset($data['Status']) && $data['Status'] == "Declined") {
+                //$payment->update(['link' => $data['Url']]);
+
+                if(!empty($payment->polic_id)) {
+                    $polic = Polisies::where([
+                        'id' => $payment->polic_id,
+                    ])->first();
+
+
+                    // Тут неудавшийся платеж!
+                    $this->sendToAmo($polic->bso, $user->phone);
+                }
+                return false;
+            }
+
         }
 
 
@@ -430,6 +454,30 @@ class ControllerPayment extends Controller
 
 
         //return response("OK", 200);
+    }
+
+    public function sendToAmo($number, $phone)
+    {
+        $client = new Client();
+        $crm = $client->crm();
+
+        $contact = null;
+        $contacts = $crm->contacts()->searchByPhone($phone);
+
+        if ($contact = $contacts->first()) {
+            $leads = $contact->leads->filter(function ($lead) use (&$number) {
+                return $lead->cf()->byId(335005)->getValue() == $number;
+            });
+
+            if ($leads->count()) {
+                if ($lead = $leads->first()) {
+                    $lead->status_id = 35724097;    // отписка до 14 дней
+                    $lead->save();
+                }
+            }
+        }
+
+
     }
 
     //Созать или обновить платежку в базе
