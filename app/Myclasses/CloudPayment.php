@@ -87,7 +87,7 @@ class CloudPayment
             "token" => $pay_token,
             'accountId' => $accoun_id,
             'description' => '',
-            'email' => $user->email,`
+            'email' => $user->email,
             'amount' => $price,
             'currency' => 'RUB',
             'requireConfirmation' => false,
