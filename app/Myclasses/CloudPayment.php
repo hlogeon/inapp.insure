@@ -55,7 +55,7 @@ class CloudPayment
     	return false;
 	}
 
-    public function charge($price, $accoun_id, $pay_token,$invoiceId)
+    public function charge($price, $accoun_id, $pay_token,$invoiceId, $period)
     {
 
         $user = (new User)->currentUser();
@@ -93,7 +93,7 @@ class CloudPayment
             'requireConfirmation' => false,
             'startDate' => Carbon::now()->toISOString(),
             'interval' => 'Month',
-            'period' => 1,
+            'period' => $period,
         ];
         return $this->send(self::SUBSCRIBE_URL, $params);
         // $_params = [

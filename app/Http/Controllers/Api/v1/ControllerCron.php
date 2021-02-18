@@ -122,7 +122,7 @@ class ControllerCron extends ControllerPayment
                             'polic_id' => $policeIs->id,
                             'tarrif_id' => $tarrif->id
                         ]);
-                        $charge = $pay->charge($tarrif->price, $user->AccountId, $user->Token, $payment->id);
+                        $charge = $pay->charge($tarrif->price, $user->AccountId, $user->Token, $payment->id, $tarrif->per_month);
     					//Проверка платежа на корректность
                  		if($charge && $charge['Success']) {
                  			//Совершение рекурретного платежа

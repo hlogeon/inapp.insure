@@ -316,7 +316,7 @@ class ControllerPayment extends Controller
                         if ($tariff) {
 
                             $cloud = $this->init();
-                            $res = $cloud->charge($tariff->price, $user->AccountId, $token, $payment->id);
+                            $res = $cloud->charge($tariff->price, $user->AccountId, $token, $payment->id, $tarrif->per_month);
                             if ($res['Success'] && $res['Model']['Status'] == 'Active')
                                 $response['payed'] = 1;
                             else {
