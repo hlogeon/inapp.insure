@@ -87,7 +87,7 @@ class CloudPayment
             "token" => $pay_token,
             'accountId' => $accoun_id,
             'description' => '',
-            'email' => $user->email,
+            'email' => $user->email,`
             'amount' => $price,
             'currency' => 'RUB',
             'requireConfirmation' => false,
@@ -95,7 +95,7 @@ class CloudPayment
             'interval' => 'Month',
             'period' => 1,
         ];
-        return $this->send(self::CHARGE_URL, $params);
+        return $this->send(self::SUBSCRIBE_URL, $params);
         // $_params = [
         //     'Amount' => $price,
         //     'AccountId' => $accoun_id,
