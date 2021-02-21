@@ -69,6 +69,7 @@ class PopulateCashbacks extends Command
             $existing->siteinfo = $campaign['texts']['siteinfo'];
             $existing->conditions = $campaign['texts']['conditions'];
             $existing->agreement = $campaign['agreement'];
+            $existing->restore();
             return $existing->save();
         }
         $bonus = [
