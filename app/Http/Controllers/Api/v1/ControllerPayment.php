@@ -11,7 +11,7 @@ use App\Models\User;
 use App\Models\Payments;
 use App\Models\Polisies;
 use App\Models\Tarrifs;
-use Illuminate\Support\Facades\Log; 
+use Illuminate\Support\Facades\Log;
 
 use App\Myclasses\CloudPayment;
 
@@ -317,7 +317,7 @@ class ControllerPayment extends Controller
 
                             $cloud = $this->init();
                             $res = $cloud->charge($tariff->price, $user->AccountId, $token, $payment->id, $tariff->per_month);
-                            if ($res['Success'] && $res['Model']['Status'] == 'Active')
+                            if ($res['Success'] && ($res['Model']['Status'] === 'Active' || $res['Model']['Status'] === 'Completed'))
                                 $response['payed'] = 1;
                             else {
                                 $response['payed'] = 0;

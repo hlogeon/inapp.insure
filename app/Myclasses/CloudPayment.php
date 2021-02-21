@@ -5,6 +5,7 @@ namespace App\Myclasses;
 
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class CloudPayment
 {
@@ -13,6 +14,7 @@ class CloudPayment
 
     const API_URL    = 'https://api.cloudpayments.ru/payments/';
     const CHARGE_URL = self::API_URL . 'tokens/charge';
+    // Нужно сначала сделать charge, а потом подписку
     const SUBSCRIBE_URL = 'https://api.cloudpayments.ru/subscriptions/create';
     const CANCEL_URL = self::API_URL . 'refund';
 
@@ -82,29 +84,29 @@ class CloudPayment
                     ], //онлайн-чек
             ]
         ];
-
+        $response = $this->send(self::CHARGE_URL, [
+            'Amount' => $price,
+            'AccountId' => $accoun_id,
+            'Token' => $pay_token,
+            'InvoiceId'=>$invoiceId,
+            'JsonData'=> json_encode($reciept)
+        ]);
+        Log::info('Got cloudpayments response: ', [$response]);
         $params = [
-            "token" => $pay_token,
+            "token" => $response["Model"]["Token"],//$pay_token,
             'accountId' => $accoun_id,
             'description' => '',
             'email' => $user->email,
             'amount' => $price,
             'currency' => 'RUB',
             'requireConfirmation' => false,
-            'startDate' => Carbon::now()->toISOString(),
+            'startDate' => Carbon::now()->addMonth()->toISOString(),
             'interval' => 'Month',
             'period' => $period,
         ];
-        return $this->send(self::SUBSCRIBE_URL, $params);
-        // $_params = [
-        //     'Amount' => $price,
-        //     'AccountId' => $accoun_id,
-        //     'Token' => $pay_token,
-        //     'InvoiceId'=>$invoiceId,
-        //     'JsonData'=> json_encode($reciept)
-        // ];
-
-        // return $this->send(self::CHARGE_URL, $params);
+        $r = $this->send(self::SUBSCRIBE_URL, $params);
+        Log::info('Cloudpayments subscription response: ', [$r]);
+        return $response;
     }
     
     public function Cancel($paymentId, $amount = 0)
