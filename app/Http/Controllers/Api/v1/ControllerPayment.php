@@ -371,8 +371,8 @@ class ControllerPayment extends Controller
             if (isset($data['Amount']) && $data['Amount'] > 0)
                 $arrayData["Amount"] = $data['Amount'];
 
-            if (isset($data['AccountId']) && $data['AccountId'])
-                $arrayData["AccountId"] = $data['AccountId'];
+            // if (isset($data['AccountId']) && $data['AccountId'])
+            //     $arrayData["AccountId"] = $data['AccountId'];
 
             if (isset($data['CardFirstSix']) && $data['CardFirstSix'])
                 $arrayData["CardFirstSix"] = $data['CardFirstSix'];
