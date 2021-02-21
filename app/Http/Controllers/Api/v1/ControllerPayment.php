@@ -383,7 +383,7 @@ class ControllerPayment extends Controller
             if (isset($data['CardType']) && $data['CardType'])
                 $arrayData["CardType"] = $data['CardType'];
 
-            if (isset($data['TransactionId']) && $data['CardType'])
+            if (isset($data['TransactionId']) && isset($data['CardType']))
                 $arrayData["TransactionId"] = $data['TransactionId'];
 
             return $arrayData;
