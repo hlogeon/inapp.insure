@@ -169,6 +169,7 @@ export default {
                     "electronic": +floatPrice, // Сумма оплаты электронными деньгами
                   }
             }, //онлайн-чек
+            recurrent: { interval: 'Month', period: 1 },
           }
         }
 
