@@ -13,7 +13,7 @@ class CloudPayment
 
     const API_URL    = 'https://api.cloudpayments.ru/payments/';
     const CHARGE_URL = self::API_URL . 'tokens/charge';
-    const SUBSCRIBE_URL = self::API_URL . 'subscriptions/create';
+    const SUBSCRIBE_URL = 'https://api.cloudpayments.ru/subscriptions/create';
     const CANCEL_URL = self::API_URL . 'refund';
 
     /**

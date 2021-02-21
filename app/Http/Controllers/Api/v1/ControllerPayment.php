@@ -310,13 +310,13 @@ class ControllerPayment extends Controller
                     ];
                     $payment->update(["data" => serialize($data)]);
                     if (!empty($token)) {
-
+			Log::info('Got token, $tarrif_id is ', [$tarrif_id]);
                         $tariff = Tarrifs::find($tarrif_id);
-
+			Log::info('Got tariff: ', [$tariff]);
                         if ($tariff) {
 
                             $cloud = $this->init();
-                            $res = $cloud->charge($tariff->price, $user->AccountId, $token, $payment->id, $tarrif->per_month);
+                            $res = $cloud->charge($tariff->price, $user->AccountId, $token, $payment->id, $tariff->per_month);
                             if ($res['Success'] && $res['Model']['Status'] == 'Active')
                                 $response['payed'] = 1;
                             else {
