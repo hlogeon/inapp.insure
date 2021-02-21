@@ -92,20 +92,20 @@ class CloudPayment
             'JsonData'=> json_encode($reciept)
         ]);
         Log::info('Got cloudpayments response: ', [$response]);
-        $params = [
-            "token" => $response["Model"]["Token"],//$pay_token,
-            'accountId' => $accoun_id,
-            'description' => '',
-            'email' => $user->email,
-            'amount' => $price,
-            'currency' => 'RUB',
-            'requireConfirmation' => false,
-            'startDate' => Carbon::now()->addMonth()->toISOString(),
-            'interval' => 'Month',
-            'period' => $period,
-        ];
-        $r = $this->send(self::SUBSCRIBE_URL, $params);
-        Log::info('Cloudpayments subscription response: ', [$r]);
+        // $params = [
+        //     "token" => $response["Model"]["Token"],//$pay_token,
+        //     'accountId' => $accoun_id,
+        //     'description' => '',
+        //     'email' => $user->email,
+        //     'amount' => $price,
+        //     'currency' => 'RUB',
+        //     'requireConfirmation' => false,
+        //     'startDate' => Carbon::now()->addMonth()->toISOString(),
+        //     'interval' => 'Month',
+        //     'period' => $period,
+        // ];
+        // $r = $this->send(self::SUBSCRIBE_URL, $params);
+        // Log::info('Cloudpayments subscription response: ', [$r]);
         return $response;
     }
     
