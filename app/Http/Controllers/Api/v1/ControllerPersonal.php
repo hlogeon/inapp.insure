@@ -43,6 +43,7 @@ class ControllerPersonal extends Controller
             $b = $bonus->toArray();
             $b['site'] = $b['cashback_company'];
             $b['logo'] = $b['cashback_company']['logo'];
+            unset($b['activation_url']);
             $bonuses[$key] = $b;
         }
         return response()->json([
