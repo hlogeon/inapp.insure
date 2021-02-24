@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Payments;
 use App\Models\FlocktoryCashback;
 use App\Models\FavoriteCashback;
+use App\Models\CashbackActivation;
 use App\Models\Polisies;
 use App\Models\Risks;
 use App\Models\Tarrifs;
@@ -33,6 +34,24 @@ class ControllerPersonal extends Controller
         return $user->currentUser();
     }
 
+    public function landingBonuses()
+    {
+        $bonuses = FlocktoryCashback::where([
+            'deleted_at' => null,
+            'landing' => true,
+        ])->with('cashbackCompany')->take(5)->get();
+        foreach ($bonuses as $key => $bonus) {
+            $b = $bonus->toArray();
+            $b['site'] = $b['cashback_company'];
+            $b['logo'] = $b['cashback_company']['logo'];
+            $bonuses[$key] = $b;
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $bonuses
+        ]);
+    }
+
     public function getBonusList()
     {
         $user = $this->getUser();
@@ -46,6 +65,7 @@ class ControllerPersonal extends Controller
             'deleted_at' => null,
         ])->with('cashbackCompany')->get();
         $favorites = FavoriteCashback::where([ 'user_id' => $user->id ])->get();
+        $activated = CashbackActivation::where(['user_id' => $user->id])->get();
         foreach ($bonuses as $key => $bonus) {
             $b = $bonus->toArray();
             $b['activationUrl'] = $b['activation_url'];
@@ -54,6 +74,11 @@ class ControllerPersonal extends Controller
             foreach ($favorites as $like) {
                 if ($like->cashback_id == $bonus->id) {
                     $b['favorite'] = $like->value;
+                }
+            }
+            foreach($activated as $activation) {
+                if ($activation->flocktory_cashback_id == $bonus->id) {
+                    $b['activated'] = true;
                 }
             }
             $bonuses[$key] = $b;
@@ -108,8 +133,15 @@ class ControllerPersonal extends Controller
         // }
         $cashback = FlocktoryCashback::where('flocktory_id', $id)->first();
         if (!$cashback) { abort(502); }
-        $cashback->activations++;
-        $cashback->save();
+        $activated = CashbackActivation::where('flocktory_cashback_id', $cashback->id)->first();
+        if (!$activated) {
+            $activation = CashbackActivation::create([
+                'user_id' => $user->id,
+                'flocktory_cashback_id' => $cashback->id,
+            ]);
+            $cashback->activations++;
+            $cashback->save();
+        }
         $response = Http::get('https://client.flocktory.com/v2/exchange/accept-campaign', [
             'token' => env('FLOCKTORY_TOKEN', '36c7afaf0080ddbe1f6c5339045963af'),
             'site_id' => env('FLOCKTORY_SITE_ID', 3169),

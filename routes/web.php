@@ -72,6 +72,8 @@ Route::group(['prefix' => '/api/v1/'], function () {
     //Получение всех страховок в лк
     Route::get('get_insurances', [ControllerPersonal::class, 'getIinsurances']);
 
+    Route::get('bonus/landing', [ControllerPersonal::class, 'landingBonuses']);
+
     Route::get('bonus/offers', [ControllerPersonal::class, 'getBonusList']);
 
     Route::get('bonus/accept', [ControllerPersonal::class, 'activateBonus']);
