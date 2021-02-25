@@ -63,7 +63,7 @@ class PopulateCashbacks extends Command
 
     private function updateOrCreateCashback($campaign, $company)
     {
-        $existing = FlocktoryCashback::where('flocktory_id', $campaign['id'])->first();
+        $existing = FlocktoryCashback::withTrashed()->where('flocktory_id', $campaign['id'])->first();
         if ($existing) {
             $existing->sale = $campaign['texts']['sale'];
             $existing->siteinfo = $campaign['texts']['siteinfo'];
