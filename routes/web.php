@@ -74,6 +74,8 @@ Route::group(['prefix' => '/api/v1/'], function () {
 
     Route::get('bonus/landing', [ControllerPersonal::class, 'landingBonuses']);
 
+    Route::get('bonus/landing/all', [ControllerPersonal::class, 'landingAllBonuses']);
+
     Route::get('bonus/offers', [ControllerPersonal::class, 'getBonusList']);
 
     Route::get('bonus/accept', [ControllerPersonal::class, 'activateBonus']);

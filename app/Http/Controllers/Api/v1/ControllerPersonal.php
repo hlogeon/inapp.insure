@@ -24,7 +24,7 @@ class ControllerPersonal extends Controller
 {
     public function __construct()
     {
-    	$this->middleware('auth')->except('landingBonuses');
+    	$this->middleware('auth')->except('landingBonuses')->except('landingAllBonuses');
     }
 
     private function getUser()
@@ -38,7 +38,25 @@ class ControllerPersonal extends Controller
         $bonuses = FlocktoryCashback::where([
             'deleted_at' => null,
             'landing' => true,
-        ])->with('cashbackCompany')->take(5)->get();
+        ])->with('cashbackCompany')->take(6)->get();
+        foreach ($bonuses as $key => $bonus) {
+            $b = $bonus->toArray();
+            $b['site'] = $b['cashback_company'];
+            $b['logo'] = $b['cashback_company']['logo'];
+            unset($b['activation_url']);
+            $bonuses[$key] = $b;
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $bonuses
+        ]);
+    }
+
+    public function landingAllBonuses()
+    {
+        $bonuses = FlocktoryCashback::where([
+            'deleted_at' => null,
+        ])->with('cashbackCompany')->get();
         foreach ($bonuses as $key => $bonus) {
             $b = $bonus->toArray();
             $b['site'] = $b['cashback_company'];
