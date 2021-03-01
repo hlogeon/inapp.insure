@@ -82,6 +82,8 @@ Route::group(['prefix' => '/api/v1/'], function () {
 
     Route::post('bonus/favorite', [ControllerPersonal::class, 'favoriteBonus']);
 
+    Route::get('plans', [ControllerPersonal::class, 'getPlans']);
+
     //Получение всех страховок
     Route::get('get_insurances_public', [ControllerInsurances::class, 'index']);
 
