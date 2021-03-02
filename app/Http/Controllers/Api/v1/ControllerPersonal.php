@@ -12,6 +12,7 @@ use App\Models\CashbackActivation;
 use App\Models\Polisies;
 use App\Models\Risks;
 use App\Models\Tarrifs;
+use App\Models\Plans;
 use App\Models\System;
 use App\Models\InsuranceLists;
 use Carbon\Carbon;
@@ -24,7 +25,9 @@ class ControllerPersonal extends Controller
 {
     public function __construct()
     {
-    	$this->middleware('auth')->except('landingBonuses');
+    	$this->middleware('auth')
+            ->except('landingBonuses')->except('landingAllBonuses')
+            ->except('getPlans');
     }
 
     private function getUser()
@@ -38,7 +41,25 @@ class ControllerPersonal extends Controller
         $bonuses = FlocktoryCashback::where([
             'deleted_at' => null,
             'landing' => true,
-        ])->with('cashbackCompany')->take(5)->get();
+        ])->with('cashbackCompany')->take(6)->get();
+        foreach ($bonuses as $key => $bonus) {
+            $b = $bonus->toArray();
+            $b['site'] = $b['cashback_company'];
+            $b['logo'] = $b['cashback_company']['logo'];
+            unset($b['activation_url']);
+            $bonuses[$key] = $b;
+        }
+        return response()->json([
+            'status' => true,
+            'data' => $bonuses
+        ]);
+    }
+
+    public function landingAllBonuses()
+    {
+        $bonuses = FlocktoryCashback::where([
+            'deleted_at' => null,
+        ])->with('cashbackCompany')->get();
         foreach ($bonuses as $key => $bonus) {
             $b = $bonus->toArray();
             $b['site'] = $b['cashback_company'];
@@ -443,6 +464,11 @@ class ControllerPersonal extends Controller
             'status' => true,
             'data' => request()->session()->get('register_another_polic')
         ]);
+    }
+
+    public function getPlans(Request $request)
+    {
+        return Plans::all();
     }
 
     public function getTarrifs(Request $request)
