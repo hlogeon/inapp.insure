@@ -3010,7 +3010,8 @@ button {
     -ms-flex-pack: center;
     justify-content: center;
     width: 100%;
-    /* padding: 0 1.5625rem; */
+    max-width: 54.375rem;
+    padding: 0 1.5625rem;
     margin: 5% auto 0;
 }
 @media (max-width: 900px) {

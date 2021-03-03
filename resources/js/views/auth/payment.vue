@@ -256,7 +256,7 @@ export default {
         data_cart: [],
         address: "",
         appartment: "",
-        tarrif_id: "",
+        tarrif_id: 2,
         cart: "",
         tarrif: false,
         another: false,
@@ -279,6 +279,9 @@ export default {
                 response.data.forEach($tarrif => {
                     this.tarrifs.push($tarrif);
                 });
+
+                this.tarrif_id = response.data[0].id;
+                this.countPrice();
             } else {
                 if (response.data.hasOwnProperty("errors"))
                     response.data.errors.forEach($error => {
@@ -326,6 +329,12 @@ export default {
     methods: {
         changePeriodHandler(value) {
             this.period = value;
+            const getTarrifsByPeriod = this.tarrifs.filter(
+                el => el.period == value
+            );
+
+            this.tarrif_id = getTarrifsByPeriod[0].id;
+            this.countPrice();
         },
         setDate() {
             document.querySelectorAll(".j_datepicker input").forEach($input => {
@@ -514,5 +523,15 @@ export default {
             width: 100%;
         }
     }
+}
+
+.step-form-tariffs {
+    @media (max-width: 768px) {
+        margin-top: 0;
+    }
+}
+
+.step-wrap {
+    max-width: 100%;
 }
 </style>

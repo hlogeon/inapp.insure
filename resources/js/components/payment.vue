@@ -54,7 +54,6 @@ export default {
         //SweetModal
     },
     mounted() {
-        console.log("user_id", this.user_id);
         let cloudPayment = document.createElement("script");
         cloudPayment.setAttribute(
             "src",
@@ -281,6 +280,20 @@ export default {
     .price {
         margin-left: auto;
         margin-right: 10px;
+    }
+    @media (max-width: 768px) {
+        height: 45px;
+        font-size: 18px;
+        border-radius: 16px;
+        padding: 0 15px;
+        width: 100%;
+        .price {
+            margin-left: 10px;
+        }
+        img {
+            width: 25px;
+            height: 25px;
+        }
     }
 }
 </style>

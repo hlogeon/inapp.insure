@@ -48,7 +48,7 @@ input {
     left: -9999px;
 
     &:checked + .control {
-        border: 1px solid #48c9ff;
+        border: 1px solid #2ec86b;
     }
 }
 .control {
@@ -61,13 +61,19 @@ input {
     border-radius: 24px;
     padding: 19px 30px;
     transition: 0.3s border ease;
-
+    @media (max-width: 768px) {
+        padding: 15px 20px;
+    }
     .amount {
         font-family: SFProRounded, sans-serif;
         font-size: 26px;
         line-height: 31px;
         color: #222;
         font-weight: 700;
+        @media (max-width: 768px) {
+            font-size: 16px;
+            line-height: 19px;
+        }
     }
     .label {
         font-family: SFProDisplay, sans-serif;
@@ -76,6 +82,11 @@ input {
         color: #94959e;
         font-weight: 400;
         margin-top: 8px;
+        @media (max-width: 768px) {
+            font-size: 12px;
+            line-height: 14px;
+            margin-top: 6px;
+        }
     }
     .price {
         display: inline-block;
@@ -87,6 +98,12 @@ input {
         padding: 8px 15px;
         border-radius: 12px;
         background-color: #f1f1f4;
+        @media (max-width: 768px) {
+            font-size: 14px;
+            line-height: 18px;
+            padding: 6px 5px;
+            border-radius: 10px;
+        }
     }
 }
 </style>

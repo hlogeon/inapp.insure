@@ -3334,7 +3334,6 @@ __webpack_require__.r(__webpack_exports__);
   components: {//SweetModal
   },
   mounted: function mounted() {
-    console.log("user_id", this.user_id);
     var cloudPayment = document.createElement("script");
     cloudPayment.setAttribute("src", "https://widget.cloudpayments.ru/bundles/cloudpayments");
     document.head.appendChild(cloudPayment);
@@ -6228,7 +6227,7 @@ __webpack_require__.r(__webpack_exports__);
       data_cart: [],
       address: "",
       appartment: "",
-      tarrif_id: "",
+      tarrif_id: 2,
       cart: "",
       tarrif: false,
       another: false,
@@ -6254,6 +6253,9 @@ __webpack_require__.r(__webpack_exports__);
         response.data.forEach(function ($tarrif) {
           _this.tarrifs.push($tarrif);
         });
+        _this.tarrif_id = response.data[0].id;
+
+        _this.countPrice();
       } else {
         if (response.data.hasOwnProperty("errors")) response.data.errors.forEach(function ($error) {
           _this.errors.push($error);
@@ -6294,6 +6296,11 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     changePeriodHandler: function changePeriodHandler(value) {
       this.period = value;
+      var getTarrifsByPeriod = this.tarrifs.filter(function (el) {
+        return el.period == value;
+      });
+      this.tarrif_id = getTarrifsByPeriod[0].id;
+      this.countPrice();
     },
     setDate: function setDate() {
       var _this2 = this;
@@ -11388,7 +11395,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".subscribe-plan[data-v-5f038416] {\n  width: 100%;\n  display: block;\n  margin: 20px 0;\n}\ninput[data-v-5f038416] {\n  position: absolute;\n  left: -9999px;\n}\ninput:checked + .control[data-v-5f038416] {\n  border: 1px solid #48c9ff;\n}\n.control[data-v-5f038416] {\n  cursor: pointer;\n  display: flex;\n  flex-flow: row;\n  align-items: center;\n  justify-content: space-between;\n  border: 1px solid #f1f1f4;\n  border-radius: 24px;\n  padding: 19px 30px;\n  transition: 0.3s border ease;\n}\n.control .amount[data-v-5f038416] {\n  font-family: SFProRounded, sans-serif;\n  font-size: 26px;\n  line-height: 31px;\n  color: #222;\n  font-weight: 700;\n}\n.control .label[data-v-5f038416] {\n  font-family: SFProDisplay, sans-serif;\n  font-size: 18px;\n  line-height: 21px;\n  color: #94959e;\n  font-weight: 400;\n  margin-top: 8px;\n}\n.control .price[data-v-5f038416] {\n  display: inline-block;\n  font-family: SFProDisplay, sans-serif;\n  font-size: 20px;\n  line-height: 24px;\n  color: #222;\n  font-weight: 400;\n  padding: 8px 15px;\n  border-radius: 12px;\n  background-color: #f1f1f4;\n}", ""]);
+exports.push([module.i, ".subscribe-plan[data-v-5f038416] {\n  width: 100%;\n  display: block;\n  margin: 20px 0;\n}\ninput[data-v-5f038416] {\n  position: absolute;\n  left: -9999px;\n}\ninput:checked + .control[data-v-5f038416] {\n  border: 1px solid #2ec86b;\n}\n.control[data-v-5f038416] {\n  cursor: pointer;\n  display: flex;\n  flex-flow: row;\n  align-items: center;\n  justify-content: space-between;\n  border: 1px solid #f1f1f4;\n  border-radius: 24px;\n  padding: 19px 30px;\n  transition: 0.3s border ease;\n}\n@media (max-width: 768px) {\n.control[data-v-5f038416] {\n    padding: 15px 20px;\n}\n}\n.control .amount[data-v-5f038416] {\n  font-family: SFProRounded, sans-serif;\n  font-size: 26px;\n  line-height: 31px;\n  color: #222;\n  font-weight: 700;\n}\n@media (max-width: 768px) {\n.control .amount[data-v-5f038416] {\n    font-size: 16px;\n    line-height: 19px;\n}\n}\n.control .label[data-v-5f038416] {\n  font-family: SFProDisplay, sans-serif;\n  font-size: 18px;\n  line-height: 21px;\n  color: #94959e;\n  font-weight: 400;\n  margin-top: 8px;\n}\n@media (max-width: 768px) {\n.control .label[data-v-5f038416] {\n    font-size: 12px;\n    line-height: 14px;\n    margin-top: 6px;\n}\n}\n.control .price[data-v-5f038416] {\n  display: inline-block;\n  font-family: SFProDisplay, sans-serif;\n  font-size: 20px;\n  line-height: 24px;\n  color: #222;\n  font-weight: 400;\n  padding: 8px 15px;\n  border-radius: 12px;\n  background-color: #f1f1f4;\n}\n@media (max-width: 768px) {\n.control .price[data-v-5f038416] {\n    font-size: 14px;\n    line-height: 18px;\n    padding: 6px 5px;\n    border-radius: 10px;\n}\n}", ""]);
 
 // exports
 
@@ -11407,7 +11414,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".button[data-v-1843408b] {\n  background: linear-gradient(109.61deg, #2ec86b 2.51%, #b3d491 91.16%);\n  border-radius: 24px;\n  display: flex;\n  padding: 0;\n  font-family: SFProRounded;\n  font-style: normal;\n  font-weight: bold;\n  font-size: 28px;\n  align-items: center;\n  width: 490px;\n  height: 70px;\n  padding: 0 30px;\n  justify-content: space-between;\n}\n.button .price[data-v-1843408b] {\n  margin-left: auto;\n  margin-right: 10px;\n}", ""]);
+exports.push([module.i, ".button[data-v-1843408b] {\n  background: linear-gradient(109.61deg, #2ec86b 2.51%, #b3d491 91.16%);\n  border-radius: 24px;\n  display: flex;\n  padding: 0;\n  font-family: SFProRounded;\n  font-style: normal;\n  font-weight: bold;\n  font-size: 28px;\n  align-items: center;\n  width: 490px;\n  height: 70px;\n  padding: 0 30px;\n  justify-content: space-between;\n}\n.button .price[data-v-1843408b] {\n  margin-left: auto;\n  margin-right: 10px;\n}\n@media (max-width: 768px) {\n.button[data-v-1843408b] {\n    height: 45px;\n    font-size: 18px;\n    border-radius: 16px;\n    padding: 0 15px;\n    width: 100%;\n}\n.button .price[data-v-1843408b] {\n    margin-left: 10px;\n}\n.button img[data-v-1843408b] {\n    width: 25px;\n    height: 25px;\n}\n}", ""]);
 
 // exports
 
@@ -11464,7 +11471,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".step-form-card.j_card[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n}\n.step-form-card-buttons[data-v-12c5619e] {\n  margin-top: 0 !important;\n}\n.j_datepicker input[data-v-12c5619e],\n.j_datepicker[data-v-12c5619e] {\n  width: 100%;\n}\n.j_datepicker[data-v-12c5619e] {\n  margin-top: 8px;\n}\n.input-wrapper-datepicker[data-v-12c5619e] {\n  margin: 0 0 15px;\n}\n.step-polis .input-wrapper[data-v-12c5619e] {\n  width: 100%;\n}\n@media (min-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 360px;\n    width: 100%;\n}\n}\n@media (max-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 320px;\n}\n}\n.step-form-inner[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n  margin-bottom: 15px;\n}\n.step-form-inner .step-form-data[data-v-12c5619e] {\n  margin-top: 0;\n}\n.step-form-inner .datepicker[data-v-12c5619e] {\n  margin-top: 15px;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(1),\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(2) {\n  flex: 1 1 25% !important;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(3) {\n  flex: 1 1 50% !important;\n}\n.plans_flex[data-v-12c5619e] {\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.plans_flex > div[data-v-12c5619e] {\n  width: calc(50% - 10px);\n}\n@media (max-width: 768px) {\n.plans_flex > div[data-v-12c5619e] {\n    width: 100%;\n}\n}", ""]);
+exports.push([module.i, ".step-form-card.j_card[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n}\n.step-form-card-buttons[data-v-12c5619e] {\n  margin-top: 0 !important;\n}\n.j_datepicker input[data-v-12c5619e],\n.j_datepicker[data-v-12c5619e] {\n  width: 100%;\n}\n.j_datepicker[data-v-12c5619e] {\n  margin-top: 8px;\n}\n.input-wrapper-datepicker[data-v-12c5619e] {\n  margin: 0 0 15px;\n}\n.step-polis .input-wrapper[data-v-12c5619e] {\n  width: 100%;\n}\n@media (min-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 360px;\n    width: 100%;\n}\n}\n@media (max-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 320px;\n}\n}\n.step-form-inner[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n  margin-bottom: 15px;\n}\n.step-form-inner .step-form-data[data-v-12c5619e] {\n  margin-top: 0;\n}\n.step-form-inner .datepicker[data-v-12c5619e] {\n  margin-top: 15px;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(1),\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(2) {\n  flex: 1 1 25% !important;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(3) {\n  flex: 1 1 50% !important;\n}\n.plans_flex[data-v-12c5619e] {\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.plans_flex > div[data-v-12c5619e] {\n  width: calc(50% - 10px);\n}\n@media (max-width: 768px) {\n.plans_flex > div[data-v-12c5619e] {\n    width: 100%;\n}\n}\n@media (max-width: 768px) {\n.step-form-tariffs[data-v-12c5619e] {\n    margin-top: 0;\n}\n}\n.step-wrap[data-v-12c5619e] {\n  max-width: 100%;\n}", ""]);
 
 // exports
 
