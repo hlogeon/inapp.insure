@@ -47,7 +47,7 @@
                         </ul>
 
                         <h1 class="title">
-                            <a
+                            <!-- <a
                                 @click="previousPage"
                                 class="button button-arrow button-arrow--prev"
                                 v-if="!another"
@@ -61,17 +61,20 @@
                                 class="button button-arrow button-arrow--prev"
                                 v-else
                             >
-                            </router-link>
+                            </router-link> -->
                             <template v-if="!another">
-                                Выбери тариф и введи данные для оформления
-                                подписки
+                                Выберите тариф и период подписки
                             </template>
                             <template v-else>
                                 Выберите тариф и укажите дату<br />активации
                                 полиса
                             </template>
                         </h1>
-                        <Paymenttype />
+
+                        <Paymenttype
+                            @changePeriod="changePeriodHandler"
+                            v-bind:period="period"
+                        />
 
                         <!-- form -->
                         <div class="step-form">
@@ -80,13 +83,21 @@
                                     class="step-form-tariffs-wrap"
                                     v-if="tarrifs.length > 0"
                                 >
-                                    <tarrif
-                                        @tarrifIs="chosenTarrif"
-                                        :id="tarrif_id"
-                                        v-bind:key="tarrif.id"
-                                        v-for="tarrif in tarrifs"
-                                        :tarrif="tarrif"
-                                    />
+                                    <div class="plans_flex">
+                                        <div class="tarif_block">
+                                            <tarrif
+                                                @tarrifIs="chosenTarrif"
+                                                :id="tarrif_id"
+                                                :period="period"
+                                                v-bind:key="tarrif.id"
+                                                v-for="tarrif in tarrifs"
+                                                :tarrif="tarrif"
+                                            />
+                                        </div>
+                                        <div class="desc_block">
+                                            <description :id="tarrif_id" />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -231,8 +242,10 @@ import moment from "moment";
 import date from "../../mixins/date";
 import invalid from "../../mixins/invalid";
 import Paymenttype from "../../components/payment/paymentType";
+import description from "../../components/payment/description";
 export default {
     data: () => ({
+        period: "month",
         loading: true,
         phone: "",
         errors: [],
@@ -254,17 +267,18 @@ export default {
         tarrif,
         Pay,
         Insurances,
-        Paymenttype
+        Paymenttype,
+        description
     },
     mounted: function() {
-        axios.get("/api/v1/tarrifs").then(response => {
-            if (response.data.status) {
-                response.data.data.forEach($tarrif => {
+        axios.get("/api/v1/plans").then(response => {
+            if (response.data) {
+                response.data.forEach($tarrif => {
                     this.tarrifs.push($tarrif);
                 });
             } else {
-                if (response.data.data.hasOwnProperty("errors"))
-                    response.data.data.errors.forEach($error => {
+                if (response.data.hasOwnProperty("errors"))
+                    response.data.errors.forEach($error => {
                         this.errors.push($error);
                     });
             }
@@ -273,25 +287,22 @@ export default {
         let data = new URLSearchParams();
         data.append("action", "checking");
         axios.get("/api/v1/send_phone", { params: data }).then(response => {
-            if (
-                response.data.data.hasOwnProperty("phone") &&
-                response.data.data.phone
-            ) {
-                this.phone = response.data.data.phone;
+            if (response.data.hasOwnProperty("phone") && response.data.phone) {
+                this.phone = response.data.phone;
             }
             if (
-                response.data.data.hasOwnProperty("address") &&
-                response.data.data.address
+                response.data.hasOwnProperty("address") &&
+                response.data.address
             ) {
-                this.address = response.data.data.address;
+                this.address = response.data.address;
             }
             if (
-                response.data.data.hasOwnProperty("appartment") &&
-                response.data.data.appartment
+                response.data.hasOwnProperty("appartment") &&
+                response.data.appartment
             ) {
-                this.appartment = response.data.data.appartment;
+                this.appartment = response.data.appartment;
             }
-            if (response.data.data.another_polic) this.another = true;
+            if (response.data.another_polic) this.another = true;
         });
 
         setTimeout(() => {
@@ -304,6 +315,9 @@ export default {
         this.onSubmit();
     },
     methods: {
+        changePeriodHandler(value) {
+            this.period = value;
+        },
         setDate() {
             document.querySelectorAll(".j_datepicker input").forEach($input => {
                 let value = moment(
@@ -360,7 +374,6 @@ export default {
             this.isInvalid("user_activate");
         },
         sendPayment() {
-            console.log(this.errors);
             if (this.errors.length == 0) {
                 const data = new URLSearchParams();
                 data.append("payment_status", this.payment_status);
@@ -373,26 +386,22 @@ export default {
                     .then(response => {
                         if (response.data.status) {
                             console.log("testing", response);
-                            //if(response.data.data.phone)
+                            //if(response.data.phone)
                             if (!this.another) {
                                 if (
-                                    response.data.data.hasOwnProperty(
-                                        "user_id"
-                                    ) &&
-                                    response.data.data.user_id > 0
+                                    response.data.hasOwnProperty("user_id") &&
+                                    response.data.user_id > 0
                                 )
                                     this.$router.push("/authpaysuccess");
                             } else {
                                 if (
-                                    response.data.data.hasOwnProperty(
-                                        "another_done"
-                                    )
+                                    response.data.hasOwnProperty("another_done")
                                 )
                                     this.$router.push("/account");
                             }
                         } else {
                             if (response.data.hasOwnProperty("errors"))
-                                response.data.data.errors.forEach($error => {
+                                response.data.errors.forEach($error => {
                                     this.errors.push($error);
                                 });
                         }
@@ -415,7 +424,6 @@ export default {
                     if ($tarrif.id == this.tarrif_id) {
                         $fullPrice = $tarrif.price;
                         this.tarrif = $tarrif;
-                        //* $tarrif.per_month
                     }
                 });
             }
@@ -425,7 +433,7 @@ export default {
 };
 </script>
 
-<style scoped="">
+<style lang="scss" scoped>
 .step-form-card.j_card {
     margin-left: auto;
     margin-right: auto;
@@ -475,5 +483,21 @@ export default {
 }
 .for-mobile-inline-flex li:nth-child(3) {
     flex: 1 1 50% !important;
+}
+
+.plans_flex {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    > div {
+        width: calc(50% - 10px);
+    }
+
+    @media (max-width: 768px) {
+        > div {
+            width: 100%;
+        }
+    }
 }
 </style>
