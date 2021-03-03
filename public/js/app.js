@@ -3304,6 +3304,7 @@ __webpack_require__.r(__webpack_exports__);
 //:width="width" :height="height"
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
+    period: "",
     price: 0,
     method: "",
     tarrif_id: null,
@@ -3333,6 +3334,7 @@ __webpack_require__.r(__webpack_exports__);
   components: {//SweetModal
   },
   mounted: function mounted() {
+    console.log("user_id", this.user_id);
     var cloudPayment = document.createElement("script");
     cloudPayment.setAttribute("src", "https://widget.cloudpayments.ru/bundles/cloudpayments");
     document.head.appendChild(cloudPayment);
@@ -3370,6 +3372,7 @@ __webpack_require__.r(__webpack_exports__);
     updateData: function updateData() {
       var data = new URLSearchParams();
       data.append("tarrif_id", this.tarrif.id);
+      data.append("period", this.period);
       data.append("user_id", this.user_id);
 
       if (this.method == "refund") {
@@ -6202,6 +6205,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 
 
@@ -6229,7 +6234,8 @@ __webpack_require__.r(__webpack_exports__);
       another: false,
       payment_status: false,
       user_activate: "",
-      fullPrice: null
+      fullPrice: null,
+      user_id: null
     };
   },
   mixins: [_mixins_date__WEBPACK_IMPORTED_MODULE_5__["default"], _mixins_invalid__WEBPACK_IMPORTED_MODULE_6__["default"], _mixins_datepicker__WEBPACK_IMPORTED_MODULE_3__["default"]],
@@ -6259,19 +6265,23 @@ __webpack_require__.r(__webpack_exports__);
     axios.get("/api/v1/send_phone", {
       params: data
     }).then(function (response) {
-      if (response.data.hasOwnProperty("phone") && response.data.phone) {
-        _this.phone = response.data.phone;
+      if (response.data.data.hasOwnProperty("phone") && response.data.data.phone) {
+        _this.phone = response.data.data.phone;
       }
 
-      if (response.data.hasOwnProperty("address") && response.data.address) {
-        _this.address = response.data.address;
+      if (response.data.data.hasOwnProperty("address") && response.data.data.address) {
+        _this.address = response.data.data.address;
       }
 
-      if (response.data.hasOwnProperty("appartment") && response.data.appartment) {
-        _this.appartment = response.data.appartment;
+      if (response.data.data.hasOwnProperty("appartment") && response.data.data.appartment) {
+        _this.appartment = response.data.data.appartment;
       }
 
-      if (response.data.another_polic) _this.another = true;
+      if (response.data.data.another_polic) _this.another = true;
+
+      if (response.data.data.hasOwnProperty("user_id")) {
+        _this.user_id = response.data.data.user_id;
+      }
     });
     setTimeout(function () {
       _this.loading = false;
@@ -6308,7 +6318,6 @@ __webpack_require__.r(__webpack_exports__);
       });else this.$router.go(-1);
     },
     beforeSend: function beforeSend($status) {
-      console.log("status", $status);
       this.payment_status = $status ? $status : false;
       this.validateForm();
       if ($status) this.sendPayment();else this.errors.push({
@@ -6348,15 +6357,20 @@ __webpack_require__.r(__webpack_exports__);
           params: data
         }).then(function (response) {
           if (response.data.status) {
-            console.log("testing", response); //if(response.data.phone)
-
+            //if(response.data.phone)
             if (!_this3.another) {
-              if (response.data.hasOwnProperty("user_id") && response.data.user_id > 0) _this3.$router.push("/authpaysuccess");
+              if (response.data.data.hasOwnProperty("user_id") && response.data.data.user_id > 0) {
+                t;
+
+                _this3.$router.push("/authpaysuccess");
+              }
             } else {
-              if (response.data.hasOwnProperty("another_done")) _this3.$router.push("/account");
+              if (response.data.data.hasOwnProperty("another_done")) {
+                _this3.$router.push("/account");
+              }
             }
           } else {
-            if (response.data.hasOwnProperty("errors")) response.data.errors.forEach(function ($error) {
+            if (response.data.data.hasOwnProperty("errors")) response.data.data.errors.forEach(function ($error) {
               _this3.errors.push($error);
             });
           }
@@ -71307,11 +71321,13 @@ var render = function() {
                         _vm._v(" "),
                         _c("Pay", {
                           attrs: {
+                            period: _vm.period,
                             price: _vm.fullPrice,
                             method: "pay_for_police",
                             tarrif: _vm.tarrif,
                             status: _vm.payment_status,
-                            hidden: _vm.another
+                            hidden: _vm.another,
+                            user_id: _vm.user_id
                           },
                           on: { isPaying: _vm.beforeSend }
                         })
@@ -88783,15 +88799,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/payment/description.vue ***!
   \*********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _description_vue_vue_type_template_id_6b99cdf8_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./description.vue?vue&type=template&id=6b99cdf8&scoped=true& */ "./resources/js/components/payment/description.vue?vue&type=template&id=6b99cdf8&scoped=true&");
 /* harmony import */ var _description_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./description.vue?vue&type=script&lang=js& */ "./resources/js/components/payment/description.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _description_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(["default"].indexOf(__WEBPACK_IMPORT_KEY__) < 0) (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _description_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _description_vue_vue_type_style_index_0_id_6b99cdf8_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./description.vue?vue&type=style&index=0&id=6b99cdf8&lang=scss&scoped=true& */ "./resources/js/components/payment/description.vue?vue&type=style&index=0&id=6b99cdf8&lang=scss&scoped=true&");
+/* empty/unused harmony star reexport *//* harmony import */ var _description_vue_vue_type_style_index_0_id_6b99cdf8_lang_scss_scoped_true___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./description.vue?vue&type=style&index=0&id=6b99cdf8&lang=scss&scoped=true& */ "./resources/js/components/payment/description.vue?vue&type=style&index=0&id=6b99cdf8&lang=scss&scoped=true&");
 /* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
@@ -88823,7 +88838,7 @@ component.options.__file = "resources/js/components/payment/description.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/payment/description.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

@@ -215,11 +215,13 @@
                                 {{ showError(value) }}
                             </div>
                             <Pay
+                                :period="period"
                                 :price="fullPrice"
                                 method="pay_for_police"
                                 :tarrif="tarrif"
                                 :status="payment_status"
                                 :hidden="another"
+                                :user_id="user_id"
                                 @isPaying="beforeSend"
                             />
                         </div>
@@ -260,7 +262,8 @@ export default {
         another: false,
         payment_status: false,
         user_activate: "",
-        fullPrice: null
+        fullPrice: null,
+        user_id: null
     }),
     mixins: [date, invalid, DatePickerFile],
     components: {
@@ -287,22 +290,28 @@ export default {
         let data = new URLSearchParams();
         data.append("action", "checking");
         axios.get("/api/v1/send_phone", { params: data }).then(response => {
-            if (response.data.hasOwnProperty("phone") && response.data.phone) {
-                this.phone = response.data.phone;
+            if (
+                response.data.data.hasOwnProperty("phone") &&
+                response.data.data.phone
+            ) {
+                this.phone = response.data.data.phone;
             }
             if (
-                response.data.hasOwnProperty("address") &&
-                response.data.address
+                response.data.data.hasOwnProperty("address") &&
+                response.data.data.address
             ) {
-                this.address = response.data.address;
+                this.address = response.data.data.address;
             }
             if (
-                response.data.hasOwnProperty("appartment") &&
-                response.data.appartment
+                response.data.data.hasOwnProperty("appartment") &&
+                response.data.data.appartment
             ) {
-                this.appartment = response.data.appartment;
+                this.appartment = response.data.data.appartment;
             }
-            if (response.data.another_polic) this.another = true;
+            if (response.data.data.another_polic) this.another = true;
+            if (response.data.data.hasOwnProperty("user_id")) {
+                this.user_id = response.data.data.user_id;
+            }
         });
 
         setTimeout(() => {
@@ -343,7 +352,6 @@ export default {
             else this.$router.go(-1);
         },
         beforeSend($status) {
-            console.log("status", $status);
             this.payment_status = $status ? $status : false;
             this.validateForm();
             if ($status) this.sendPayment();
@@ -385,23 +393,30 @@ export default {
                     .get("/api/v1/send_phone", { params: data })
                     .then(response => {
                         if (response.data.status) {
-                            console.log("testing", response);
                             //if(response.data.phone)
+
                             if (!this.another) {
                                 if (
-                                    response.data.hasOwnProperty("user_id") &&
-                                    response.data.user_id > 0
-                                )
+                                    response.data.data.hasOwnProperty(
+                                        "user_id"
+                                    ) &&
+                                    response.data.data.user_id > 0
+                                ) {
+                                    t;
                                     this.$router.push("/authpaysuccess");
+                                }
                             } else {
                                 if (
-                                    response.data.hasOwnProperty("another_done")
-                                )
+                                    response.data.data.hasOwnProperty(
+                                        "another_done"
+                                    )
+                                ) {
                                     this.$router.push("/account");
+                                }
                             }
                         } else {
-                            if (response.data.hasOwnProperty("errors"))
-                                response.data.errors.forEach($error => {
+                            if (response.data.data.hasOwnProperty("errors"))
+                                response.data.data.errors.forEach($error => {
                                     this.errors.push($error);
                                 });
                         }

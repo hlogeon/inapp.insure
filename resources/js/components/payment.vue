@@ -25,6 +25,7 @@
 //:width="width" :height="height"
 export default {
     props: {
+        period: "",
         price: 0,
         method: "",
         tarrif_id: null,
@@ -53,6 +54,7 @@ export default {
         //SweetModal
     },
     mounted() {
+        console.log("user_id", this.user_id);
         let cloudPayment = document.createElement("script");
         cloudPayment.setAttribute(
             "src",
@@ -92,6 +94,7 @@ export default {
             const data = new URLSearchParams();
 
             data.append("tarrif_id", this.tarrif.id);
+            data.append("period", this.period);
             data.append("user_id", this.user_id);
             if (this.method == "refund") {
                 data.append("refund", 1);
