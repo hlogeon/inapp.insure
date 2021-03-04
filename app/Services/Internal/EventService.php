@@ -20,7 +20,7 @@ class EventService extends Service {
         if (!$model->id) {
             return false;
         }
-        PolisiesCreateJob::dispatch($model);
+        // PolisiesCreateJob::dispatch($model);
         return true;
     }
 }

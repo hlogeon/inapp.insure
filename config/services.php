@@ -29,5 +29,9 @@ return [
         'secret' => env('AWS_SECRET_ACCESS_KEY'),
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
+    'cloudpayments' => [
+        'public_id' => env('CLOUDPAYMENTS_ID', 'pk_652b21ba5ff3b85074b0776a6dfa1'),
+        'api_password' => env('CLOUDPAYMENTS_PASSWORD', 'dc38ef6362e55a158333634704e83384'),
+    ]
 
 ];

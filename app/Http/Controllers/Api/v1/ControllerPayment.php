@@ -11,6 +11,7 @@ use App\Models\User;
 use App\Models\Payments;
 use App\Models\Polisies;
 use App\Models\Tarrifs;
+use App\Models\Plans;
 use Illuminate\Support\Facades\Log;
 
 use App\Myclasses\CloudPayment;
@@ -294,12 +295,15 @@ class ControllerPayment extends Controller
             if (($tarrif_id && $tarrif_id != 'undefined') || $refund) {
 
 
-                if (!$payment)
+                if (!$payment) {
+                    Log::info('No payment found! Create the new one');
                     $payment = Payments::create([
                         'user_id' => $user->id,
                         'tarrif_id' => $tarrif_id,
                         'address' => request()->session()->get('address')
                     ]);
+                    Log::info('Created this payment: ', [$payment]);
+                }
 
                 if ($payment) {
                     $order_id = request()->session()->put('order_id', $payment->id);
@@ -310,15 +314,16 @@ class ControllerPayment extends Controller
                     ];
                     $payment->update(["data" => serialize($data)]);
                     if (!empty($token)) {
-			Log::info('Got token, $tarrif_id is ', [$tarrif_id]);
-                        $tariff = Tarrifs::find($tarrif_id);
-			Log::info('Got tariff: ', [$tariff]);
+			            Log::info('Got token, $tarrif_id is ', [$tarrif_id]);
+                        $tariff = Plans::find($tarrif_id);
+			            Log::info('Got tariff: ', [$tariff]);
                         if ($tariff) {
-
                             $cloud = $this->init();
-                            $res = $cloud->charge($tariff->price, $user->AccountId, $token, $payment->id, $tariff->per_month);
-                            if ($res['Success'] && ($res['Model']['Status'] === 'Active' || $res['Model']['Status'] === 'Completed'))
+                            $res = $cloud->charge($tariff->price, $user->AccountId, $token, $payment->id);
+                            if ($res['Success'] && ($res['Model']['Status'] === 'Active' || $res['Model']['Status'] === 'Completed')){
                                 $response['payed'] = 1;
+                                $payment->update($this->getData($res['Model']));
+                            }
                             else {
                                 $response['payed'] = 0;
                                 $response["errors"] = $res['Message'];  //$res['Model']['CardHolderMessage'];

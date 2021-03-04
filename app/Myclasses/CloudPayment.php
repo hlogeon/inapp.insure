@@ -8,9 +8,9 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Log;
 
 class CloudPayment
-{
-	protected $public_id = "pk_19ba322d94cdaa881e611754cf8e3";
-	protected $api_password = "e7a11a440c59702f971c26d59c967569";
+{    
+    protected $public_id;
+	protected $api_password;
 
     const API_URL    = 'https://api.cloudpayments.ru/payments/';
     const CHARGE_URL = self::API_URL . 'tokens/charge';
@@ -25,8 +25,8 @@ class CloudPayment
 
 	public function __construct()
 	{
-		//$this->public_id = $this->$public_id;
-		//$this->api_password = self::$api_password;
+        $this->public_id = config('services.cloudpayments.public_id');
+        $this->api_password = config('services.cloudpayments.api_password');
 	}
 
 	function send($url, $params)
@@ -57,7 +57,7 @@ class CloudPayment
     	return false;
 	}
 
-    public function charge($price, $accoun_id, $pay_token,$invoiceId, $period)
+    public function charge($price, $accoun_id, $pay_token,$invoiceId)
     {
 
         $user = (new User)->currentUser();

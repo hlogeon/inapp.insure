@@ -5,7 +5,7 @@
 
 //function pre($arr){echo'<pre>';print_r($arr);echo'</pre>';}
 
-use App\Models\Polisies;
+// use App\Models\Polisies;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\v1\MenuTop;
 use App\Http\Controllers\Api\v1\ControllerMenuBottom;

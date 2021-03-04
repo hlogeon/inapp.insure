@@ -11,9 +11,11 @@ use App\Models\Polisies;
 use App\Models\Payments;
 use App\Myclasses\SmsSender;
 use App\Models\Bso;
+use App\Models\Plans;
 use App\Models\BsoIndexes;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class AuthValidation extends Controller
 {
@@ -200,10 +202,11 @@ class AuthValidation extends Controller
                     if($payment) {
                         //Создание полиса
                         $polic_id = $this->createPolic(1);
-                        $this->generateBos($polic_id);
+                        Log::info('Creted police', [$polic_id]);
+                        // $this->generateBos($polic_id);
                         request()->session()->put('account_message', 'Новый полис успешно создан');
                         if($polic_id) {
-                            $tarrif = Tarrifs::find($tarrif_id);
+                            $tarrif = Plans::find($tarrif_id);
                             if($tarrif) {
                                 //Запись полиса в оплату
                                 $payment->update([
@@ -360,7 +363,7 @@ class AuthValidation extends Controller
         $data = $this->getAllData();
         $start = Carbon::createFromTimestamp(strtotime($user_activate));
         if( $start->timestamp >= Carbon::now()->toDateTimeString() ) {
-            $tarrif = Tarrifs::find($data["tarrif_id"]);
+            $tarrif = Plans::find($data["tarrif_id"]);
             $polis = Polisies::where([
                 'id' => $data['polis_id'],
                 'active' => 0
@@ -370,15 +373,14 @@ class AuthValidation extends Controller
                 $errors[] = ["er" => "Полис уже активирован"];
             elseif($tarrif) {
                 $polis = $polis[0];
-                $per_month = $tarrif->per_month;
-                $finish = Carbon::createFromTimestamp(strtotime($user_activate))->addMonth(($per_month > 0) ? $per_month : 1);
+                $finish = Carbon::createFromTimestamp(strtotime($user_activate))->addMonth($tarrif->period === 'year' ? 12 : 1);
                 $checking = Carbon::createFromTimestamp(strtotime($polis->created_at));
                 $checking->addDays(2);
                 if($checking->timestamp > strtotime($start)) {
                     $errors[] = [
                         "user_activate" => "Дата активации должна быть не менее 3 дней с момента оплаты"
                     ];
-                } elseif($per_month > 0 && $finish->format('d.m.Y') != $start->format('d.m.Y')) {
+                } elseif($finish->format('d.m.Y') != $start->format('d.m.Y')) {
                     $polic_id = $this->updatePolic($data["polis_id"], $start, $finish);
                     if($polic_id) {
                         $data["done"] = true;
@@ -386,8 +388,6 @@ class AuthValidation extends Controller
                 } else {
                     if($finish->format('d.m.Y') == $start->format('d.m.Y'))
                         $errors[] = ["er" => "Дата начала полиса совпадает с датой его окончания"];
-                    elseif($per_month <= 0)
-                        $errors[] = ["er" => "Минимальное количество месяцев для создания тарифов должно быть не меньше 1"];
                     else
                         $errors[] = ["er" => "Некорректные данные"];
                 }
@@ -468,7 +468,7 @@ class AuthValidation extends Controller
     private function checkPayment($oder_id)
     {
         $data = $this->getAllData();
-        if(!isset($data["user_id"]) || $data["user_id"] <= 0 && !isset($oder_id) || $oder_id <= 0) return false;
+        if(!isset($data["user_id"]) && !isset($oder_id)) return false;
         return Payments::where([
             "user_id"   => $data["user_id"],
             "id"        => $oder_id,

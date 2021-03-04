@@ -392,9 +392,9 @@ class ControllerPersonal extends Controller
 
         if(isset($polices[0])) {
             $police = $polices[0];
-            $tarrif = Tarrifs::find($police->tarrif_id);
+            $tarrif = Plans::find($police->tarrif_id);
             if($tarrif) {
-                $police->tarrif = $tarrif;
+                $police->tarrif_id = $tarrif->id;
             }
             $payment = Payments::where([
                 'user_id' => $user->id,
