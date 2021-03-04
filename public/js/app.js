@@ -6206,6 +6206,34 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -11471,7 +11499,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".step-form-card.j_card[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n}\n.step-form-card-buttons[data-v-12c5619e] {\n  margin-top: 0 !important;\n}\n.j_datepicker input[data-v-12c5619e],\n.j_datepicker[data-v-12c5619e] {\n  width: 100%;\n}\n.j_datepicker[data-v-12c5619e] {\n  margin-top: 8px;\n}\n.input-wrapper-datepicker[data-v-12c5619e] {\n  margin: 0 0 15px;\n}\n.step-polis .input-wrapper[data-v-12c5619e] {\n  width: 100%;\n}\n@media (min-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 360px;\n    width: 100%;\n}\n}\n@media (max-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 320px;\n}\n}\n.step-form-inner[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n  margin-bottom: 15px;\n}\n.step-form-inner .step-form-data[data-v-12c5619e] {\n  margin-top: 0;\n}\n.step-form-inner .datepicker[data-v-12c5619e] {\n  margin-top: 15px;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(1),\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(2) {\n  flex: 1 1 25% !important;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(3) {\n  flex: 1 1 50% !important;\n}\n.plans_flex[data-v-12c5619e] {\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.plans_flex > div[data-v-12c5619e] {\n  width: calc(50% - 10px);\n}\n@media (max-width: 768px) {\n.plans_flex > div[data-v-12c5619e] {\n    width: 100%;\n}\n}\n@media (max-width: 768px) {\n.step-form-tariffs[data-v-12c5619e] {\n    margin-top: 0;\n}\n}\n.step-wrap[data-v-12c5619e] {\n  max-width: 100%;\n}", ""]);
+exports.push([module.i, ".step-form-card.j_card[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n}\n.step-form-card-buttons[data-v-12c5619e] {\n  margin-top: 0 !important;\n}\n.j_datepicker input[data-v-12c5619e],\n.j_datepicker[data-v-12c5619e] {\n  width: 100%;\n}\n.j_datepicker[data-v-12c5619e] {\n  margin-top: 8px;\n}\n.input-wrapper-datepicker[data-v-12c5619e] {\n  width: 60%;\n  margin: 40px auto;\n}\n.step-polis .input-wrapper[data-v-12c5619e] {\n  width: 100%;\n}\n@media (min-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 360px;\n    width: 100%;\n}\n}\n@media (max-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 320px;\n}\n}\n.step-form-inner[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n  margin-bottom: 15px;\n}\n.step-form-inner .step-form-data[data-v-12c5619e] {\n  margin-top: 0;\n}\n.step-form-data[data-v-12c5619e] {\n  margin-bottom: 40px;\n}\n.step-form-inner .datepicker[data-v-12c5619e] {\n  margin-top: 15px;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(1),\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(2) {\n  flex: 1 1 25% !important;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(3) {\n  flex: 1 1 50% !important;\n}\n.plans_flex[data-v-12c5619e] {\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.plans_flex > div[data-v-12c5619e] {\n  width: calc(50% - 10px);\n}\n@media (max-width: 768px) {\n.plans_flex > div[data-v-12c5619e] {\n    width: 100%;\n}\n}\n@media (max-width: 768px) {\n.step-form-tariffs[data-v-12c5619e] {\n    margin-top: 0;\n}\n}\n.step-wrap[data-v-12c5619e] {\n  max-width: 100%;\n}", ""]);
 
 // exports
 
@@ -71036,280 +71064,160 @@ var render = function() {
                             : _vm._e()
                         ]),
                         _vm._v(" "),
-                        !_vm.another
-                          ? _c("div", { staticClass: "step-form-data" }, [
-                              _c("ul", { staticClass: "step-form-data-list" }, [
-                                _c(
-                                  "li",
-                                  { staticClass: "step-form-data-item" },
-                                  [
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "step-form-data-item__subtitle"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        Город, улица, номер дома\n                                    "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "step-form-data-item__value"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        " +
-                                            _vm._s(_vm.address) +
-                                            "\n                                    "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "li",
-                                  { staticClass: "step-form-data-item" },
-                                  [
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "step-form-data-item__subtitle"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        Номер квартиры\n                                    "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "step-form-data-item__value"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        " +
-                                            _vm._s(_vm.appartment) +
-                                            "\n                                    "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                ),
-                                _vm._v(" "),
-                                _c(
-                                  "li",
-                                  { staticClass: "step-form-data-item" },
-                                  [
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "step-form-data-item__subtitle"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        Номер телефона\n                                    "
-                                        )
-                                      ]
-                                    ),
-                                    _vm._v(" "),
-                                    _c(
-                                      "span",
-                                      {
-                                        staticClass:
-                                          "step-form-data-item__value"
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                                        " +
-                                            _vm._s(_vm.phone) +
-                                            "\n                                    "
-                                        )
-                                      ]
-                                    )
-                                  ]
-                                )
-                              ])
+                        _c("div", { staticClass: "step-form-data" }, [
+                          _c("ul", { staticClass: "step-form-data-list" }, [
+                            _c("li", { staticClass: "step-form-data-item" }, [
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "step-form-data-item__subtitle"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Город, улица, номер дома\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "step-form-data-item__value" },
+                                [
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(_vm.address) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "step-form-data-item" }, [
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "step-form-data-item__subtitle"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Номер квартиры\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "step-form-data-item__value" },
+                                [
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(_vm.appartment) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              )
+                            ]),
+                            _vm._v(" "),
+                            _c("li", { staticClass: "step-form-data-item" }, [
+                              _c(
+                                "span",
+                                {
+                                  staticClass: "step-form-data-item__subtitle"
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                                        Номер телефона\n                                    "
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "span",
+                                { staticClass: "step-form-data-item__value" },
+                                [
+                                  _vm._v(
+                                    "\n                                        " +
+                                      _vm._s(_vm.phone) +
+                                      "\n                                    "
+                                  )
+                                ]
+                              )
                             ])
-                          : _vm._e(),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "step-polis-wrapper" }, [
-                          _c("div", { staticClass: "step-polis" }, [
-                            _vm.another
-                              ? _c("div", { staticClass: "step-form-inner" }, [
-                                  _c("div", { staticClass: "step-form-data" }, [
-                                    _c(
-                                      "ul",
-                                      { staticClass: "step-form-data-list" },
-                                      [
-                                        _c(
-                                          "li",
-                                          {
-                                            staticClass: "step-form-data-item"
-                                          },
-                                          [
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "step-form-data-item__subtitle"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    Город, улица, номер дома\n                                                "
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "step-form-data-item__value"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    " +
-                                                    _vm._s(_vm.address) +
-                                                    "\n                                                "
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        ),
-                                        _vm._v(" "),
-                                        _c(
-                                          "li",
-                                          {
-                                            staticClass: "step-form-data-item"
-                                          },
-                                          [
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "step-form-data-item__subtitle"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    Номер квартиры\n                                                "
-                                                )
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "span",
-                                              {
-                                                staticClass:
-                                                  "step-form-data-item__value"
-                                              },
-                                              [
-                                                _vm._v(
-                                                  "\n                                                    " +
-                                                    _vm._s(_vm.appartment) +
-                                                    "\n                                                "
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    )
-                                  ]),
-                                  _vm._v(" "),
+                          ]),
+                          _vm._v(" "),
+                          _vm.another
+                            ? _c(
+                                "div",
+                                {
+                                  staticClass:
+                                    "input-wrapper input-wrapper-datepicker"
+                                },
+                                [
                                   _c(
                                     "div",
+                                    { staticClass: "input__logo-wrapper" },
+                                    [
+                                      _c("img", {
+                                        staticClass: "input__logo j_card-brand",
+                                        attrs: {
+                                          src: "/images/calendar.png",
+                                          alt: ""
+                                        }
+                                      })
+                                    ]
+                                  ),
+                                  _vm._v(" "),
+                                  _c(
+                                    "label",
                                     {
                                       staticClass:
-                                        "input-wrapper input-wrapper-datepicker"
+                                        "input-label datepicker j_datepicker",
+                                      attrs: { "data-datepicker-min": "3" }
                                     },
                                     [
-                                      _c(
-                                        "div",
-                                        { staticClass: "input__logo-wrapper" },
-                                        [
-                                          _c("img", {
-                                            staticClass:
-                                              "input__logo j_card-brand",
-                                            attrs: {
-                                              src: "/images/calendar.png",
-                                              alt: ""
+                                      _c("input", {
+                                        directives: [
+                                          {
+                                            name: "model",
+                                            rawName: "v-model",
+                                            value: _vm.user_activate,
+                                            expression: "user_activate"
+                                          }
+                                        ],
+                                        staticClass:
+                                          "input input--big user_activate",
+                                        attrs: {
+                                          required: "",
+                                          type: "text",
+                                          placeholder: "Дата активации полиса"
+                                        },
+                                        domProps: { value: _vm.user_activate },
+                                        on: {
+                                          change: _vm.isChangeActivate,
+                                          input: function($event) {
+                                            if ($event.target.composing) {
+                                              return
                                             }
-                                          })
-                                        ]
-                                      ),
+                                            _vm.user_activate =
+                                              $event.target.value
+                                          }
+                                        }
+                                      }),
                                       _vm._v(" "),
                                       _c(
-                                        "label",
-                                        {
-                                          staticClass:
-                                            "input-label datepicker j_datepicker",
-                                          attrs: { "data-datepicker-min": "3" }
-                                        },
+                                        "div",
+                                        { staticClass: "input__placeholder" },
                                         [
-                                          _c("input", {
-                                            directives: [
-                                              {
-                                                name: "model",
-                                                rawName: "v-model",
-                                                value: _vm.user_activate,
-                                                expression: "user_activate"
-                                              }
-                                            ],
-                                            staticClass:
-                                              "input input--big user_activate",
-                                            attrs: {
-                                              required: "",
-                                              type: "text",
-                                              placeholder:
-                                                "Дата активации полиса"
-                                            },
-                                            domProps: {
-                                              value: _vm.user_activate
-                                            },
-                                            on: {
-                                              change: _vm.isChangeActivate,
-                                              input: function($event) {
-                                                if ($event.target.composing) {
-                                                  return
-                                                }
-                                                _vm.user_activate =
-                                                  $event.target.value
-                                              }
-                                            }
-                                          }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "div",
-                                            {
-                                              staticClass: "input__placeholder"
-                                            },
-                                            [
-                                              _c("span", [
-                                                _vm._v(
-                                                  "Дата активации\n                                                    полиса"
-                                                )
-                                              ])
-                                            ]
-                                          )
+                                          _c("span", [
+                                            _vm._v("Дата активации полиса")
+                                          ])
                                         ]
                                       )
                                     ]
                                   )
-                                ])
-                              : _vm._e()
-                          ])
+                                ]
+                              )
+                            : _vm._e()
                         ]),
                         _vm._v(" "),
                         _vm._l(_vm.errors, function(value) {

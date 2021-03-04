@@ -101,7 +101,7 @@
                                 </div>
                             </div>
 
-                            <div class="step-form-data" v-if="!another">
+                            <div class="step-form-data">
                                 <ul class="step-form-data-list">
                                     <li class="step-form-data-item">
                                         <span
@@ -140,8 +140,36 @@
                                         </span>
                                     </li>
                                 </ul>
+                                <div
+                                    class="input-wrapper input-wrapper-datepicker"
+                                    v-if="another"
+                                >
+                                    <div class="input__logo-wrapper">
+                                        <img
+                                            src="/images/calendar.png"
+                                            alt=""
+                                            class="input__logo j_card-brand"
+                                        />
+                                    </div>
+                                    <label
+                                        data-datepicker-min="3"
+                                        class="input-label datepicker j_datepicker"
+                                    >
+                                        <input
+                                            required
+                                            class="input input--big user_activate"
+                                            type="text"
+                                            v-model="user_activate"
+                                            v-on:change="isChangeActivate"
+                                            placeholder="Дата активации полиса"
+                                        />
+                                        <div class="input__placeholder">
+                                            <span>Дата активации полиса</span>
+                                        </div>
+                                    </label>
+                                </div>
                             </div>
-                            <div class="step-polis-wrapper">
+                            <!-- <div class="step-polis-wrapper">
                                 <div class="step-polis">
                                     <div class="step-form-inner" v-if="another">
                                         <div class="step-form-data">
@@ -206,7 +234,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> -->
                             <div
                                 class="error"
                                 v-bind:key="value"
@@ -473,7 +501,8 @@ export default {
     margin-top: 8px;
 }
 .input-wrapper-datepicker {
-    margin: 0 0 15px;
+    width: 60%;
+    margin: 40px auto;
 }
 .step-polis .input-wrapper {
     width: 100%;
@@ -496,6 +525,9 @@ export default {
 }
 .step-form-inner .step-form-data {
     margin-top: 0;
+}
+.step-form-data {
+    margin-bottom: 40px;
 }
 .step-form-inner .datepicker {
     margin-top: 15px;
