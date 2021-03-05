@@ -186,7 +186,7 @@ class ControllerPersonal extends Controller
             ])->first();
             if($polic) {
                 $tarrif = Plans::find($polic->tarrif_id);
-                if (Carbon::createFromTimestamp(strtotime($polic->created_at))->isBefore('2021-03-07 12:45:15') ) {
+                if (Carbon::createFromTimestamp(strtotime($polic->created_at))->isBefore('2021-03-05 12:45:15') ) {
                     $tarrif = null;
                 }
                 $pdf = (new PolisPDF)->genPolicyPdf(
@@ -366,7 +366,7 @@ class ControllerPersonal extends Controller
             $insurances = InsuranceLists::where('plan_id', null)->orderBy("sort", "desc")->get();
         } else {
             $policy = Polisies::find($policyId);
-            if (Carbon::createFromTimestamp(strtotime($polic->created_at))->isBefore('2021-03-07 12:45:15')) {
+            if (Carbon::createFromTimestamp(strtotime($polic->created_at))->isBefore('2021-03-05 12:45:15')) {
                 $insurances = InsuranceLists::where('plan_id', null)->orderBy("sort", "desc")->get();
             } else {
                 $insurances = InsuranceLists::where('plan_id', $policy->tarrif_id)->orderBy("sort", "desc")->get();
