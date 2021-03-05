@@ -15,6 +15,32 @@
 */
 //$params = get_policy($policy);
 
+$coverageDetails = [];
+
+if($plan == 0) {
+    $coverageDetails = [
+        300000,300000,300000,150000
+    ];
+    $coverage = 1050000;
+} else {
+    switch(intval($coverage)) {
+    case 2000000:
+        $coverageDetails = [
+            600000,600000,600000,200000
+        ];
+        break;
+    case 3000000:
+        $coverageDetails = [
+            900000,900000,900000,900000
+        ];
+        break;
+    default:
+        $coverageDetails = [
+            300000,300000,300000,100000
+        ];
+        break;
+}
+
 //$params
 //$number = '1234567890-231';
 //$number = '1234567890-231';
@@ -23,6 +49,9 @@
 //$date_of_birth = '30.07.1998';
 //$validity = '1.12.20 – 30.12.20';
 //$cost = '399';
+//$plan = 1/2/3/4/5/6 (ID тарифа)
+//$coverage = 1000000 - страховое покрытие
+//$period = 'year' || 'month'
 //$comes_into_force = '1.12.20, 00:00';
 //$valid_until = '30.12.20, 23:59';
 
@@ -130,7 +159,7 @@
                                         Конструктивные элементы, внутренняя отделка и инженерное оборудование
                                     </h4>
                                     <em class="polis__price">
-                                        300 000 ₽
+                                        {{ number_format($coverageDetails[0], 0, ' ', ' ') }} ₽
                                     </em>
                                 </li>
                                 <li class="h4 polis__item">
@@ -138,7 +167,7 @@
                                         Движимое имущество
                                     </h4>
                                     <em class="polis__price">
-                                        300 000 ₽
+                                    {{ number_format($coverageDetails[1], 0, ' ', ' ') }} ₽
                                     </em>
                                 </li>
                                 <li class="h4 polis__item">
@@ -146,19 +175,19 @@
                                         Страхование гражданской ответственности
                                     </h4>
                                     <em class="polis__price">
-                                        300 000 ₽
+                                    {{ number_format($coverageDetails[2], 0, ' ', ' ') }} ₽
                                     </em>
                                 </li>
                                 <li class="h4 polis__item">
                                     <h4 class="polis__product"> Страхование непредвиденных расходов </h4>
                                     <em class="polis__price">
-                                        150 000 ₽
+                                    {{ number_format($coverageDetails[3], 0, ' ', ' ') }} ₽
                                     </em>
                                 </li>
                                 <li class="h4 polis__item">
                                     <h4 class="polis__product"> Общая страховая сумма </h4>
                                     <em class="polis__price">
-                                        1 050 000 ₽
+                                    {{ number_format($coverage, 0, ' ', ' ') }} ₽
                                     </em>
                                 </li>
                             </ul>
@@ -788,7 +817,7 @@
                                         Конструктивные элементы, внутренняя отделка и инженерное оборудование
                                     </h4>
                                     <em class="polis__price">
-                                        300 000 ₽
+                                        {{ number_format($coverageDetails[0], 0, ' ', ' ') }} ₽
                                     </em>
                                 </li>
                                 <li class="h4 polis__item">
@@ -796,7 +825,7 @@
                                         Движимое имущество
                                     </h4>
                                     <em class="polis__price">
-                                        300 000 ₽
+                                    {{ number_format($coverageDetails[1], 0, ' ', ' ') }} ₽
                                     </em>
                                 </li>
                                 <li class="h4 polis__item">
@@ -804,19 +833,19 @@
                                         Страхование гражданской ответственности
                                     </h4>
                                     <em class="polis__price">
-                                        300 000 ₽
+                                    {{ number_format($coverageDetails[2], 0, ' ', ' ') }} ₽
                                     </em>
                                 </li>
                                 <li class="h4 polis__item">
                                     <h4 class="polis__product"> Страхование непредвиденных расходов </h4>
                                     <em class="polis__price">
-                                        150 000 ₽
+                                    {{ number_format($coverageDetails[3], 0, ' ', ' ') }} ₽
                                     </em>
                                 </li>
                                 <li class="h4 polis__item">
                                     <h4 class="polis__product"> Общая страховая сумма </h4>
                                     <em class="polis__price">
-                                        1 050 000 ₽
+                                    {{ number_format($coverage, 0, ' ', ' ') }} ₽
                                     </em>
                                 </li>
                             </ul>
