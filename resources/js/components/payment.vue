@@ -239,17 +239,16 @@ export default {
                     },
                     {
                         onSuccess: function(options) {
-                            // success
                             console.log("Успех");
                             $this.$emit("isPaying", true);
                         },
                         onFail: function(reason, options) {
-                            // fail
-
                             console.log("Неуспех");
                             $this.disabled = false;
                         },
-                        onComplete: function(paymentResult, options) {}
+                        onComplete: function(paymentResult, options) {
+                            console.log('Hellllo!');
+                        }
                     }
                 );
             }

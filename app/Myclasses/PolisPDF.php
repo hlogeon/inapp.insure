@@ -13,9 +13,14 @@ class PolisPDF
     //    $this->text = $text;
     //}
 
-    public function genPolicyPdf($number, $address, $policyholder, $date_of_birth, $validity, $cost, $comes_into_force, $valid_until, $policy, $phone, $email){
+    public function genPolicyPdf($number, $address, $policyholder, $date_of_birth, $validity, $plan, $comes_into_force, $valid_until, $policy, $phone, $email){
         $pdf_path = $_SERVER['DOCUMENT_ROOT'] . "/policies/{$number}.pdf";
-        $url = 'https://my.inapp.insure/certgen?policy='.$policy.'&number='.$number.'&address='.$address.'&policyholder='.$policyholder.'&phone='.$phone.'&email='.$email.'&date_of_birth='.$date_of_birth.'&validity='.$validity.'&cost='.$cost.'&comes_into_force='.$comes_into_force.'&valid_until='.$valid_until;
+        $url = '';
+        if ($plan) {
+            $url = 'https://my.inapp.insure/certgen?policy='.$policy.'&number='.$number.'&address='.$address.'&policyholder='.$policyholder.'&phone='.$phone.'&email='.$email.'&date_of_birth='.$date_of_birth.'&validity='.$validity.'&cost='.$plan->price.'&plan=' . $plan->id .'&coverage=' . $plan->coverage . '&period=' . $plan->period . '&comes_into_force='.$comes_into_force.'&valid_until='.$valid_until;
+        } else {
+            $url = 'https://my.inapp.insure/certgen?policy='.$policy.'&number='.$number.'&address='.$address.'&policyholder='.$policyholder.'&phone='.$phone.'&email='.$email.'&date_of_birth='.$date_of_birth.'&validity='.$validity.'&cost=399'.'&plan=' . 0 .'&coverage=' . 1000000  . '&comes_into_force='.$comes_into_force.'&valid_until='.$valid_until;
+        }
         if (!file_exists($pdf_path)) {
             $command = 'google-chrome --no-sandbox --headless --disable-gpu --print-to-pdf="' . $pdf_path . '" "'.$url.'"';
             exec($command);

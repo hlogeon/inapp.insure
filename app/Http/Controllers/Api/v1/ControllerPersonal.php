@@ -20,14 +20,13 @@ use App\Myclasses\SmsSender;
 use App\Myclasses\PolisPDF;
 use App\Myclasses\Client;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class ControllerPersonal extends Controller
 {
     public function __construct()
     {
-    	$this->middleware('auth')
-            ->except('landingBonuses')->except('landingAllBonuses')
-            ->except('getPlans');
+    	$this->middleware('auth', ['except' => ['landingBonuses', 'landingAllBonuses', 'getPlans']]);
     }
 
     private function getUser()
@@ -186,15 +185,17 @@ class ControllerPersonal extends Controller
                 'user_id'   => $user->id
             ])->first();
             if($polic) {
-
-                $tarrif = Tarrifs::find($polic->tarrif_id);
+                $tarrif = Plans::find($polic->tarrif_id);
+                if (Carbon::createFromTimestamp(strtotime($polic->created_at))->isBefore('2021-03-05 12:45:15') ) {
+                    $tarrif = null;
+                }
                 $pdf = (new PolisPDF)->genPolicyPdf(
                     $polic->bso,
                     $polic->address . ", ".$polic->appartment,
                     $user->user_name . " " . $user->user_surname,
                     date('d.m.Y', strtotime($user->user_birsday)),
                     "",
-                    $tarrif->price,
+                    $tarrif,
                     date('d.m.Y', strtotime($polic->start)),
                     date('d.m.Y', strtotime($polic->finish)),
                     "vsk",
@@ -357,9 +358,20 @@ class ControllerPersonal extends Controller
         ]);
     }
 
-    public function getIinsurances()
+    public function getIinsurances(Request $request)
     {
-        $insurances = InsuranceLists::orderBy("sort", "desc")->get();
+        $policyId = $request['policy_id'];
+
+        if(!$policyId) {
+            $insurances = InsuranceLists::where('plan_id', null)->orderBy("sort", "desc")->get();
+        } else {
+            $policy = Polisies::find($policyId);
+            if (Carbon::createFromTimestamp(strtotime($polic->created_at))->isBefore('2021-03-05 12:45:15')) {
+                $insurances = InsuranceLists::where('plan_id', null)->orderBy("sort", "desc")->get();
+            } else {
+                $insurances = InsuranceLists::where('plan_id', $policy->tarrif_id)->orderBy("sort", "desc")->get();
+            }
+        }
 
         foreach ($insurances as $key => $insurance) {
             $insurances[$key]->price = $this->priceFormat($insurance->price);
@@ -381,6 +393,7 @@ class ControllerPersonal extends Controller
             "user_id"   => $user->id,
             "active"    => 1
         ])->get();
+
 
         foreach ($polices as $key => $police) {
             $polices[$key]->finish = Carbon::createFromTimestamp(strtotime($police->finish))->subDays(3);
