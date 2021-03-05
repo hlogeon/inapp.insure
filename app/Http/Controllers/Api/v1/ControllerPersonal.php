@@ -358,9 +358,20 @@ class ControllerPersonal extends Controller
         ]);
     }
 
-    public function getIinsurances()
+    public function getIinsurances(Request $request)
     {
-        $insurances = InsuranceLists::orderBy("sort", "desc")->get();
+        $policyId = $request['policy_id'];
+
+        if(!$policyId) {
+            $insurances = InsuranceLists::where('plan_id', null)->orderBy("sort", "desc")->get();
+        } else {
+            $policy = Polisies::find($policyId);
+            if (Carbon::createFromTimestamp(strtotime($polic->created_at))->isBefore('2021-03-07 12:45:15')) {
+                $insurances = InsuranceLists::where('plan_id', null)->orderBy("sort", "desc")->get();
+            } else {
+                $insurances = InsuranceLists::where('plan_id', $policy->tarrif_id)->orderBy("sort", "desc")->get();
+            }
+        }
 
         foreach ($insurances as $key => $insurance) {
             $insurances[$key]->price = $this->priceFormat($insurance->price);
@@ -383,7 +394,6 @@ class ControllerPersonal extends Controller
             "active"    => 1
         ])->get();
 
-        Log::info('Got Polisies', [$polices]);
 
         foreach ($polices as $key => $police) {
             $polices[$key]->finish = Carbon::createFromTimestamp(strtotime($police->finish))->subDays(3);
