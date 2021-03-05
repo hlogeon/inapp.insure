@@ -189,6 +189,7 @@
                                     :type="type"
                                     :current="current"
                                     :id="id"
+                                    :insurances="insurances"
                                 />
                             </div>
                             <div class="polis__img-wrapper" v-if="!current">
@@ -259,7 +260,8 @@ export default {
         polices: [],
         current: false,
         info: [],
-        name: ""
+        name: "",
+        insurances: []
     }),
     mixins: [popupFile],
     components: {
@@ -291,6 +293,7 @@ export default {
             axios.get("/api/v1/get_insurances?id=" + $id).then(response => {
                 if (response.data.status) {
                     this.insurances = response.data.data;
+                    console.log(" this.insurances", this.insurances);
                 }
             });
         },

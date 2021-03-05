@@ -4533,6 +4533,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -4549,7 +4550,8 @@ __webpack_require__.r(__webpack_exports__);
       polices: [],
       current: false,
       info: [],
-      name: ""
+      name: "",
+      insurances: []
     };
   },
   mixins: [_mixins_popup__WEBPACK_IMPORTED_MODULE_5__["default"]],
@@ -4584,6 +4586,7 @@ __webpack_require__.r(__webpack_exports__);
       axios.get("/api/v1/get_insurances?id=" + $id).then(function (response) {
         if (response.data.status) {
           _this2.insurances = response.data.data;
+          console.log(" this.insurances", _this2.insurances);
         }
       });
     },
@@ -69315,7 +69318,8 @@ var render = function() {
                                 attrs: {
                                   type: _vm.type,
                                   current: _vm.current,
-                                  id: _vm.id
+                                  id: _vm.id,
+                                  insurances: _vm.insurances
                                 }
                               })
                             ],
