@@ -3551,16 +3551,16 @@ __webpack_require__.r(__webpack_exports__);
           data: data
         }, {
           onSuccess: function onSuccess(options) {
-            // success
             console.log("Успех");
             $this.$emit("isPaying", true);
           },
           onFail: function onFail(reason, options) {
-            // fail
             console.log("Неуспех");
             $this.disabled = false;
           },
-          onComplete: function onComplete(paymentResult, options) {}
+          onComplete: function onComplete(paymentResult, options) {
+            console.log('Hellllo!');
+          }
         });
       }
     },
@@ -4581,7 +4581,7 @@ __webpack_require__.r(__webpack_exports__);
     getInsurances: function getInsurances($id) {
       var _this2 = this;
 
-      axios.get("/api/v1/get_insurances/" + $id).then(function (response) {
+      axios.get("/api/v1/get_insurances?id=" + $id).then(function (response) {
         if (response.data.status) {
           _this2.insurances = response.data.data;
         }

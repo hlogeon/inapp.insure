@@ -288,7 +288,7 @@ export default {
         },
 
         getInsurances($id) {
-            axios.get("/api/v1/get_insurances/" + $id).then(response => {
+            axios.get("/api/v1/get_insurances?id=" + $id).then(response => {
                 if (response.data.status) {
                     this.insurances = response.data.data;
                 }
