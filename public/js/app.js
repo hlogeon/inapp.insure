@@ -2186,26 +2186,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["type", "current"],
-  data: function data() {
-    return {
-      insurances: []
-    };
-  },
+  props: ["type", "current", "id", "insurances"],
+  // data: () => ({
+  //     insurances: []
+  // }),
   mixins: [_mixins_Accordion__WEBPACK_IMPORTED_MODULE_0__["default"]],
   mounted: function mounted() {
     var _this = this;
 
-    axios.get('/api/v1/get_insurances').then(function (response) {
-      if (response.data.status) {
-        _this.insurances = response.data.data;
-        setTimeout(function () {
-          _this.initAccording();
-        }, 500);
-      }
-    });
+    setTimeout(function () {
+      _this.initAccording();
+    }, 500);
   }
 });
 
@@ -2320,14 +2321,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["id", "polices"],
   mounted: function mounted() {
-    console.log('inside_police', this.polices);
+    console.log("inside_police", this.polices);
   },
   methods: {
     choosePolice: function choosePolice($id) {
-      this.$emit('chosenPolice', $id);
+      this.$emit("chosenPolice", $id);
     },
     setStatus: function setStatus($status_id) {
       if ($status_id == 1 || $status_id == 2) return true;
@@ -2336,9 +2366,9 @@ __webpack_require__.r(__webpack_exports__);
     addSecondPolic: function addSecondPolic() {
       var _this = this;
 
-      axios.get('/api/v1/add_aPolic').then(function (response) {
+      axios.get("/api/v1/add_aPolic").then(function (response) {
         if (response.data.status && response.data.data) {
-          _this.$router.push('/authaddress');
+          _this.$router.push("/authaddress");
         }
       });
     }
@@ -2501,6 +2531,10 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
 //
 //
 //
@@ -4369,6 +4403,136 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4414,40 +4578,52 @@ __webpack_require__.r(__webpack_exports__);
     setType: function setType($status_id) {
       if ($status_id == 1 || $status_id == 2) this.type = true;else this.type = false;
     },
-    updateAccount: function updateAccount() {
+    getInsurances: function getInsurances($id) {
       var _this2 = this;
 
+      axios.get("/api/v1/get_insurances/" + $id).then(function (response) {
+        if (response.data.status) {
+          _this2.insurances = response.data.data;
+        }
+      });
+    },
+    updateAccount: function updateAccount() {
+      var _this3 = this;
+
       var data = new URLSearchParams();
-      data.append('id', this.id);
-      axios.get('/api/v1/get_polices', {
+      data.append("id", this.id);
+      axios.get("/api/v1/get_polices", {
         params: data
       }).then(function (response) {
         if (response.data.status) {
           var $data = response.data.data;
-          _this2.polices = $data.polices;
-          if ($data.user.hasOwnProperty("user_name") && $data.user.user_name) _this2.name = $data.user.user_name;
+          _this3.polices = $data.polices; // this.setId(this.polices[0].id);
 
-          if ($data.hasOwnProperty('current')) {
-            _this2.setType($data.current.status_id);
+          _this3.getInsurances(_this3.id ? _this3.id : $data.polices[0].id);
 
-            _this2.status_id = $data.current.status_id;
-            _this2.current = $data.current;
+          if ($data.user.hasOwnProperty("user_name") && $data.user.user_name) _this3.name = $data.user.user_name;
+
+          if ($data.hasOwnProperty("current")) {
+            _this3.setType($data.current.status_id);
+
+            _this3.status_id = $data.current.status_id;
+            _this3.current = $data.current;
           } else {
-            _this2.type = true;
+            _this3.type = true;
           }
         }
       });
     },
     enableSubscribe: function enableSubscribe($id) {
-      var _this3 = this;
+      var _this4 = this;
 
       var data = new URLSearchParams();
-      data.append('id', $id);
-      axios.get('/api/v1/enable_subscribe', {
+      data.append("id", $id);
+      axios.get("/api/v1/enable_subscribe", {
         params: data
       }).then(function (response) {
         if (response.data.status) {
-          _this3.updateAccount();
+          _this4.updateAccount();
 
           new StatusPopup({
             text: "Автопродление включено",
@@ -5969,72 +6145,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_invalid__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../mixins/invalid */ "./resources/js/mixins/invalid.js");
 /* harmony import */ var _components_payment_paymentType__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../components/payment/paymentType */ "./resources/js/components/payment/paymentType.vue");
 /* harmony import */ var _components_payment_description__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../components/payment/description */ "./resources/js/components/payment/description.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -11518,7 +11628,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.polis-house-accordion__text[data-v-824b96e0] {\n\tline-height: 1.5;\n}\n", ""]);
+exports.push([module.i, "\n.polis-house-accordion__text[data-v-824b96e0] {\r\n    line-height: 1.5;\n}\r\n", ""]);
 
 // exports
 
@@ -11613,7 +11723,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.step-form-card.j_card[data-v-6686a801] {\n\tmargin-left: 0;\n\tmargin-right: 0;\n}\n.subscribe-form[data-v-6686a801] {\n\tdisplay: inline-block;\n\tmargin-top: 40px;\n}\n.subscribe-form button[data-v-6686a801] {\n\tmargin-top: 35px;\n}\n", ""]);
+exports.push([module.i, "\n.step-form-card.j_card[data-v-6686a801] {\r\n    margin-left: 0;\r\n    margin-right: 0;\n}\n.subscribe-form[data-v-6686a801] {\r\n    display: inline-block;\r\n    margin-top: 40px;\n}\n.subscribe-form button[data-v-6686a801] {\r\n    margin-top: 35px;\n}\r\n", ""]);
 
 // exports
 
@@ -66380,15 +66490,133 @@ var render = function() {
           [
             !_vm.current
               ? _c("h2", { staticClass: "title" }, [
-                  _vm._v("\n\t\t    Квартира будет застрахована\n\t\t  ")
+                  _vm._v("\n            Квартира будет застрахована\n        ")
                 ])
-              : _c("h2", [_vm._v("\n\t\t  \tКвартира застрахована\n\t\t  ")]),
+              : _c("h2", [
+                  _vm._v("\n            Квартира застрахована\n        ")
+                ]),
             _vm._v(" "),
             _c(
               "ul",
               { staticClass: "polis-house-list" },
               _vm._l(_vm.insurances, function(insurance) {
-                return _c("li", { staticClass: "polis-house-item" }, [
+                return _c(
+                  "li",
+                  { key: insurance.id, staticClass: "polis-house-item" },
+                  [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "polis-house-accordion",
+                        attrs: { "data-accordion": "" }
+                      },
+                      [
+                        _c(
+                          "div",
+                          { staticClass: "polis-house-accordion__header" },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "polis-house-accordion__left" },
+                              [
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "polis-house-accordion__title"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(insurance.name) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c(
+                                  "em",
+                                  {
+                                    staticClass: "polis-house-accordion__price"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(insurance.price) +
+                                        " ₽\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "button button-icon accordion-button",
+                                attrs: { type: "button" }
+                              },
+                              [
+                                _c("svg", { staticClass: "svg" }, [
+                                  _c("use", {
+                                    attrs: { "xlink:href": "#plus" }
+                                  })
+                                ])
+                              ]
+                            )
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass:
+                              "polis-house-accordion__content accordion-list"
+                          },
+                          [
+                            _c(
+                              "div",
+                              { staticClass: "polis-house-accordion__wrap" },
+                              [
+                                _c(
+                                  "p",
+                                  {
+                                    staticClass: "polis-house-accordion__text"
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                                " +
+                                        _vm._s(insurance.text) +
+                                        "\n                            "
+                                    )
+                                  ]
+                                )
+                              ]
+                            )
+                          ]
+                        )
+                      ]
+                    )
+                  ]
+                )
+              }),
+              0
+            )
+          ]
+        )
+      : _c("div", { staticClass: "polis-house" }, [
+          _c("h2", { staticClass: "title" }, [
+            _vm._v("\n            Квартира не застрахована\n        ")
+          ]),
+          _vm._v(" "),
+          _c(
+            "ul",
+            { staticClass: "polis-house-list" },
+            _vm._l(_vm.insurances, function(insurance) {
+              return _c(
+                "li",
+                { key: insurance.id, staticClass: "polis-house-item" },
+                [
                   _c(
                     "div",
                     {
@@ -66409,9 +66637,9 @@ var render = function() {
                                 { staticClass: "polis-house-accordion__title" },
                                 [
                                   _vm._v(
-                                    "\n\t\t              " +
+                                    "\n                                " +
                                       _vm._s(insurance.name) +
-                                      "\n\t\t            "
+                                      "\n                            "
                                   )
                                 ]
                               ),
@@ -66421,9 +66649,9 @@ var render = function() {
                                 { staticClass: "polis-house-accordion__price" },
                                 [
                                   _vm._v(
-                                    "\n\t\t              " +
+                                    "\n                                " +
                                       _vm._s(insurance.price) +
-                                      " ₽\n\t\t            "
+                                      " ₽\n                            "
                                   )
                                 ]
                               )
@@ -66434,7 +66662,7 @@ var render = function() {
                             "button",
                             {
                               staticClass:
-                                "button button-icon accordion-button",
+                                "button button-icon button-icon--red accordion-button",
                               attrs: { type: "button" }
                             },
                             [
@@ -66462,9 +66690,9 @@ var render = function() {
                                 { staticClass: "polis-house-accordion__text" },
                                 [
                                   _vm._v(
-                                    "\n\t\t            \t" +
+                                    "\n                                " +
                                       _vm._s(insurance.text) +
-                                      "\n\t\t            "
+                                      "\n                            "
                                   )
                                 ]
                               )
@@ -66474,108 +66702,8 @@ var render = function() {
                       )
                     ]
                   )
-                ])
-              }),
-              0
-            )
-          ]
-        )
-      : _c("div", { staticClass: "polis-house" }, [
-          _c("h2", { staticClass: "title" }, [
-            _vm._v("\n            Квартира не застрахована\n          ")
-          ]),
-          _vm._v(" "),
-          _c(
-            "ul",
-            { staticClass: "polis-house-list" },
-            _vm._l(_vm.insurances, function(insurance) {
-              return _c("li", { staticClass: "polis-house-item" }, [
-                _c(
-                  "div",
-                  {
-                    staticClass: "polis-house-accordion",
-                    attrs: { "data-accordion": "" }
-                  },
-                  [
-                    _c(
-                      "div",
-                      { staticClass: "polis-house-accordion__header" },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "polis-house-accordion__left" },
-                          [
-                            _c(
-                              "span",
-                              { staticClass: "polis-house-accordion__title" },
-                              [
-                                _vm._v(
-                                  "\n                      " +
-                                    _vm._s(insurance.name) +
-                                    "\n                    "
-                                )
-                              ]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "em",
-                              { staticClass: "polis-house-accordion__price" },
-                              [
-                                _vm._v(
-                                  "\n                      " +
-                                    _vm._s(insurance.price) +
-                                    " ₽\n                    "
-                                )
-                              ]
-                            )
-                          ]
-                        ),
-                        _vm._v(" "),
-                        _c(
-                          "button",
-                          {
-                            staticClass:
-                              "button button-icon button-icon--red accordion-button",
-                            attrs: { type: "button" }
-                          },
-                          [
-                            _c("svg", { staticClass: "svg" }, [
-                              _c("use", { attrs: { "xlink:href": "#plus" } })
-                            ])
-                          ]
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        staticClass:
-                          "polis-house-accordion__content accordion-list"
-                      },
-                      [
-                        _c(
-                          "div",
-                          { staticClass: "polis-house-accordion__wrap" },
-                          [
-                            _c(
-                              "p",
-                              { staticClass: "polis-house-accordion__text" },
-                              [
-                                _vm._v(
-                                  "\n\t\t            \t" +
-                                    _vm._s(insurance.text) +
-                                    "\n\t\t            "
-                                )
-                              ]
-                            )
-                          ]
-                        )
-                      ]
-                    )
-                  ]
-                )
-              ])
+                ]
+              )
             }),
             0
           )
@@ -66717,32 +66845,45 @@ var render = function() {
           return [
             index == 0
               ? [
-                  _c("div", { staticClass: "polis-address" }, [
-                    _vm.setStatus(police.status_id)
-                      ? _c("img", {
-                          staticClass: "polis-address__img",
-                          attrs: { src: "/images/done_shild.svg" }
-                        })
-                      : _c("img", {
-                          staticClass: "polis-address__img",
-                          attrs: { src: "/images/error_shild.svg" }
-                        }),
-                    _vm._v(" "),
-                    _c("p", { staticClass: "polis-address__text" }, [
-                      _vm._v(
-                        "\n                        " +
-                          _vm._s(police.address) +
-                          ", " +
-                          _vm._s(police.appartment) +
-                          "\n                    "
-                      )
-                    ])
-                  ])
+                  _c(
+                    "div",
+                    {
+                      key: index,
+                      staticClass: "polis-address",
+                      on: {
+                        click: function($event) {
+                          return _vm.choosePolice(police.id)
+                        }
+                      }
+                    },
+                    [
+                      _vm.setStatus(police.status_id)
+                        ? _c("img", {
+                            staticClass: "polis-address__img",
+                            attrs: { src: "/images/done_shild.svg" }
+                          })
+                        : _c("img", {
+                            staticClass: "polis-address__img",
+                            attrs: { src: "/images/error_shild.svg" }
+                          }),
+                      _vm._v(" "),
+                      _c("p", { staticClass: "polis-address__text" }, [
+                        _vm._v(
+                          "\n                        " +
+                            _vm._s(police.address) +
+                            ", " +
+                            _vm._s(police.appartment) +
+                            "\n                    "
+                        )
+                      ])
+                    ]
+                  )
                 ]
               : [
                   _c(
                     "div",
                     {
+                      key: index,
                       staticClass: "polis-address",
                       class: { error: !_vm.setStatus(police.status_id) },
                       on: {
@@ -66788,9 +66929,9 @@ var render = function() {
             _c("svg", { staticClass: "svg" }, [
               _c("use", { attrs: { "xlink:href": "#plus" } })
             ]),
-            _vm._v("\n\n                Добавить "),
+            _vm._v("\n\n            Добавить "),
             _c("br"),
-            _vm._v("\n                полис\n            ")
+            _vm._v("\n            полис\n        ")
           ]
         )
       ],
@@ -66995,16 +67136,20 @@ var render = function() {
   return _c(
     "ul",
     { staticClass: "step-form-desc-list" },
-    _vm._l(_vm.insurances, function(insurance) {
-      return _c("li", { staticClass: "step-form-desc-item" }, [
+    _vm._l(_vm.insurances, function(insurance, index) {
+      return _c("li", { key: index, staticClass: "step-form-desc-item" }, [
         _c("p", { staticClass: "step-form-desc-item__text" }, [
           _c("span", { staticClass: "step-form-desc-item__key" }, [
-            _vm._v("\n             " + _vm._s(insurance.name) + "\n          ")
+            _vm._v(
+              "\n                " + _vm._s(insurance.name) + "\n            "
+            )
           ]),
           _vm._v(" "),
           _c("em", { staticClass: "step-form-desc-item__value" }, [
             _vm._v(
-              "\n            \t" + _vm._s(insurance.price) + " ₽\n          "
+              "\n                " +
+                _vm._s(insurance.price) +
+                " ₽\n            "
             )
           ])
         ])
@@ -68864,12 +69009,12 @@ var render = function() {
                                       _vm.current && _vm.current.subscribed == 0
                                         ? [
                                             _vm._v(
-                                              "\n\t\t\t\t \t\t\t \t\t\tАвтопродление отключено\n\t\t\t\t \t\t\t \t\t"
+                                              "\n                                        Автопродление отключено\n                                    "
                                             )
                                           ]
                                         : [
                                             _vm._v(
-                                              "\n\t\t\t\t \t\t\t \t  \t\tПривет"
+                                              "\n                                        Привет"
                                             ),
                                             _vm.name
                                               ? [
@@ -68878,7 +69023,9 @@ var render = function() {
                                                   )
                                                 ]
                                               : _vm._e(),
-                                            _vm._v("!\n\t\t\t\t \t\t\t \t  \t")
+                                            _vm._v(
+                                              "!\n                                    "
+                                            )
                                           ]
                                     ],
                                     2
@@ -69006,7 +69153,7 @@ var render = function() {
                                                   },
                                                   [
                                                     _vm._v(
-                                                      "\n\t\t\t\t \t\t\t\t\t\t\t\tВключить автопродление - "
+                                                      "\n                                                Включить автопродление -\n                                                "
                                                     ),
                                                     _vm.current.tarrif
                                                       ? [
@@ -69014,7 +69161,8 @@ var render = function() {
                                                             _vm._s(
                                                               _vm.current.tarrif
                                                                 .price
-                                                            ) + " ₽"
+                                                            ) +
+                                                              "\n                                                    ₽"
                                                           )
                                                         ]
                                                       : _vm._e()
@@ -69044,7 +69192,7 @@ var render = function() {
                                         { staticClass: "title polis__title" },
                                         [
                                           _vm._v(
-                                            "\n\t\t\t\t \t\t\t\t  \tДобавь свой первый полис\n\t\t\t\t \t\t\t\t"
+                                            "\n                                    Добавь свой первый полис\n                                "
                                           )
                                         ]
                                       ),
@@ -69164,7 +69312,11 @@ var render = function() {
                                 : _vm._e(),
                               _vm._v(" "),
                               _c("InsuranceList", {
-                                attrs: { type: _vm.type, current: _vm.current }
+                                attrs: {
+                                  type: _vm.type,
+                                  current: _vm.current,
+                                  id: _vm.id
+                                }
                               })
                             ],
                             1
