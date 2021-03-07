@@ -373,7 +373,6 @@ export default {
                                     ) &&
                                     response.data.data.user_id > 0
                                 ) {
-                                    t;
                                     this.$router.push("/authpaysuccess");
                                 }
                             } else {
