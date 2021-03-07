@@ -193,6 +193,7 @@ class AuthValidation extends Controller
                 request()->session()->put('register_payment_status', $payment_status);
                 request()->session()->put('register_tarrif_id', $tarrif_id);
                 $order_id = request()->session()->get('order_id');
+                Log::info('orderID: ', [$order_id]);
                 //$order_id = 434;
                 
                 //Проверка существует ли плата с нужным статусом от банка
@@ -587,8 +588,10 @@ class AuthValidation extends Controller
         foreach ($data as $key => $value) {
             switch ($key) {
                 case 'phone':
-                    if( empty($value) && strlen($value) < 8 )
-                    $error = true;
+                    if( empty($value) && strlen($value) < 8 ) {
+                        $error = true;
+                        Log::info('Check payment phone failed');
+                    }
                     break;
 
                 //case 'email':
@@ -598,13 +601,17 @@ class AuthValidation extends Controller
                 //    break;
                 
                 case 'address':
-                    if( empty($value) )
-                    $error = true;
+                    if( empty($value) ) {
+                        $error = true;
+                        Log::info('Check payment address failed');
+                    }
                     break;
 
                 case 'appartment':
-                    if( empty($value) )
-                    $error = true;
+                    if( empty($value) ) {
+                        $error = true;
+                        Log::info('Check payment address failed');
+                    }
                     break;
             }
         }
