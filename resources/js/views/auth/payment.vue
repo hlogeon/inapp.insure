@@ -47,21 +47,6 @@
                         </ul>
 
                         <h1 class="title">
-                            <!-- <a
-                                @click="previousPage"
-                                class="button button-arrow button-arrow--prev"
-                                v-if="!another"
-                            >
-                                <svg class="svg">
-                                    <use xlink:href="#arrow"></use>
-                                </svg>
-                            </a>
-                            <router-link
-                                to="/authaddress"
-                                class="button button-arrow button-arrow--prev"
-                                v-else
-                            >
-                            </router-link> -->
                             <template v-if="!another">
                                 Выберите тариф и период подписки
                             </template>
