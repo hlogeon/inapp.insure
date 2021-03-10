@@ -189,7 +189,7 @@ class ControllerPersonal extends Controller
         if (!$code) abort(502);
         if (!$user) abort(502);
         if (!$promocode) abort(502);
-        if ($promocode->activations === $promocode->max_activations) {
+        if ($promocode->max_activations && ($promocode->activations === $promocode->max_activations)) {
             abort(502);
         }
         if ($promocode->is_percent) {
