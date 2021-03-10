@@ -126,8 +126,8 @@
                                     </li>
                                 </ul>
                                 <div
-                                    class="input-wrapper input-wrapper-datepicker"
                                     v-if="another"
+                                    class="input-wrapper input-wrapper-datepicker"
                                 >
                                     <div class="input__logo-wrapper">
                                         <img
@@ -161,7 +161,10 @@
                             >
                                 {{ showError(value) }}
                             </div>
-                            <Promocode :tarrif_id="tarrif_id" />
+                            <Promocode
+                                @setPromoCode="setPromoCode"
+                                :tarrif_id="tarrif_id"
+                            />
                             <Pay
                                 :period="period"
                                 :price="fullPrice"
@@ -401,6 +404,9 @@ export default {
                 });
             }
             this.fullPrice = $fullPrice;
+        },
+        setPromoCode($price) {
+            this.fullPrice = $price;
         }
     }
 };
@@ -423,7 +429,13 @@ export default {
 }
 .input-wrapper-datepicker {
     width: 60%;
-    margin: 40px auto;
+    margin: 20px auto;
+    margin-bottom: 0;
+}
+@media (max-width: 700px) {
+    .input-wrapper-datepicker {
+        width: 100%;
+    }
 }
 .step-polis .input-wrapper {
     width: 100%;

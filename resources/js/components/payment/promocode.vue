@@ -7,12 +7,20 @@
             type="text"
         />
         <label for="promocode">Промокод</label>
-        <button @click="getPromoCode" type="button">Применить</button>
+        <button
+            v-if="inputValue.length > 3"
+            @click="getPromoCode"
+            type="button"
+        >
+            Применить
+        </button>
 
-        <div v-show="success" class="alert success">
+        <div v-if="success" class="alert success">
             Промокод успешно применен
         </div>
-        <div v-show="error" class="alert error">Промокод успешно применен</div>
+        <div v-if="error" class="alert error">
+            Этот промокод недействителен
+        </div>
     </div>
 </template>
 
@@ -36,9 +44,24 @@ export default {
             params.append("code", this.inputValue);
             params.append("plan", this.tarrif_id);
             axios
-                .get("/api/v1/promocodes/activate", { params: params })
+                .get("/api/v1/promocode/activate", { params: params })
                 .then(response => {
-                    console.log(response);
+                    const { data } = response;
+                    if (data.status) {
+                        this.success = true;
+                        this.error = false;
+                        this.$emit("setPromoCode", data.data.final_price);
+                    }
+                })
+                .catch(err => {
+                    this.success = false;
+                    this.error = true;
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        this.success = false;
+                        this.error = false;
+                    }, 2000);
                 });
         }
     }
@@ -50,6 +73,7 @@ export default {
     position: relative;
     margin-bottom: 10px;
     font-family: SFProDisplay;
+
     input {
         background: #f1f1f4;
         border: none;
@@ -65,6 +89,7 @@ export default {
         text-transform: uppercase;
         font-family: SFProDisplay;
         font-weight: 400;
+        padding-right: 140px;
         &:focus {
             outline: none;
             background: #fff;
@@ -112,6 +137,21 @@ export default {
         }
         &.success {
             color: #2ec86b;
+        }
+    }
+
+    @media (max-width: 768px) {
+        width: 100%;
+        input {
+            width: 100%;
+            padding-right: 120px;
+        }
+        label {
+            font-size: 14px;
+        }
+        button {
+            font-size: 14px;
+            top: 18px;
         }
     }
 }

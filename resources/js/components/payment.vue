@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="btn_wrapper">
         <div class="error" v-if="errors">{{ errors }}</div>
         <div class="step-form-card-wrap">
             <button
@@ -174,12 +174,8 @@ export default {
                 (this.user && this.tarrif && this.payment) ||
                 (this.user && this.payment && this.method == "refund")
             ) {
-                let floatPrice =
-                    this.method != "refund"
-                        ? this.tarrif.price.toFixed(2)
-                        : this.price.toFixed(2);
-                let price =
-                    this.method != "refund" ? this.tarrif.price : this.price;
+                let floatPrice = this.price.toFixed(2);
+                let price = this.price;
 
                 var data = {
                     cloudPayments: {
@@ -261,6 +257,9 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.btn_wrapper {
+    width: 100%;
+}
 .button {
     background: linear-gradient(109.61deg, #2ec86b 2.51%, #b3d491 91.16%);
     border-radius: 24px;
@@ -286,7 +285,7 @@ export default {
         padding: 0 15px;
         width: 100%;
         .price {
-            margin-left: 10px;
+            margin-left: auto;
         }
         img {
             width: 25px;

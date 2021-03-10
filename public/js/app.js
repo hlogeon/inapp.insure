@@ -3479,8 +3479,8 @@ __webpack_require__.r(__webpack_exports__);
       var widget = new cp.CloudPayments();
 
       if (this.user && this.tarrif && this.payment || this.user && this.payment && this.method == "refund") {
-        var floatPrice = this.method != "refund" ? this.tarrif.price.toFixed(2) : this.price.toFixed(2);
-        var price = this.method != "refund" ? this.tarrif.price : this.price;
+        var floatPrice = this.price.toFixed(2);
+        var price = this.price;
         var data = {
           cloudPayments: {
             CustomerReceipt: {
@@ -3739,6 +3739,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Promocode",
@@ -3754,13 +3762,30 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     getPromoCode: function getPromoCode() {
+      var _this = this;
+
       var params = new URLSearchParams();
       params.append("code", this.inputValue);
       params.append("plan", this.tarrif_id);
-      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/v1/promocodes/activate", {
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/v1/promocode/activate", {
         params: params
       }).then(function (response) {
-        console.log(response);
+        var data = response.data;
+
+        if (data.status) {
+          _this.success = true;
+          _this.error = false;
+
+          _this.$emit("setPromoCode", data.data.final_price);
+        }
+      })["catch"](function (err) {
+        _this.success = false;
+        _this.error = true;
+      })["finally"](function () {
+        setTimeout(function () {
+          _this.success = false;
+          _this.error = false;
+        }, 2000);
       });
     }
   }
@@ -6438,6 +6463,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 
 
 
@@ -6642,6 +6670,9 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       this.fullPrice = $fullPrice;
+    },
+    setPromoCode: function setPromoCode($price) {
+      this.fullPrice = $price;
     }
   }
 });
@@ -11646,7 +11677,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".button[data-v-1843408b] {\n  background: linear-gradient(109.61deg, #2ec86b 2.51%, #b3d491 91.16%);\n  border-radius: 24px;\n  display: flex;\n  padding: 0;\n  font-family: SFProRounded;\n  font-style: normal;\n  font-weight: bold;\n  font-size: 28px;\n  align-items: center;\n  width: 490px;\n  height: 70px;\n  padding: 0 30px;\n  justify-content: space-between;\n}\n.button .price[data-v-1843408b] {\n  margin-left: auto;\n  margin-right: 10px;\n}\n@media (max-width: 768px) {\n.button[data-v-1843408b] {\n    height: 45px;\n    font-size: 18px;\n    border-radius: 16px;\n    padding: 0 15px;\n    width: 100%;\n}\n.button .price[data-v-1843408b] {\n    margin-left: 10px;\n}\n.button img[data-v-1843408b] {\n    width: 25px;\n    height: 25px;\n}\n}", ""]);
+exports.push([module.i, ".btn_wrapper[data-v-1843408b] {\n  width: 100%;\n}\n.button[data-v-1843408b] {\n  background: linear-gradient(109.61deg, #2ec86b 2.51%, #b3d491 91.16%);\n  border-radius: 24px;\n  display: flex;\n  padding: 0;\n  font-family: SFProRounded;\n  font-style: normal;\n  font-weight: bold;\n  font-size: 28px;\n  align-items: center;\n  width: 490px;\n  height: 70px;\n  padding: 0 30px;\n  justify-content: space-between;\n}\n.button .price[data-v-1843408b] {\n  margin-left: auto;\n  margin-right: 10px;\n}\n@media (max-width: 768px) {\n.button[data-v-1843408b] {\n    height: 45px;\n    font-size: 18px;\n    border-radius: 16px;\n    padding: 0 15px;\n    width: 100%;\n}\n.button .price[data-v-1843408b] {\n    margin-left: auto;\n}\n.button img[data-v-1843408b] {\n    width: 25px;\n    height: 25px;\n}\n}", ""]);
 
 // exports
 
@@ -11703,7 +11734,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".promocode-wrapper[data-v-0329ea78] {\n  position: relative;\n  margin-bottom: 10px;\n  font-family: SFProDisplay;\n}\n.promocode-wrapper input[data-v-0329ea78] {\n  background: #f1f1f4;\n  border: none;\n  width: 490px;\n  height: 55px;\n  border-radius: 16px;\n  box-sizing: border-box;\n  padding: 28px 20px 8px 20px;\n  vertical-align: baseline;\n  color: #222222;\n  font-size: 18px;\n  border: 1px solid transparent;\n  text-transform: uppercase;\n  font-family: SFProDisplay;\n  font-weight: 400;\n}\n.promocode-wrapper input[data-v-0329ea78]:focus {\n  outline: none;\n  background: #fff;\n  border-color: #d0d2d6;\n}\n.promocode-wrapper input:focus + label[data-v-0329ea78], .promocode-wrapper input.focus + label[data-v-0329ea78] {\n  top: 8px;\n  font-size: 12px;\n}\n.promocode-wrapper label[data-v-0329ea78] {\n  color: #94959e;\n  font-size: 18px;\n  font-family: SFProDisplay;\n  font-weight: 400;\n  position: absolute;\n  left: 20px;\n  top: 17px;\n  transition: all 0.2s linear;\n}\n.promocode-wrapper button[data-v-0329ea78] {\n  font-weight: 600;\n  font-size: 18px;\n  position: absolute;\n  right: 20px;\n  top: 15px;\n  background: transparent;\n  border: none;\n}\n.promocode-wrapper button[data-v-0329ea78]:focus {\n  outline: none;\n}\n.promocode-wrapper .alert[data-v-0329ea78] {\n  font-size: 16px;\n  font-weight: 400;\n  text-align: center;\n  margin: 0%;\n  margin-top: 10px;\n}\n.promocode-wrapper .alert.error[data-v-0329ea78] {\n  color: #f54064;\n}\n.promocode-wrapper .alert.success[data-v-0329ea78] {\n  color: #2ec86b;\n}", ""]);
+exports.push([module.i, ".promocode-wrapper[data-v-0329ea78] {\n  position: relative;\n  margin-bottom: 10px;\n  font-family: SFProDisplay;\n}\n.promocode-wrapper input[data-v-0329ea78] {\n  background: #f1f1f4;\n  border: none;\n  width: 490px;\n  height: 55px;\n  border-radius: 16px;\n  box-sizing: border-box;\n  padding: 28px 20px 8px 20px;\n  vertical-align: baseline;\n  color: #222222;\n  font-size: 18px;\n  border: 1px solid transparent;\n  text-transform: uppercase;\n  font-family: SFProDisplay;\n  font-weight: 400;\n  padding-right: 140px;\n}\n.promocode-wrapper input[data-v-0329ea78]:focus {\n  outline: none;\n  background: #fff;\n  border-color: #d0d2d6;\n}\n.promocode-wrapper input:focus + label[data-v-0329ea78], .promocode-wrapper input.focus + label[data-v-0329ea78] {\n  top: 8px;\n  font-size: 12px;\n}\n.promocode-wrapper label[data-v-0329ea78] {\n  color: #94959e;\n  font-size: 18px;\n  font-family: SFProDisplay;\n  font-weight: 400;\n  position: absolute;\n  left: 20px;\n  top: 17px;\n  transition: all 0.2s linear;\n}\n.promocode-wrapper button[data-v-0329ea78] {\n  font-weight: 600;\n  font-size: 18px;\n  position: absolute;\n  right: 20px;\n  top: 15px;\n  background: transparent;\n  border: none;\n}\n.promocode-wrapper button[data-v-0329ea78]:focus {\n  outline: none;\n}\n.promocode-wrapper .alert[data-v-0329ea78] {\n  font-size: 16px;\n  font-weight: 400;\n  text-align: center;\n  margin: 0%;\n  margin-top: 10px;\n}\n.promocode-wrapper .alert.error[data-v-0329ea78] {\n  color: #f54064;\n}\n.promocode-wrapper .alert.success[data-v-0329ea78] {\n  color: #2ec86b;\n}\n@media (max-width: 768px) {\n.promocode-wrapper[data-v-0329ea78] {\n    width: 100%;\n}\n.promocode-wrapper input[data-v-0329ea78] {\n    width: 100%;\n    padding-right: 120px;\n}\n.promocode-wrapper label[data-v-0329ea78] {\n    font-size: 14px;\n}\n.promocode-wrapper button[data-v-0329ea78] {\n    font-size: 14px;\n    top: 18px;\n}\n}", ""]);
 
 // exports
 
@@ -11722,7 +11753,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".step-form-card.j_card[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n}\n.step-form-card-buttons[data-v-12c5619e] {\n  margin-top: 0 !important;\n}\n.j_datepicker input[data-v-12c5619e],\n.j_datepicker[data-v-12c5619e] {\n  width: 100%;\n}\n.j_datepicker[data-v-12c5619e] {\n  margin-top: 8px;\n}\n.input-wrapper-datepicker[data-v-12c5619e] {\n  width: 60%;\n  margin: 40px auto;\n}\n.step-polis .input-wrapper[data-v-12c5619e] {\n  width: 100%;\n}\n@media (min-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 360px;\n    width: 100%;\n}\n}\n@media (max-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 320px;\n}\n}\n.step-form-inner[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n  margin-bottom: 15px;\n}\n.step-form-inner .step-form-data[data-v-12c5619e] {\n  margin-top: 0;\n}\n.step-form-data[data-v-12c5619e] {\n  margin-bottom: 40px;\n}\n.step-form-inner .datepicker[data-v-12c5619e] {\n  margin-top: 15px;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(1),\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(2) {\n  flex: 1 1 25% !important;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(3) {\n  flex: 1 1 50% !important;\n}\n.plans_flex[data-v-12c5619e] {\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.plans_flex > div[data-v-12c5619e] {\n  width: calc(50% - 10px);\n}\n@media (max-width: 768px) {\n.plans_flex > div[data-v-12c5619e] {\n    width: 100%;\n}\n}\n@media (max-width: 768px) {\n.step-form-tariffs[data-v-12c5619e] {\n    margin-top: 0;\n}\n}\n.step-wrap[data-v-12c5619e] {\n  max-width: 100%;\n}", ""]);
+exports.push([module.i, ".step-form-card.j_card[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n}\n.step-form-card-buttons[data-v-12c5619e] {\n  margin-top: 0 !important;\n}\n.j_datepicker input[data-v-12c5619e],\n.j_datepicker[data-v-12c5619e] {\n  width: 100%;\n}\n.j_datepicker[data-v-12c5619e] {\n  margin-top: 8px;\n}\n.input-wrapper-datepicker[data-v-12c5619e] {\n  width: 60%;\n  margin: 20px auto;\n  margin-bottom: 0;\n}\n@media (max-width: 700px) {\n.input-wrapper-datepicker[data-v-12c5619e] {\n    width: 100%;\n}\n}\n.step-polis .input-wrapper[data-v-12c5619e] {\n  width: 100%;\n}\n@media (min-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 360px;\n    width: 100%;\n}\n}\n@media (max-width: 700px) {\n.step-polis-wrapper[data-v-12c5619e] {\n    min-width: 320px;\n}\n}\n.step-form-inner[data-v-12c5619e] {\n  margin-left: auto;\n  margin-right: auto;\n  margin-bottom: 15px;\n}\n.step-form-inner .step-form-data[data-v-12c5619e] {\n  margin-top: 0;\n}\n.step-form-data[data-v-12c5619e] {\n  margin-bottom: 40px;\n}\n.step-form-inner .datepicker[data-v-12c5619e] {\n  margin-top: 15px;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(1),\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(2) {\n  flex: 1 1 25% !important;\n}\n.for-mobile-inline-flex li[data-v-12c5619e]:nth-child(3) {\n  flex: 1 1 50% !important;\n}\n.plans_flex[data-v-12c5619e] {\n  display: flex;\n  width: 100%;\n  justify-content: space-between;\n  flex-wrap: wrap;\n}\n.plans_flex > div[data-v-12c5619e] {\n  width: calc(50% - 10px);\n}\n@media (max-width: 768px) {\n.plans_flex > div[data-v-12c5619e] {\n    width: 100%;\n}\n}\n@media (max-width: 768px) {\n.step-form-tariffs[data-v-12c5619e] {\n    margin-top: 0;\n}\n}\n.step-wrap[data-v-12c5619e] {\n  max-width: 100%;\n}", ""]);
 
 // exports
 
@@ -68128,7 +68159,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", [
+  return _c("div", { staticClass: "btn_wrapper" }, [
     _vm.errors
       ? _c("div", { staticClass: "error" }, [_vm._v(_vm._s(_vm.errors))])
       : _vm._e(),
@@ -68415,43 +68446,25 @@ var render = function() {
     _vm._v(" "),
     _c("label", { attrs: { for: "promocode" } }, [_vm._v("Промокод")]),
     _vm._v(" "),
-    _c(
-      "button",
-      { attrs: { type: "button" }, on: { click: _vm.getPromoCode } },
-      [_vm._v("Применить")]
-    ),
+    _vm.inputValue.length > 3
+      ? _c(
+          "button",
+          { attrs: { type: "button" }, on: { click: _vm.getPromoCode } },
+          [_vm._v("\n        Применить\n    ")]
+        )
+      : _vm._e(),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.success,
-            expression: "success"
-          }
-        ],
-        staticClass: "alert success"
-      },
-      [_vm._v("\n        Промокод успешно применен\n    ")]
-    ),
+    _vm.success
+      ? _c("div", { staticClass: "alert success" }, [
+          _vm._v("\n        Промокод успешно применен\n    ")
+        ])
+      : _vm._e(),
     _vm._v(" "),
-    _c(
-      "div",
-      {
-        directives: [
-          {
-            name: "show",
-            rawName: "v-show",
-            value: _vm.error,
-            expression: "error"
-          }
-        ],
-        staticClass: "alert error"
-      },
-      [_vm._v("Промокод успешно применен")]
-    )
+    _vm.error
+      ? _c("div", { staticClass: "alert error" }, [
+          _vm._v("\n        Этот промокод недействителен\n    ")
+        ])
+      : _vm._e()
   ])
 }
 var staticRenderFns = []
@@ -71625,7 +71638,8 @@ var render = function() {
                         }),
                         _vm._v(" "),
                         _c("Promocode", {
-                          attrs: { tarrif_id: _vm.tarrif_id }
+                          attrs: { tarrif_id: _vm.tarrif_id },
+                          on: { setPromoCode: _vm.setPromoCode }
                         }),
                         _vm._v(" "),
                         _c("Pay", {
