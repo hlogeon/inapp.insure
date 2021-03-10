@@ -90,7 +90,8 @@ export default {
         font-family: SFProDisplay;
         font-weight: 400;
         padding-right: 140px;
-        &:focus {
+        &:focus,
+        &.focus {
             outline: none;
             background: #fff;
             border-color: #d0d2d6;
