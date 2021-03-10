@@ -211,7 +211,7 @@ class ControllerPersonal extends Controller
             'status' => true,
             'data' => [
                 'activated' => true,
-                'finalPrice' => $finalPrice,
+                'final_price' => $finalPrice,
                 'activation_id' => $activation->id,
             ]
         ]);
