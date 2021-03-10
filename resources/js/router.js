@@ -61,11 +61,11 @@ const routes = [
         component: AuthActive,
         meta: { middlewareAuth: true }
     },
-    {
-        path: "/authcashback",
-        component: AuthCashback,
-        meta: { middlewareAuth: true }
-    },
+    // {
+    //     path: "/authcashback",
+    //     component: AuthCashback,
+    //     meta: { middlewareAuth: true }
+    // },
     {
         path: "/account",
         component: Account,

@@ -68,7 +68,6 @@ export default {
         checkingPayment(timer = 5000) {
             this.interval = setInterval(() => {
                 this.updateData().then(response => {
-                    console.log("checking!!!", response);
                     if (
                         response.data.data.hasOwnProperty("Status") &&
                         response.data.data.Status != null
@@ -247,7 +246,7 @@ export default {
                             $this.disabled = false;
                         },
                         onComplete: function(paymentResult, options) {
-                            console.log('Hellllo!');
+                            console.log("Hellllo!");
                         }
                     }
                 );

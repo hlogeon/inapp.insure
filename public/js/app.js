@@ -3382,8 +3382,6 @@ __webpack_require__.r(__webpack_exports__);
       var timer = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 5000;
       this.interval = setInterval(function () {
         _this.updateData().then(function (response) {
-          console.log("checking!!!", response);
-
           if (response.data.data.hasOwnProperty("Status") && response.data.data.Status != null) {
             if (response.data.data.Status == "Completed") {
               _this.$refs.tinkoff.close();
@@ -3559,7 +3557,7 @@ __webpack_require__.r(__webpack_exports__);
             $this.disabled = false;
           },
           onComplete: function onComplete(paymentResult, options) {
-            console.log('Hellllo!');
+            console.log("Hellllo!");
           }
         });
       }
@@ -5327,6 +5325,52 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
  //import 'vue2-datepicker/index.css'
 //import 'vue2-datepicker/locale/ru'
@@ -5366,8 +5410,8 @@ __webpack_require__.r(__webpack_exports__);
     setDate: function setDate() {
       var _this2 = this;
 
-      document.querySelectorAll('.j_datepicker input').forEach(function ($input) {
-        var value = moment__WEBPACK_IMPORTED_MODULE_2___default()(new Date().setDate(new Date().getDate() + 3)).format('DD.MM.YYYY');
+      document.querySelectorAll(".j_datepicker input").forEach(function ($input) {
+        var value = moment__WEBPACK_IMPORTED_MODULE_2___default()(new Date().setDate(new Date().getDate() + 3)).format("DD.MM.YYYY");
         $input.value = value;
         _this2.user_activate = value;
       });
@@ -5416,37 +5460,39 @@ __webpack_require__.r(__webpack_exports__);
       } else user_activate = this.user_activate; //console.log(this.errors)
 
 
-      this.isInvalid('user_name');
-      this.isInvalid('user_surname');
-      this.isInvalid('user_birsday');
-      this.isInvalid('user_activate');
+      this.isInvalid("user_name");
+      this.isInvalid("user_surname");
+      this.isInvalid("user_birsday");
+      this.isInvalid("user_activate");
 
       if (this.errors.length == 0) {
         var data = new URLSearchParams();
-        data.append('user_name', this.user_name);
-        data.append('user_surname', this.user_surname);
-        data.append('user_birsday', user_birsday);
-        data.append('user_activate', user_activate);
-        data.append('action', 'activate');
-        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get('/api/v1/send_phone', {
+        data.append("user_name", this.user_name);
+        data.append("user_surname", this.user_surname);
+        data.append("user_birsday", user_birsday);
+        data.append("user_activate", user_activate);
+        data.append("action", "activate");
+        axios__WEBPACK_IMPORTED_MODULE_0___default.a.get("/api/v1/send_phone", {
           params: data
         }).then(function (response) {
           //console.log(response)
           if (response.data.status) {
-            if (response.data.data.done) _this3.$router.push('/authcashback');
+            if (response.data.data.done) {
+              _this3.$router.push("/authcashback");
+            }
           } else {
-            if (response.data.data.hasOwnProperty('errors')) response.data.data.errors.forEach(function ($error) {
+            if (response.data.data.hasOwnProperty("errors")) response.data.data.errors.forEach(function ($error) {
               _this3.errors.push($error);
             });
           }
 
-          _this3.isInvalid('user_name');
+          _this3.isInvalid("user_name");
 
-          _this3.isInvalid('user_surname');
+          _this3.isInvalid("user_surname");
 
-          _this3.isInvalid('user_birsday');
+          _this3.isInvalid("user_birsday");
 
-          _this3.isInvalid('user_activate');
+          _this3.isInvalid("user_activate");
         });
       }
     },
@@ -6332,21 +6378,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 
@@ -6508,8 +6539,6 @@ __webpack_require__.r(__webpack_exports__);
             //if(response.data.phone)
             if (!_this3.another) {
               if (response.data.data.hasOwnProperty("user_id") && response.data.data.user_id > 0) {
-                t;
-
                 _this3.$router.push("/authpaysuccess");
               }
             } else {
@@ -70197,7 +70226,7 @@ var render = function() {
                         ]
                       ),
                       _vm._v(
-                        "\n            Осталось активировать полис. Для этого введи информацию о себе\n          "
+                        "\n                        Осталось активировать полис. Для этого введи\n                        информацию о себе\n                    "
                       )
                     ]),
                     _vm._v(" "),
@@ -70400,9 +70429,17 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _vm._l(_vm.errors, function(value) {
-                          return _c("div", { staticClass: "error" }, [
-                            _vm._v(_vm._s(_vm.showError(value)))
-                          ])
+                          return _c(
+                            "div",
+                            { key: value, staticClass: "error" },
+                            [
+                              _vm._v(
+                                "\n                            " +
+                                  _vm._s(_vm.showError(value)) +
+                                  "\n                        "
+                              )
+                            ]
+                          )
                         }),
                         _vm._v(" "),
                         _c(
@@ -70418,7 +70455,7 @@ var render = function() {
                           },
                           [
                             _vm._v(
-                              "\n              Активировать полис\n            "
+                              "\n                            Активировать полис\n                        "
                             )
                           ]
                         )
@@ -89765,13 +89802,12 @@ var routes = [{
   meta: {
     middlewareAuth: true
   }
-}, {
-  path: "/authcashback",
-  component: _views_auth_cashback__WEBPACK_IMPORTED_MODULE_9__["default"],
-  meta: {
-    middlewareAuth: true
-  }
-}, {
+}, // {
+//     path: "/authcashback",
+//     component: AuthCashback,
+//     meta: { middlewareAuth: true }
+// },
+{
   path: "/account",
   component: _views_account_index__WEBPACK_IMPORTED_MODULE_10__["default"],
   meta: {
