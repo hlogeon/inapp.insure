@@ -84,6 +84,8 @@ Route::group(['prefix' => '/api/v1/'], function () {
 
     Route::get('plans', [ControllerPersonal::class, 'getPlans']);
 
+    Route::get('promocode/activate', [ControllerPersonal::class, 'activatePromocode']);
+
     //Получение всех страховок
     Route::get('get_insurances_public', [ControllerInsurances::class, 'index']);
 

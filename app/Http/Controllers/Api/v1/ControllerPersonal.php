@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Payments;
+use App\Models\Promocodes;
+use App\Models\PromocodeActivations;
 use App\Models\FlocktoryCashback;
 use App\Models\FavoriteCashback;
 use App\Models\CashbackActivation;
@@ -172,6 +174,46 @@ class ControllerPersonal extends Controller
         return response()->json([
             'status' => true,
             'data' => $response
+        ]);
+    }
+
+    public function activatePromocode(Request $request)
+    {
+        $code = strtoupper($request['code']);
+        $planId = $request['plan'];
+        $plan = Plans::find($planId);
+        $user = $this->getUser();
+        $discountAmount = 0;
+        $promocode = Promocodes::where(['code' => $code])->first();
+        if (!$plan) abort(502);
+        if (!$code) abort(502);
+        if (!$user) abort(502);
+        if (!$promocode) abort(502);
+        if ($promocode->activations === $promocode->max_activations) {
+            abort(502);
+        }
+        if ($promocode->is_percent) {
+            $discountAmount = floor($plan->price * (1 / $promocode->value));
+        } else {
+            $discountAmount = $promocode->value;
+        }
+        $finalPrice = $plan->orice - $discountAmount;
+        if ($finalPrice < 1) $finalPrice = 1;
+        $activation = PromocodeActivations::create([
+            'promocode_id' => $promocode->id,
+            'user_id' => $user->id,
+            'activated_at' => Carbon::now(),
+            'discount' => $discountAmount,
+        ]);
+        $activation->save();
+        request()->session()->put('promocode_activation_id', $activation->id);
+        return response()->json([
+            'status' => true,
+            'data' => [
+                'activated' => true,
+                'finalPrice' => $finalPrice,
+                'activation_id' => $activation->id,
+            ]
         ]);
     }
 

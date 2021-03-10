@@ -17,5 +17,7 @@ class Promocodes extends Model
       "is_percent",
     	"value",
     	"code",
+      "max_activations",
+      "activations",
     ];
 }
