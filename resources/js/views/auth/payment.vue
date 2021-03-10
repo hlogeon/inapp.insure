@@ -161,6 +161,7 @@
                             >
                                 {{ showError(value) }}
                             </div>
+                            <Promocode :tarrif_id="tarrif_id" />
                             <Pay
                                 :period="period"
                                 :price="fullPrice"
@@ -191,6 +192,7 @@ import moment from "moment";
 import date from "../../mixins/date";
 import invalid from "../../mixins/invalid";
 import Paymenttype from "../../components/payment/paymentType";
+import Promocode from "../../components/payment/promocode";
 import description from "../../components/payment/description";
 export default {
     data: () => ({
@@ -218,7 +220,8 @@ export default {
         Pay,
         Insurances,
         Paymenttype,
-        description
+        description,
+        Promocode
     },
     mounted: function() {
         axios.get("/api/v1/plans").then(response => {
