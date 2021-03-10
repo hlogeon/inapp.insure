@@ -197,7 +197,7 @@ class ControllerPersonal extends Controller
         } else {
             $discountAmount = $promocode->value;
         }
-        $finalPrice = $plan->orice - $discountAmount;
+        $finalPrice = $plan->price - $discountAmount;
         if ($finalPrice < 1) $finalPrice = 1;
         $activation = PromocodeActivations::create([
             'promocode_id' => $promocode->id,
