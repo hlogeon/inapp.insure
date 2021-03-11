@@ -7,11 +7,7 @@
             type="text"
         />
         <label for="promocode">Промокод</label>
-        <button
-            v-if="inputValue.length > 3"
-            @click="getPromoCode"
-            type="button"
-        >
+        <button v-if="inputValue.length" @click="getPromoCode" type="button">
             Применить
         </button>
 

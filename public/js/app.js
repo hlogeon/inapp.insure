@@ -3743,10 +3743,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Promocode",
@@ -68446,7 +68442,7 @@ var render = function() {
     _vm._v(" "),
     _c("label", { attrs: { for: "promocode" } }, [_vm._v("Промокод")]),
     _vm._v(" "),
-    _vm.inputValue.length > 3
+    _vm.inputValue.length
       ? _c(
           "button",
           { attrs: { type: "button" }, on: { click: _vm.getPromoCode } },
