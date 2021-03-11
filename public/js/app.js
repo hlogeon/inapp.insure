@@ -2297,6 +2297,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ["payments"],
   methods: {
@@ -3745,7 +3750,6 @@ __webpack_require__.r(__webpack_exports__);
         _this.error = true;
       })["finally"](function () {
         setTimeout(function () {
-          _this.success = false;
           _this.error = false;
         }, 2000);
       });
@@ -6535,6 +6539,7 @@ __webpack_require__.r(__webpack_exports__);
       if (this.tarrif_id > 0) {
         this.tarrifs.forEach(function ($tarrif) {
           if ($tarrif.id == _this4.tarrif_id) {
+            console.log($tarrif.price);
             $fullPrice = $tarrif.price;
             _this4.tarrif = $tarrif;
           }
@@ -6544,6 +6549,16 @@ __webpack_require__.r(__webpack_exports__);
       this.fullPrice = $fullPrice;
     },
     setPromoCode: function setPromoCode($price) {
+      var _this5 = this;
+
+      console.log(this.tarrifs[this.tarrif_id]);
+      this.tarrifs = this.tarrifs.map(function ($tarrif) {
+        if ($tarrif.id === _this5.tarrif_id) {
+          $tarrif.price = $price;
+        }
+
+        return $tarrif;
+      });
       this.fullPrice = $price;
     }
   }
@@ -11644,7 +11659,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.polis-house-accordion__text[data-v-824b96e0] {\n    line-height: 1.5;\n}\n", ""]);
+exports.push([module.i, "\n.polis-house-accordion__text[data-v-824b96e0] {\r\n    line-height: 1.5;\n}\r\n", ""]);
 
 // exports
 
@@ -11739,7 +11754,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.step-form-card.j_card[data-v-6686a801] {\n    margin-left: 0;\n    margin-right: 0;\n}\n.subscribe-form[data-v-6686a801] {\n    display: inline-block;\n    margin-top: 40px;\n}\n.subscribe-form button[data-v-6686a801] {\n    margin-top: 35px;\n}\n", ""]);
+exports.push([module.i, "\n.step-form-card.j_card[data-v-6686a801] {\r\n    margin-left: 0;\r\n    margin-right: 0;\n}\n.subscribe-form[data-v-6686a801] {\r\n    display: inline-block;\r\n    margin-top: 40px;\n}\n.subscribe-form button[data-v-6686a801] {\r\n    margin-top: 35px;\n}\r\n", ""]);
 
 // exports
 
@@ -11758,7 +11773,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(/css/datepicker.minimal.css);", ""]);
 
 // module
-exports.push([module.i, "\n", ""]);
+exports.push([module.i, "\r\n", ""]);
 
 // exports
 
@@ -11796,7 +11811,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.for-mobile-inline-flex li[data-v-2a3f323a]:nth-child(1) {\n    flex: 1 1 25% !important;\n}\n", ""]);
+exports.push([module.i, "\n.for-mobile-inline-flex li[data-v-2a3f323a]:nth-child(1) {\r\n    flex: 1 1 25% !important;\n}\r\n", ""]);
 
 // exports
 
@@ -66776,24 +66791,6 @@ var render = function() {
         { key: payment.id, staticClass: "settings-table__row" },
         [
           _c(
-            "a",
-            {
-              staticClass: "settings-table__row-link",
-              attrs: { href: "javascript:;" },
-              on: {
-                click: function($event) {
-                  return _vm.openCheck(payment.link)
-                }
-              }
-            },
-            [
-              _c("svg", { staticClass: "settings-table__row-icon" }, [
-                _c("use", { attrs: { "xlink:href": "#download" } })
-              ])
-            ]
-          ),
-          _vm._v(" "),
-          _c(
             "div",
             {
               staticClass:
@@ -69037,334 +69034,306 @@ var render = function() {
                         "div",
                         { staticClass: "polis-wrap" },
                         [
-                          _c(
-                            "div",
-                            { staticClass: "polis-content" },
-                            [
-                              _c(
-                                "div",
-                                { staticClass: "polis-addresses-wrapper" },
-                                [
-                                  _c(
-                                    "h2",
-                                    { staticClass: "title" },
-                                    [
-                                      _vm.current && _vm.current.subscribed == 0
-                                        ? [
-                                            _vm._v(
-                                              "\n                                        Автопродление отключено\n                                    "
-                                            )
-                                          ]
-                                        : [
-                                            _vm._v(
-                                              "\n                                        Привет"
-                                            ),
-                                            _vm.name
-                                              ? [
-                                                  _vm._v(
-                                                    ", " + _vm._s(_vm.name)
-                                                  )
-                                                ]
-                                              : _vm._e(),
-                                            _vm._v(
-                                              "!\n                                    "
-                                            )
-                                          ]
-                                    ],
-                                    2
-                                  ),
-                                  _vm._v(" "),
-                                  _vm.current
-                                    ? [
-                                        _c("Polices", {
-                                          attrs: {
-                                            polices: _vm.polices,
-                                            id: _vm.id
-                                          },
-                                          on: { chosenPolice: _vm.setId }
-                                        })
-                                      ]
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _vm.current && _vm.current.subscribed == 0
-                                    ? [
-                                        _c(
-                                          "div",
-                                          {
-                                            staticClass:
-                                              "step-form-card-wrap j_card subscribe-form"
-                                          },
-                                          [
-                                            _c(
-                                              "div",
-                                              {
-                                                staticClass:
-                                                  "input-wrapper valid"
-                                              },
-                                              [
-                                                _c(
-                                                  "label",
-                                                  {
-                                                    staticClass: "input-label"
-                                                  },
-                                                  [
-                                                    _vm.current.card.type ==
-                                                    "Visa"
-                                                      ? _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "input__logo-wrapper"
-                                                          },
-                                                          [
-                                                            _c("img", {
-                                                              staticClass:
-                                                                "input__logo j_card-brand",
-                                                              attrs: {
-                                                                src:
-                                                                  "/images/visa.svg",
-                                                                alt: ""
-                                                              }
-                                                            })
-                                                          ]
-                                                        )
-                                                      : _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "input__logo-wrapper"
-                                                          },
-                                                          [
-                                                            _c("img", {
-                                                              staticClass:
-                                                                "input__logo j_card-brand",
-                                                              attrs: {
-                                                                src:
-                                                                  "/images/master-card-colored.svg",
-                                                                alt: ""
-                                                              }
-                                                            })
-                                                          ]
-                                                        ),
-                                                    _vm._v(" "),
-                                                    _c("input", {
-                                                      staticClass:
-                                                        "input input--medium j_card-number",
-                                                      attrs: {
-                                                        required: "required",
-                                                        type: "text",
-                                                        placeholder:
-                                                          "Номер карты"
-                                                      },
-                                                      domProps: {
-                                                        value: _vm.current.card
-                                                          .number
-                                                          ? "**** **** **** " +
-                                                            _vm.current.card
-                                                              .number
-                                                          : ""
-                                                      }
-                                                    }),
-                                                    _vm._v(" "),
-                                                    _c(
-                                                      "div",
-                                                      {
-                                                        staticClass:
-                                                          "input__placeholder"
-                                                      },
-                                                      [
-                                                        _c("span", [
-                                                          _vm._v("Номер карты")
-                                                        ])
-                                                      ]
-                                                    )
-                                                  ]
-                                                ),
-                                                _vm._v(" "),
-                                                _c(
-                                                  "button",
-                                                  {
-                                                    staticClass: "button",
-                                                    attrs: { type: "button" },
-                                                    on: {
-                                                      click: function($event) {
-                                                        return _vm.enableSubscribe(
-                                                          _vm.current.id
-                                                        )
-                                                      }
-                                                    }
-                                                  },
-                                                  [
-                                                    _vm._v(
-                                                      "\n                                                Включить автопродление -\n                                                "
-                                                    ),
-                                                    _vm.current.tarrif
-                                                      ? [
-                                                          _vm._v(
-                                                            _vm._s(
-                                                              _vm.current.tarrif
-                                                                .price
-                                                            ) +
-                                                              "\n                                                    ₽"
-                                                          )
-                                                        ]
-                                                      : _vm._e()
-                                                  ],
-                                                  2
-                                                )
-                                              ]
-                                            )
-                                          ]
-                                        )
-                                      ]
-                                    : _vm._e()
-                                ],
-                                2
-                              ),
-                              _vm._v(" "),
-                              !_vm.current
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass: "polis__title-wrapper",
-                                      staticStyle: { "margin-bottom": "65px" }
-                                    },
-                                    [
-                                      _c(
-                                        "h1",
-                                        { staticClass: "title polis__title" },
-                                        [
+                          _c("div", { staticClass: "polis-content" }, [
+                            _c(
+                              "div",
+                              { staticClass: "polis-addresses-wrapper" },
+                              [
+                                _c(
+                                  "h2",
+                                  { staticClass: "title" },
+                                  [
+                                    _vm.current && _vm.current.subscribed == 0
+                                      ? [
                                           _vm._v(
-                                            "\n                                    Добавь свой первый полис\n                                "
+                                            "\n                                        Автопродление отключено\n                                    "
                                           )
                                         ]
-                                      ),
-                                      _vm._v(" "),
+                                      : [
+                                          _vm._v(
+                                            "\n                                        Привет"
+                                          ),
+                                          _vm.name
+                                            ? [_vm._v(", " + _vm._s(_vm.name))]
+                                            : _vm._e(),
+                                          _vm._v(
+                                            "!\n                                    "
+                                          )
+                                        ]
+                                  ],
+                                  2
+                                ),
+                                _vm._v(" "),
+                                _vm.current
+                                  ? [
+                                      _c("Polices", {
+                                        attrs: {
+                                          polices: _vm.polices,
+                                          id: _vm.id
+                                        },
+                                        on: { chosenPolice: _vm.setId }
+                                      })
+                                    ]
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _vm.current && _vm.current.subscribed == 0
+                                  ? [
                                       _c(
-                                        "router-link",
+                                        "div",
                                         {
-                                          staticClass: "button button--plus",
-                                          attrs: { to: "/authaddress" }
+                                          staticClass:
+                                            "step-form-card-wrap j_card subscribe-form"
                                         },
                                         [
-                                          _c("svg", { staticClass: "svg" }, [
-                                            _c("use", {
-                                              attrs: { "xlink:href": "#plus" }
-                                            })
-                                          ])
-                                        ]
-                                      )
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _vm.status_id == 4
-                                ? _c(
-                                    "div",
-                                    {
-                                      staticClass: "polis-card",
-                                      staticStyle: { "max-width": "550px" }
-                                    },
-                                    [
-                                      _c(
-                                        "label",
-                                        { staticClass: "input-label" },
-                                        [
-                                          _vm.current.card.type == "Visa"
-                                            ? _c(
-                                                "div",
-                                                {
-                                                  staticClass:
-                                                    "input__logo-wrapper"
-                                                },
-                                                [
-                                                  _c("img", {
-                                                    staticClass:
-                                                      "input__logo j_card-brand",
-                                                    attrs: {
-                                                      src: "/images/visa.svg",
-                                                      alt: ""
-                                                    }
-                                                  })
-                                                ]
-                                              )
-                                            : _c(
-                                                "div",
-                                                {
-                                                  staticClass:
-                                                    "input__logo-wrapper"
-                                                },
-                                                [
-                                                  _c("img", {
-                                                    staticClass:
-                                                      "input__logo j_card-brand",
-                                                    attrs: {
-                                                      src:
-                                                        "/images/master-card-colored.svg",
-                                                      alt: ""
-                                                    }
-                                                  })
-                                                ]
-                                              ),
-                                          _vm._v(" "),
-                                          _c("input", {
-                                            staticClass:
-                                              "input input--medium j_card-number",
-                                            attrs: {
-                                              required: "required",
-                                              type: "text",
-                                              placeholder: "Номер карты"
-                                            },
-                                            domProps: {
-                                              value: _vm.current.card.number
-                                                ? "**** **** **** " +
-                                                  _vm.current.card.number
-                                                : ""
-                                            }
-                                          }),
-                                          _vm._v(" "),
                                           _c(
                                             "div",
                                             {
-                                              staticClass: "input__placeholder"
+                                              staticClass: "input-wrapper valid"
                                             },
                                             [
-                                              _c("span", [
-                                                _vm._v("Номер карты")
-                                              ])
+                                              _c(
+                                                "label",
+                                                { staticClass: "input-label" },
+                                                [
+                                                  _vm.current.card.type ==
+                                                  "Visa"
+                                                    ? _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "input__logo-wrapper"
+                                                        },
+                                                        [
+                                                          _c("img", {
+                                                            staticClass:
+                                                              "input__logo j_card-brand",
+                                                            attrs: {
+                                                              src:
+                                                                "/images/visa.svg",
+                                                              alt: ""
+                                                            }
+                                                          })
+                                                        ]
+                                                      )
+                                                    : _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "input__logo-wrapper"
+                                                        },
+                                                        [
+                                                          _c("img", {
+                                                            staticClass:
+                                                              "input__logo j_card-brand",
+                                                            attrs: {
+                                                              src:
+                                                                "/images/master-card-colored.svg",
+                                                              alt: ""
+                                                            }
+                                                          })
+                                                        ]
+                                                      ),
+                                                  _vm._v(" "),
+                                                  _c("input", {
+                                                    staticClass:
+                                                      "input input--medium j_card-number",
+                                                    attrs: {
+                                                      required: "required",
+                                                      type: "text",
+                                                      placeholder: "Номер карты"
+                                                    },
+                                                    domProps: {
+                                                      value: _vm.current.card
+                                                        .number
+                                                        ? "**** **** **** " +
+                                                          _vm.current.card
+                                                            .number
+                                                        : ""
+                                                    }
+                                                  }),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "input__placeholder"
+                                                    },
+                                                    [
+                                                      _c("span", [
+                                                        _vm._v("Номер карты")
+                                                      ])
+                                                    ]
+                                                  )
+                                                ]
+                                              ),
+                                              _vm._v(" "),
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass: "button",
+                                                  attrs: { type: "button" },
+                                                  on: {
+                                                    click: function($event) {
+                                                      return _vm.enableSubscribe(
+                                                        _vm.current.id
+                                                      )
+                                                    }
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                                                Включить автопродление -\n                                                "
+                                                  ),
+                                                  _vm.current.tarrif
+                                                    ? [
+                                                        _vm._v(
+                                                          _vm._s(
+                                                            _vm.current.tarrif
+                                                              .price
+                                                          ) +
+                                                            "\n                                                    ₽"
+                                                        )
+                                                      ]
+                                                    : _vm._e()
+                                                ],
+                                                2
+                                              )
                                             ]
                                           )
                                         ]
-                                      ),
-                                      _vm._v(" "),
-                                      _c("Pay", {
-                                        attrs: {
-                                          price:
-                                            _vm.current.tarrif.price *
-                                            _vm.current.tarrif.per_month,
-                                          method: "pay_for_police",
-                                          tarrif_id: _vm.current.tarrif.id,
-                                          hidden: _vm.another
-                                        },
-                                        on: { isPaying: _vm.beforeSend }
-                                      })
-                                    ],
-                                    1
-                                  )
-                                : _vm._e(),
-                              _vm._v(" "),
-                              _c("InsuranceList", {
-                                attrs: {
-                                  type: _vm.type,
-                                  current: _vm.current,
-                                  id: _vm.id,
-                                  insurances: _vm.insurances
-                                }
-                              })
-                            ],
-                            1
-                          ),
+                                      )
+                                    ]
+                                  : _vm._e()
+                              ],
+                              2
+                            ),
+                            _vm._v(" "),
+                            !_vm.current
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass: "polis__title-wrapper",
+                                    staticStyle: { "margin-bottom": "65px" }
+                                  },
+                                  [
+                                    _c(
+                                      "h1",
+                                      { staticClass: "title polis__title" },
+                                      [
+                                        _vm._v(
+                                          "\n                                    Добавь свой первый полис\n                                "
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "router-link",
+                                      {
+                                        staticClass: "button button--plus",
+                                        attrs: { to: "/authaddress" }
+                                      },
+                                      [
+                                        _c("svg", { staticClass: "svg" }, [
+                                          _c("use", {
+                                            attrs: { "xlink:href": "#plus" }
+                                          })
+                                        ])
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.status_id == 4
+                              ? _c(
+                                  "div",
+                                  {
+                                    staticClass: "polis-card",
+                                    staticStyle: { "max-width": "550px" }
+                                  },
+                                  [
+                                    _c(
+                                      "label",
+                                      { staticClass: "input-label" },
+                                      [
+                                        _vm.current.card.type == "Visa"
+                                          ? _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "input__logo-wrapper"
+                                              },
+                                              [
+                                                _c("img", {
+                                                  staticClass:
+                                                    "input__logo j_card-brand",
+                                                  attrs: {
+                                                    src: "/images/visa.svg",
+                                                    alt: ""
+                                                  }
+                                                })
+                                              ]
+                                            )
+                                          : _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "input__logo-wrapper"
+                                              },
+                                              [
+                                                _c("img", {
+                                                  staticClass:
+                                                    "input__logo j_card-brand",
+                                                  attrs: {
+                                                    src:
+                                                      "/images/master-card-colored.svg",
+                                                    alt: ""
+                                                  }
+                                                })
+                                              ]
+                                            ),
+                                        _vm._v(" "),
+                                        _c("input", {
+                                          staticClass:
+                                            "input input--medium j_card-number",
+                                          attrs: {
+                                            required: "required",
+                                            type: "text",
+                                            placeholder: "Номер карты"
+                                          },
+                                          domProps: {
+                                            value: _vm.current.card.number
+                                              ? "**** **** **** " +
+                                                _vm.current.card.number
+                                              : ""
+                                          }
+                                        }),
+                                        _vm._v(" "),
+                                        _c(
+                                          "div",
+                                          { staticClass: "input__placeholder" },
+                                          [_c("span", [_vm._v("Номер карты")])]
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c("Pay", {
+                                      attrs: {
+                                        price:
+                                          _vm.current.tarrif.price *
+                                          _vm.current.tarrif.per_month,
+                                        method: "pay_for_police",
+                                        tarrif_id: _vm.current.tarrif.id,
+                                        hidden: _vm.another
+                                      },
+                                      on: { isPaying: _vm.beforeSend }
+                                    })
+                                  ],
+                                  1
+                                )
+                              : _vm._e()
+                          ]),
                           _vm._v(" "),
                           !_vm.current
                             ? _c("div", { staticClass: "polis__img-wrapper" }, [
@@ -88005,7 +87974,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/arrow.svg?09c32db6e9932baa9f02c472cf1c565b";
+module.exports = "/images/arrow.svg?aa4808b11ea4f511f6f71fee40fe192a";
 
 /***/ }),
 
@@ -88016,7 +87985,7 @@ module.exports = "/images/arrow.svg?09c32db6e9932baa9f02c472cf1c565b";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/checked.svg?6008eb02d16935762ade68bbd97e3257";
+module.exports = "/images/checked.svg?8f6595e9a4691d4dcaae5505430901d9";
 
 /***/ }),
 
@@ -88027,7 +87996,7 @@ module.exports = "/images/checked.svg?6008eb02d16935762ade68bbd97e3257";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/union.svg?7b6eb4d9a7e3d32c1a7af44c04b4e599";
+module.exports = "/images/union.svg?bb40dbd0609a4231e44fc8b9254d43f5";
 
 /***/ }),
 
@@ -91136,8 +91105,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/hlogeon/Work/inapp/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/hlogeon/Work/inapp/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\OSPanel\domains\inapp\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\inapp\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

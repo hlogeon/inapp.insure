@@ -1,7 +1,7 @@
 <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
 <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0" />
-<link rel="shortcut icon" href="https://inapp.insure/images/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="<?=asset('favicon.ico')?>" type="image/x-icon">
 
 <link href="<?=asset('css/main.css')?>" rel="stylesheet">
 <link href="<?=asset('css/app.css')?>" rel="stylesheet">

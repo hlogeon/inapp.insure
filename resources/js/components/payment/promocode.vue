@@ -55,7 +55,6 @@ export default {
                 })
                 .finally(() => {
                     setTimeout(() => {
-                        this.success = false;
                         this.error = false;
                     }, 2000);
                 });

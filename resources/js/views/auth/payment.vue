@@ -391,14 +391,24 @@ export default {
             if (this.tarrif_id > 0) {
                 this.tarrifs.forEach($tarrif => {
                     if ($tarrif.id == this.tarrif_id) {
+                        console.log($tarrif.price);
                         $fullPrice = $tarrif.price;
                         this.tarrif = $tarrif;
                     }
                 });
             }
+
             this.fullPrice = $fullPrice;
         },
         setPromoCode($price) {
+            console.log(this.tarrifs[this.tarrif_id]);
+            this.tarrifs = this.tarrifs.map($tarrif => {
+                if ($tarrif.id === this.tarrif_id) {
+                    $tarrif.price = $price;
+                }
+
+                return $tarrif;
+            });
             this.fullPrice = $price;
         }
     }
