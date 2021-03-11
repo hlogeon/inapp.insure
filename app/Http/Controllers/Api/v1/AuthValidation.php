@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Tarrifs;
 use App\Models\Polisies;
+use App\Models\PromocodeActivations;
 use App\Models\Payments;
 use App\Myclasses\SmsSender;
 use App\Models\Bso;
@@ -27,6 +28,7 @@ class AuthValidation extends Controller
     	$phone = isset($request["phone"]) ? $request["phone"] : "";
     	$sms = null;
     	$data = [];
+        $promocode = request()->session()->get('promocode_activation_id');
 
         if(isset($request["action"]) && $request["action"] == "checking") {
 
@@ -204,6 +206,12 @@ class AuthValidation extends Controller
                         //Создание полиса
                         $polic_id = $this->createPolic(1);
                         Log::info('Creted police', [$polic_id]);
+                        if ($promocode) {
+                            $promocodeActivation = PromocodeActivations::find($promocode);
+                            $promocodeActivation->payment_id = $payment->id;
+                            $promocodeActivation->activated_at = Carbon::now();
+                            $promocodeActivation->save();
+                        }
                         // $this->generateBos($polic_id);
                         request()->session()->put('account_message', 'Новый полис успешно создан');
                         if($polic_id) {
@@ -215,6 +223,7 @@ class AuthValidation extends Controller
                                 ]);
                                 $data = $this->getAllData();
                                 if($data['another_polic']) {
+                                    Log::info('user_activate 1: ', [$user_activate]);
                                     //Запись даты активации в полис. Этап когда у пользователя 1 и более полисов
                                     $result = $this->proceccingActivate($user_activate);
                                     $data = $result["data"];
@@ -302,7 +311,7 @@ class AuthValidation extends Controller
                         if($delta->format('%y')<18){
                             $errors[] = ["user_birsday" => "Сервис не обслуживает лиц младше 18 лет"];
                         }
-
+                        Log::info('user_activate 2: ', [$user_activate]);
                         //Запись даты активации полиса в базу. Этап создания первого полиса.
                         $result = $this->proceccingActivate($user_activate);
                         $data = $result["data"];
@@ -362,8 +371,9 @@ class AuthValidation extends Controller
     {
         $errors = [];
         $data = $this->getAllData();
-        $start = Carbon::createFromTimestamp(strtotime($user_activate));
-        if( $start->timestamp >= Carbon::now()->toDateTimeString() ) {
+        $start = new Carbon(strtotime($user_activate));
+        Log::info('Activation date: ', [$start->timestamp, Carbon::now()->toDateTimeString(), $start->timestamp >= Carbon::now()->toDateTimeString()]);
+        if( $start->timestamp >= Carbon::now()->timestamp ) {
             $tarrif = Plans::find($data["tarrif_id"]);
             $polis = Polisies::where([
                 'id' => $data['polis_id'],
@@ -374,14 +384,16 @@ class AuthValidation extends Controller
                 $errors[] = ["er" => "Полис уже активирован"];
             elseif($tarrif) {
                 $polis = $polis[0];
-                $finish = Carbon::createFromTimestamp(strtotime($user_activate))->addMonth($tarrif->period === 'year' ? 12 : 1);
-                $checking = Carbon::createFromTimestamp(strtotime($polis->created_at));
-                $checking->addDays(2);
-                if($checking->timestamp > strtotime($start)) {
-                    $errors[] = [
-                        "user_activate" => "Дата активации должна быть не менее 3 дней с момента оплаты"
-                    ];
-                } elseif($finish->format('d.m.Y') != $start->format('d.m.Y')) {
+                $finish = (new Carbon($start))->addMonth($tarrif->period === 'year' ? 12 : 1);
+                $checking = new Carbon($polis->created_at);
+                $checking->addDays(3);
+                Log::info('Comparing: ', [$checking->timestamp, $start->timestamp, $checking->timestamp > $start->timestamp]);
+                // if($checking->timestamp > $start->timestamp) {
+                    // $errors[] = [
+                        // "user_activate" => "Дата активации должна быть не менее 3 дней с момента оплаты"
+                    // ];
+                // } 
+                if($finish->format('d.m.Y') != $start->format('d.m.Y')) {
                     $polic_id = $this->updatePolic($data["polis_id"], $start, $finish);
                     if($polic_id) {
                         $data["done"] = true;
