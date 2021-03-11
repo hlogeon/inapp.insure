@@ -305,14 +305,7 @@ export default {
             var b = document.querySelector(".submit-button");
             b.removeAttribute("disabled");
         },
-        previousPage() {
-            if (this.$route.query.hasOwnProperty("previously"))
-                this.$router.push({
-                    path: "/authaddress",
-                    query: this.$route.query
-                });
-            else this.$router.go(-1);
-        },
+
         beforeSend($status) {
             this.payment_status = $status ? $status : false;
             this.validateForm();

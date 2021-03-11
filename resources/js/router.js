@@ -10,7 +10,6 @@ import AuthAddress from "./views/auth/address";
 import AuthPayment from "./views/auth/payment";
 import AuthPaySuccess from "./views/auth/success";
 import AuthActive from "./views/auth/activate";
-import AuthCashback from "./views/auth/cashback";
 import Account from "./views/account/index";
 import ChangeMobile from "./views/account/mobile";
 import ChangeSms from "./views/account/sms";
@@ -61,11 +60,7 @@ const routes = [
         component: AuthActive,
         meta: { middlewareAuth: true }
     },
-    // {
-    //     path: "/authcashback",
-    //     component: AuthCashback,
-    //     meta: { middlewareAuth: true }
-    // },
+
     {
         path: "/account",
         component: Account,
