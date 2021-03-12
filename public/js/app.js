@@ -5561,11 +5561,7 @@ __webpack_require__.r(__webpack_exports__);
           params: data
         }).then(function (response) {
           //console.log(response)
-          if (response.data.status) {
-            if (response.data.data.done) {
-              _this3.$router.push("/authcashback");
-            }
-          } else {
+          if (response.data.status) {} else {
             if (response.data.data.hasOwnProperty("errors")) response.data.data.errors.forEach(function ($error) {
               _this3.errors.push($error);
             });
@@ -6549,16 +6545,6 @@ __webpack_require__.r(__webpack_exports__);
       this.fullPrice = $fullPrice;
     },
     setPromoCode: function setPromoCode($price) {
-      var _this5 = this;
-
-      console.log(this.tarrifs[this.tarrif_id]);
-      this.tarrifs = this.tarrifs.map(function ($tarrif) {
-        if ($tarrif.id === _this5.tarrif_id) {
-          $tarrif.price = $price;
-        }
-
-        return $tarrif;
-      });
       this.fullPrice = $price;
     }
   }

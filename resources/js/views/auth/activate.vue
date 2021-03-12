@@ -230,9 +230,6 @@ export default {
                     .then(response => {
                         //console.log(response)
                         if (response.data.status) {
-                            if (response.data.data.done) {
-                                this.$router.push("/authcashback");
-                            }
                         } else {
                             if (response.data.data.hasOwnProperty("errors"))
                                 response.data.data.errors.forEach($error => {
