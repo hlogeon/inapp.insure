@@ -3480,8 +3480,9 @@ __webpack_require__.r(__webpack_exports__);
             },
             //онлайн-чек
             recurrent: {
-              interval: "Month",
-              period: 1
+              interval: this.tarrif.period,
+              period: this.tarrif.interval,
+              amount: this.tarrif.price
             }
           }
         }; //console.log(data);
@@ -11650,7 +11651,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.polis-house-accordion__text[data-v-824b96e0] {\r\n    line-height: 1.5;\n}\r\n", ""]);
+exports.push([module.i, "\n.polis-house-accordion__text[data-v-824b96e0] {\n    line-height: 1.5;\n}\n", ""]);
 
 // exports
 
@@ -11745,7 +11746,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.step-form-card.j_card[data-v-6686a801] {\r\n    margin-left: 0;\r\n    margin-right: 0;\n}\n.subscribe-form[data-v-6686a801] {\r\n    display: inline-block;\r\n    margin-top: 40px;\n}\n.subscribe-form button[data-v-6686a801] {\r\n    margin-top: 35px;\n}\r\n", ""]);
+exports.push([module.i, "\n.step-form-card.j_card[data-v-6686a801] {\n    margin-left: 0;\n    margin-right: 0;\n}\n.subscribe-form[data-v-6686a801] {\n    display: inline-block;\n    margin-top: 40px;\n}\n.subscribe-form button[data-v-6686a801] {\n    margin-top: 35px;\n}\n", ""]);
 
 // exports
 
@@ -11764,7 +11765,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(/css/datepicker.minimal.css);", ""]);
 
 // module
-exports.push([module.i, "\r\n", ""]);
+exports.push([module.i, "\n", ""]);
 
 // exports
 
@@ -11802,7 +11803,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.for-mobile-inline-flex li[data-v-2a3f323a]:nth-child(1) {\r\n    flex: 1 1 25% !important;\n}\r\n", ""]);
+exports.push([module.i, "\n.for-mobile-inline-flex li[data-v-2a3f323a]:nth-child(1) {\n    flex: 1 1 25% !important;\n}\n", ""]);
 
 // exports
 
@@ -87971,7 +87972,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/arrow.svg?aa4808b11ea4f511f6f71fee40fe192a";
+module.exports = "/images/arrow.svg?09c32db6e9932baa9f02c472cf1c565b";
 
 /***/ }),
 
@@ -87982,7 +87983,7 @@ module.exports = "/images/arrow.svg?aa4808b11ea4f511f6f71fee40fe192a";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/checked.svg?8f6595e9a4691d4dcaae5505430901d9";
+module.exports = "/images/checked.svg?6008eb02d16935762ade68bbd97e3257";
 
 /***/ }),
 
@@ -87993,7 +87994,7 @@ module.exports = "/images/checked.svg?8f6595e9a4691d4dcaae5505430901d9";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/union.svg?bb40dbd0609a4231e44fc8b9254d43f5";
+module.exports = "/images/union.svg?7b6eb4d9a7e3d32c1a7af44c04b4e599";
 
 /***/ }),
 
@@ -91102,8 +91103,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\OSPanel\domains\inapp\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\OSPanel\domains\inapp\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/hlogeon/Work/inapp/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/hlogeon/Work/inapp/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
