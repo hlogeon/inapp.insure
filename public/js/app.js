@@ -3480,8 +3480,9 @@ __webpack_require__.r(__webpack_exports__);
             },
             //онлайн-чек
             recurrent: {
-              interval: "Month",
-              period: 1
+              interval: this.tarrif.period,
+              period: 1,
+              amount: this.tarrif.price
             }
           }
         }; //console.log(data);
