@@ -74,6 +74,9 @@ export default {
             top: 8px;
             font-size: 12px;
         }
+        &:focus {
+            border-color: #94959e;
+        }
     }
 
     label {

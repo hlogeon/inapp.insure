@@ -3481,7 +3481,7 @@ __webpack_require__.r(__webpack_exports__);
             //онлайн-чек
             recurrent: {
               interval: this.tarrif.period,
-              period: 1,
+              period: this.tarrif.interval,
               amount: this.tarrif.price
             }
           }
@@ -6405,6 +6405,8 @@ __webpack_require__.r(__webpack_exports__);
     }, 500);
     setTimeout(function () {
       _this.initDatepickers();
+
+      _this.setDate();
     }, 1000);
     this.onSubmit();
   },
@@ -6498,8 +6500,8 @@ __webpack_require__.r(__webpack_exports__);
     chosenTarrif: function chosenTarrif($id) {
       if ($id > 0) {
         this.tarrif_id = $id;
-        this.countPrice();
         this.setDate();
+        this.countPrice();
 
         if (this.promoSuccess && this.promocode) {
           this.getPromoCode();
@@ -6514,7 +6516,6 @@ __webpack_require__.r(__webpack_exports__);
       if (this.tarrif_id > 0) {
         this.tarrifs.forEach(function ($tarrif) {
           if ($tarrif.id == _this4.tarrif_id) {
-            console.log($tarrif.price);
             $fullPrice = $tarrif.price;
             _this4.tarrif = $tarrif;
           }
@@ -11613,7 +11614,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, ".promocode-wrapper[data-v-0329ea78] {\n  position: relative;\n  margin-bottom: 10px;\n  font-family: SFProDisplay;\n}\n.promocode-wrapper input[data-v-0329ea78] {\n  background: #f1f1f4;\n  border: none;\n  width: 490px;\n  height: 55px;\n  border-radius: 16px;\n  box-sizing: border-box;\n  padding: 28px 20px 8px 20px;\n  vertical-align: baseline;\n  color: #222222;\n  font-size: 18px;\n  border: 1px solid transparent;\n  text-transform: uppercase;\n  font-family: SFProDisplay;\n  font-weight: 400;\n  padding-right: 140px;\n}\n.promocode-wrapper input[data-v-0329ea78]:focus, .promocode-wrapper input.focus[data-v-0329ea78] {\n  outline: none;\n  background: #fff;\n  border-color: #d0d2d6;\n}\n.promocode-wrapper input:focus + label[data-v-0329ea78], .promocode-wrapper input.focus + label[data-v-0329ea78] {\n  top: 8px;\n  font-size: 12px;\n}\n.promocode-wrapper label[data-v-0329ea78] {\n  color: #94959e;\n  font-size: 18px;\n  font-family: SFProDisplay;\n  font-weight: 400;\n  position: absolute;\n  left: 20px;\n  top: 17px;\n  transition: all 0.2s linear;\n}\n.promocode-wrapper button[data-v-0329ea78] {\n  font-weight: 600;\n  font-size: 18px;\n  position: absolute;\n  right: 20px;\n  top: 15px;\n  background: transparent;\n  border: none;\n}\n.promocode-wrapper button[data-v-0329ea78]:focus {\n  outline: none;\n}\n.promocode-wrapper .alert[data-v-0329ea78] {\n  font-size: 16px;\n  font-weight: 400;\n  text-align: center;\n  margin: 0%;\n  margin-top: 10px;\n}\n.promocode-wrapper .alert.error[data-v-0329ea78] {\n  color: #f54064;\n}\n.promocode-wrapper .alert.success[data-v-0329ea78] {\n  color: #2ec86b;\n}\n@media (max-width: 768px) {\n.promocode-wrapper[data-v-0329ea78] {\n    width: 100%;\n}\n.promocode-wrapper input[data-v-0329ea78] {\n    width: 100%;\n    padding-right: 120px;\n}\n.promocode-wrapper label[data-v-0329ea78] {\n    font-size: 14px;\n}\n.promocode-wrapper button[data-v-0329ea78] {\n    font-size: 14px;\n    top: 18px;\n}\n}", ""]);
+exports.push([module.i, ".promocode-wrapper[data-v-0329ea78] {\n  position: relative;\n  margin-bottom: 10px;\n  font-family: SFProDisplay;\n}\n.promocode-wrapper input[data-v-0329ea78] {\n  background: #f1f1f4;\n  border: none;\n  width: 490px;\n  height: 55px;\n  border-radius: 16px;\n  box-sizing: border-box;\n  padding: 28px 20px 8px 20px;\n  vertical-align: baseline;\n  color: #222222;\n  font-size: 18px;\n  border: 1px solid transparent;\n  text-transform: uppercase;\n  font-family: SFProDisplay;\n  font-weight: 400;\n  padding-right: 140px;\n}\n.promocode-wrapper input[data-v-0329ea78]:focus, .promocode-wrapper input.focus[data-v-0329ea78] {\n  outline: none;\n  background: #fff;\n  border-color: #d0d2d6;\n}\n.promocode-wrapper input:focus + label[data-v-0329ea78], .promocode-wrapper input.focus + label[data-v-0329ea78] {\n  top: 8px;\n  font-size: 12px;\n}\n.promocode-wrapper input[data-v-0329ea78]:focus {\n  border-color: #94959e;\n}\n.promocode-wrapper label[data-v-0329ea78] {\n  color: #94959e;\n  font-size: 18px;\n  font-family: SFProDisplay;\n  font-weight: 400;\n  position: absolute;\n  left: 20px;\n  top: 17px;\n  transition: all 0.2s linear;\n}\n.promocode-wrapper button[data-v-0329ea78] {\n  font-weight: 600;\n  font-size: 18px;\n  position: absolute;\n  right: 20px;\n  top: 15px;\n  background: transparent;\n  border: none;\n}\n.promocode-wrapper button[data-v-0329ea78]:focus {\n  outline: none;\n}\n.promocode-wrapper .alert[data-v-0329ea78] {\n  font-size: 16px;\n  font-weight: 400;\n  text-align: center;\n  margin: 0%;\n  margin-top: 10px;\n}\n.promocode-wrapper .alert.error[data-v-0329ea78] {\n  color: #f54064;\n}\n.promocode-wrapper .alert.success[data-v-0329ea78] {\n  color: #2ec86b;\n}\n@media (max-width: 768px) {\n.promocode-wrapper[data-v-0329ea78] {\n    width: 100%;\n}\n.promocode-wrapper input[data-v-0329ea78] {\n    width: 100%;\n    padding-right: 120px;\n}\n.promocode-wrapper label[data-v-0329ea78] {\n    font-size: 14px;\n}\n.promocode-wrapper button[data-v-0329ea78] {\n    font-size: 14px;\n    top: 18px;\n}\n}", ""]);
 
 // exports
 
