@@ -162,8 +162,10 @@
                                 {{ showError(value) }}
                             </div>
                             <Promocode
-                                @setPromoCode="setPromoCode"
+                                @set_pr="setPromo"
                                 :tarrif_id="tarrif_id"
+                                :success="promoSuccess"
+                                :error="promoError"
                             />
                             <Pay
                                 :period="period"
@@ -215,7 +217,10 @@ export default {
         payment_status: false,
         user_activate: "",
         fullPrice: null,
-        user_id: null
+        user_id: null,
+        promoSuccess: false,
+        promoError: false,
+        promocode: null
     }),
     mixins: [date, invalid, DatePickerFile],
     components: {
@@ -384,6 +389,9 @@ export default {
                 this.tarrif_id = $id;
                 this.countPrice();
                 this.setDate();
+                if (this.promoSuccess && this.promocode) {
+                    this.getPromoCode();
+                }
             }
         },
         countPrice() {
@@ -400,8 +408,34 @@ export default {
 
             this.fullPrice = $fullPrice;
         },
-        setPromoCode($price) {
-            this.fullPrice = $price;
+        setPromo($promocode) {
+            this.promocode = $promocode;
+            this.getPromoCode();
+        },
+        getPromoCode() {
+            const params = new URLSearchParams();
+            params.append("code", this.promocode);
+            params.append("plan", this.tarrif_id);
+            axios
+                .get("/api/v1/promocode/activate", { params: params })
+                .then(response => {
+                    const { data } = response;
+                    if (data.status) {
+                        this.promoSuccess = true;
+                        this.promoError = false;
+                        this.fullPrice = data.data.final_price;
+                        console.log(data.data.final_price);
+                    }
+                })
+                .catch(err => {
+                    this.promoSuccess = false;
+                    this.promoError = true;
+                })
+                .finally(() => {
+                    setTimeout(() => {
+                        this.promoError = false;
+                    }, 2000);
+                });
         }
     }
 };

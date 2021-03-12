@@ -7,7 +7,7 @@
             type="text"
         />
         <label for="promocode">Промокод</label>
-        <button v-if="inputValue.length" @click="getPromoCode" type="button">
+        <button v-if="inputValue.length" @click="setPromocode" type="button">
             Применить
         </button>
 
@@ -21,43 +21,21 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
     name: "Promocode",
     props: {
-        tarrif_id: null
+        tarrif_id: null,
+        error: false,
+        success: false
     },
     data() {
         return {
-            inputValue: "",
-            error: false,
-            success: false
+            inputValue: ""
         };
     },
     methods: {
-        getPromoCode() {
-            const params = new URLSearchParams();
-            params.append("code", this.inputValue);
-            params.append("plan", this.tarrif_id);
-            axios
-                .get("/api/v1/promocode/activate", { params: params })
-                .then(response => {
-                    const { data } = response;
-                    if (data.status) {
-                        this.success = true;
-                        this.error = false;
-                        this.$emit("setPromoCode", data.data.final_price);
-                    }
-                })
-                .catch(err => {
-                    this.success = false;
-                    this.error = true;
-                })
-                .finally(() => {
-                    setTimeout(() => {
-                        this.error = false;
-                    }, 2000);
-                });
+        setPromocode() {
+            this.$emit("set_pr", this.inputValue);
         }
     }
 };

@@ -185,12 +185,13 @@
                                 </div>
                                 <!-- ./ End of card -->
 
-                                <!-- <InsuranceList
+                                <InsuranceList
                                     :type="type"
                                     :current="current"
                                     :id="id"
                                     :insurances="insurances"
-                                /> -->
+                                />
+                                <!-- <InsuranceList /> -->
                             </div>
                             <div class="polis__img-wrapper" v-if="!current">
                                 <img

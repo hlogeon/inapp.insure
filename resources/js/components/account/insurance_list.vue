@@ -20,9 +20,6 @@
                                 <span class="polis-house-accordion__title">
                                     {{ insurance.name }}
                                 </span>
-                                <em class="polis-house-accordion__price">
-                                    {{ insurance.price }} ₽
-                                </em>
                             </div>
 
                             <button
@@ -66,9 +63,6 @@
                                 <span class="polis-house-accordion__title">
                                     {{ insurance.name }}
                                 </span>
-                                <em class="polis-house-accordion__price">
-                                    {{ insurance.price }} ₽
-                                </em>
                             </div>
 
                             <button
