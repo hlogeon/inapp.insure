@@ -193,7 +193,7 @@ class ControllerPersonal extends Controller
             abort(502);
         }
         if ($promocode->is_percent) {
-            $discountAmount = floor($plan->price * (1 / $promocode->value));
+            $discountAmount = floor(($plan->price / 100) * $promocode->value);
         } else {
             $discountAmount = $promocode->value;
         }
