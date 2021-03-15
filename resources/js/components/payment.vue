@@ -203,8 +203,8 @@ export default {
                             }
                         }, //онлайн-чек
                         recurrent: {
-                            interval: this.tarrif.period,
-                            period: this.tarrif.interval,
+                            interval: 'month',
+                            period: this.tarrif.period === 'month' ? 1 : 12, //this.tarrif.interval,
                             amount: this.tarrif.price
                         }
                     }
