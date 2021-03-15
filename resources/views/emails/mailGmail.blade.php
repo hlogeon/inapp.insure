@@ -154,8 +154,7 @@
                               <p class="h2 m25" style="font-size:32px;font-weight:bold;color:#222222;margin-top:40px;margin-bottom:30px;text-align:left;font-family:Arial, 'Helvetica Neue', Helvetica, Roboto, sans-serif;">
                                 Поздравляем!<br>Оплата прошла успешно.</p>
                                 <p class="h1_subtext" style="margin-bottom:20px;font-size:20px;line-height:28px;color:#222222;font-family:Arial, 'Helvetica Neue', Helvetica, Roboto, sans-serif;">
-                                  Это значит, что ваша квартира теперь будет застрахована на 1
-                                  050 000 рублей. Ваш страховой полис находится в <a href="https://my.inapp.insure" target="_blank" style="text-decoration:none;">личном
+                                  Это значит, что ваша квартира теперь будет застрахована. Ваш страховой полис находится в <a href="https://my.inapp.insure" target="_blank" style="text-decoration:none;">личном
                                   кабинете</a>.
                                 </p>
                                 <p class="h1_subtext m25" style="margin-bottom:40px;margin-top:30px;font-size:20px;line-height:28px;color:#222222;font-family:Arial, 'Helvetica Neue', Helvetica, Roboto, sans-serif;">
