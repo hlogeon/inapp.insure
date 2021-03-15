@@ -58,7 +58,7 @@
 			         	    <input required class="input sms" v-model="sms" type="text" maxlength="4" placeholder="••••" />
 			         	  </label>
 			         	</div>
-			           	<div class="error" v-for="value in errors">{{ showError(value) }}</div>
+			           	<div :key="value" class="error" v-for="value in errors">{{ showError(value) }}</div>
 			         	<button class="button submit-button" type="button" v-on:click="sendSmsAuth()">
 			            	Продолжить
 			          	</button>
@@ -153,8 +153,9 @@
 										query: { previously: this.$route.query.redirect }
 									})
 								} else	
+								
 									this.$router.push({ 
-										path: '/authpayment', 
+										path: '/account', 
 										query: { 
 											previously: this.$route.query.redirect 
 										}

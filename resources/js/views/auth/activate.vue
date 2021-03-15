@@ -230,6 +230,7 @@ export default {
                     .then(response => {
                         //console.log(response)
                         if (response.data.status) {
+                             this.$router.push('/account')
                         } else {
                             if (response.data.data.hasOwnProperty("errors"))
                                 response.data.data.errors.forEach($error => {

@@ -15,7 +15,7 @@
             </div>
             <div>
                 <div class="price">
-                    {{ tarrif.price.toLocaleString("ru-RU") }} ₽/мес.
+                    {{ tarrif.price.toLocaleString("ru-RU") }} ₽/<span v-if="period==='month'">мес</span><span v-if="period==='year'">год</span>.
                 </div>
             </div>
         </div>
@@ -33,6 +33,9 @@ export default {
         isTarrif($id) {
             this.$emit("tarrifIs", $id);
         }
+    },
+    mounted(){
+        console.log('period',this.period)
     }
 };
 </script>

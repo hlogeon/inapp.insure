@@ -294,6 +294,9 @@ export default {
 
             this.tarrif_id = getTarrifsByPeriod[0].id;
             this.countPrice();
+                 if (this.promoSuccess && this.promocode) {
+                    this.getPromoCode();
+                }
         },
         setDate() {
             document.querySelectorAll(".j_datepicker input").forEach($input => {

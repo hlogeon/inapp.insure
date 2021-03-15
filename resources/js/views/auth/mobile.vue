@@ -122,7 +122,7 @@ export default {
     mounted: function() {
         if (
             this.$route.query.hasOwnProperty("redirect") &&
-            this.$route.query.redirect == "/authpayment"
+            this.$route.query.redirect == "/account"
         )
             this.prev = true;
         setTimeout(() => {

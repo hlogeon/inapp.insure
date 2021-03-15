@@ -2850,6 +2850,9 @@ __webpack_require__.r(__webpack_exports__);
     isTarrif: function isTarrif($id) {
       this.$emit("tarrifIs", $id);
     }
+  },
+  mounted: function mounted() {
+    console.log('period', this.period);
   }
 });
 
@@ -5531,7 +5534,9 @@ __webpack_require__.r(__webpack_exports__);
           params: data
         }).then(function (response) {
           //console.log(response)
-          if (response.data.status) {} else {
+          if (response.data.status) {
+            _this3.$router.push('/account');
+          } else {
             if (response.data.data.hasOwnProperty("errors")) response.data.data.errors.forEach(function ($error) {
               _this3.errors.push($error);
             });
@@ -5996,7 +6001,7 @@ __webpack_require__.r(__webpack_exports__);
   mounted: function mounted() {
     var _this = this;
 
-    if (this.$route.query.hasOwnProperty("redirect") && this.$route.query.redirect == "/authpayment") this.prev = true;
+    if (this.$route.query.hasOwnProperty("redirect") && this.$route.query.redirect == "/account") this.prev = true;
     setTimeout(function () {
       _this.loading = false;
     }, 500);
@@ -6418,6 +6423,10 @@ __webpack_require__.r(__webpack_exports__);
       });
       this.tarrif_id = getTarrifsByPeriod[0].id;
       this.countPrice();
+
+      if (this.promoSuccess && this.promocode) {
+        this.getPromoCode();
+      }
     },
     setDate: function setDate() {
       var _this2 = this;
@@ -6736,7 +6745,7 @@ __webpack_require__.r(__webpack_exports__);
                   }
                 });
               } else _this2.$router.push({
-                path: '/authpayment',
+                path: '/account',
                 query: {
                   previously: _this2.$route.query.redirect
                 }
@@ -67392,8 +67401,11 @@ var render = function() {
               _vm._v(
                 "\n                " +
                   _vm._s(_vm.tarrif.price.toLocaleString("ru-RU")) +
-                  " ₽/мес.\n            "
-              )
+                  " ₽/"
+              ),
+              _vm.period === "month" ? _c("span", [_vm._v("мес")]) : _vm._e(),
+              _vm.period === "year" ? _c("span", [_vm._v("год")]) : _vm._e(),
+              _vm._v(".\n            ")
             ])
           ])
         ])
@@ -67529,7 +67541,9 @@ var render = function() {
                       {
                         staticClass:
                           "footer-social-link footer-social-link--pink",
-                        attrs: { href: _vm.instagram }
+                        attrs: {
+                          href: "https://www.instagram.com/inapp.insure/"
+                        }
                       },
                       [
                         _c("svg", { staticClass: "footer-social-link__icon" }, [
@@ -71485,7 +71499,7 @@ var render = function() {
                       ),
                       _vm._v(" "),
                       _vm._l(_vm.errors, function(value) {
-                        return _c("div", { staticClass: "error" }, [
+                        return _c("div", { key: value, staticClass: "error" }, [
                           _vm._v(_vm._s(_vm.showError(value)))
                         ])
                       }),

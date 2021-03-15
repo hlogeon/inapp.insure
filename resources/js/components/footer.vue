@@ -78,7 +78,7 @@
         		        <use xlink:href="#whatsup"></use>
         		      </svg>
         		    </a>
-        		    <a :href="instagram" class="footer-social-link footer-social-link--pink" v-if="instagram">
+        		    <a href="https://www.instagram.com/inapp.insure/" class="footer-social-link footer-social-link--pink" v-if="instagram">
         		      <svg class="footer-social-link__icon">
         		        <use xlink:href="#instagram"></use>
         		      </svg>
