@@ -229,7 +229,7 @@ if($plan == 0) {
                               Пожар
                             </span>
                                             <p class="polis-risk__text">
-                                                п. 6.3.1 правил
+                                                п. 4.4.1 правил
                                             </p>
                                         </div>
                                     </div>
@@ -240,7 +240,7 @@ if($plan == 0) {
                               Взрыв
                             </span>
                                             <p class="polis-risk__text">
-                                                п. 6.3.2 правил
+                                                п. 4.4.3 правил
                                             </p>
                                         </div>
                                     </div>
@@ -251,7 +251,7 @@ if($plan == 0) {
                               Залив
                             </span>
                                             <p class="polis-risk__text">
-                                                п. 6.3.5 правил
+                                                п. 4.4.5 правил
                                             </p>
                                         </div>
                                     </div>
@@ -262,7 +262,7 @@ if($plan == 0) {
                               Удар молнии
                             </span>
                                             <p class="polis-risk__text">
-                                                п. 6.3.3 правил
+                                                п. 4.4.2 правил
                                             </p>
                                         </div>
                                     </div>
@@ -270,10 +270,10 @@ if($plan == 0) {
                                         <img src="/images/risk5.png" alt="" class="polis-risk__img" />
                                         <div class="polis-risk__info">
                             <span class="polis-risk__title">
-                              Повреждения ино- родными объектами и животными
+                              Механические повреждения инородными объектами
                             </span>
                                             <p class="polis-risk__text">
-                                                п. 6.3.10 правил
+                                                п. 4.4.8 правил
                                             </p>
                                         </div>
                                     </div>
@@ -284,7 +284,7 @@ if($plan == 0) {
                               Противоправные действия третьих лиц
                             </span>
                                             <p class="polis-risk__text">
-                                                п. 6.3.4 правил
+                                                п. 4.4.7 правил
                                             </p>
                                         </div>
                                     </div>
@@ -295,7 +295,7 @@ if($plan == 0) {
                               Стихийные бедствия
                             </span>
                                             <p class="polis-risk__text">
-                                                п. 6.3.6 правил
+                                                п. 4.4.6 правил
                                             </p>
                                         </div>
                                     </div>
