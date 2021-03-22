@@ -107,7 +107,9 @@
   </div>
 	
 </template>
-
+<script>
+  fbq('track', 'Subscribe');
+</script>
 <script>
   import fluidstate from "../../mixins/FluidState"
 
