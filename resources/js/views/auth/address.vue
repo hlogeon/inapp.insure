@@ -92,7 +92,7 @@
                     </label>
                   </div>
                 </div>
-                <div class="error" v-for="value in errors">{{ showError(value) }}</div>
+                <div :key="value" class="error" v-for="value in errors">{{ showError(value) }}</div>
                 <button class="button submit-button" type="button" :disabled="disabled" v-on:click="sendSmsAddress()">
                     Продолжить
                 </button>

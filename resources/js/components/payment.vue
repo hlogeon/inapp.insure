@@ -61,7 +61,6 @@ export default {
         );
         document.head.appendChild(cloudPayment);
         this.b_text = this.btn_text;
-        //this.updateData()
         this.onSubmit();
     },
     methods: {
@@ -88,6 +87,39 @@ export default {
                 });
             }, timer);
         },
+        toPay() {
+            this.disabled = true;
+            this.updateData().then(response => {
+                this.payment = response.data.data.payment;
+                this.user = response.data.data.user;
+                this.charge();
+                this.disabled = false;
+                // if (
+                //     response.data.data.hasOwnProperty("payed") &&
+                //     response.data.data.payed == 1
+                // ) {
+                //     this.$emit("isPaying", true);
+                // } else if (
+                //     this.method == "refund" ||
+                //     (response.data.data.hasOwnProperty("payment") &&
+                //         response.data.data.payment.hasOwnProperty("Status") &&
+                //         response.data.data.payment.Status != "Completed")
+                // ) {
+                //     this.payment = response.data.data.payment;
+                //     this.user = response.data.data.user;
+                //     this.charge();
+                // } else if (
+                //     response.data.data.hasOwnProperty("payment") &&
+                //     response.data.data.payment.Status == "Completed"
+                // ) {
+                //     this.$emit("isPaying", true);
+                // } else {
+                //     if (response.data.data.hasOwnProperty("errors"))
+                //         this.errors = response.data.data.errors;
+                //     this.disabled = false;
+                // }
+            });
+        },
         updateData() {
             const data = new URLSearchParams();
 
@@ -100,36 +132,7 @@ export default {
 
             return axios.get("/api/v1/what_is_going_on", { params: data });
         },
-        toPay() {
-            this.disabled = true;
-            //this.$emit('isPaying', this.data)
-            this.updateData().then(response => {
-                if (
-                    response.data.data.hasOwnProperty("payed") &&
-                    response.data.data.payed == 1
-                ) {
-                    this.$emit("isPaying", true);
-                } else if (
-                    this.method == "refund" ||
-                    (response.data.data.hasOwnProperty("payment") &&
-                        response.data.data.payment.hasOwnProperty("Status") &&
-                        response.data.data.payment.Status != "Completed")
-                ) {
-                    this.payment = response.data.data.payment;
-                    this.user = response.data.data.user;
-                    this.charge();
-                } else if (
-                    response.data.data.hasOwnProperty("payment") &&
-                    response.data.data.payment.Status == "Completed"
-                ) {
-                    this.$emit("isPaying", true);
-                } else {
-                    if (response.data.data.hasOwnProperty("errors"))
-                        this.errors = response.data.data.errors;
-                    this.disabled = false;
-                }
-            });
-        },
+
         init() {
             this.disabled = true;
             let $this = this;
@@ -151,8 +154,6 @@ export default {
                 },
                 {
                     onSuccess: function(options) {
-                        // success
-                        console.log("success", options);
                         $this.$emit("isPaying", true);
                     },
                     onFail: function(reason, options) {
@@ -203,23 +204,13 @@ export default {
                             }
                         }, //онлайн-чек
                         recurrent: {
-                            interval: 'month',
-                            period: this.tarrif.period === 'month' ? 1 : 12, //this.tarrif.interval,
+                            interval: "month",
+                            period: this.tarrif.period === "month" ? 1 : 12, //this.tarrif.interval,
                             amount: this.tarrif.price
                         }
                     }
                 };
 
-                //console.log(data);
-                // console.log({ // options
-                //   publicId: this.api, //id из личного кабинета
-                //   description: (this.tarrif) ? this.tarrif.name : this.title, //назначение
-                //   amount: this.tarrif.price, //сумма
-                //   currency: 'RUB', //валюта
-                //   skin: "mini", //дизайн виджета
-                //   invoiceId: this.payment,
-                //   accountId: 'user' + this.user.id + '@client.com', //идентификатор плательщика (обязательно для создания подписки)
-                // });
                 let $this = this;
                 widget.pay(
                     "charge",

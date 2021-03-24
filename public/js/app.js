@@ -3339,8 +3339,7 @@ __webpack_require__.r(__webpack_exports__);
     var cloudPayment = document.createElement("script");
     cloudPayment.setAttribute("src", "https://widget.cloudpayments.ru/bundles/cloudpayments");
     document.head.appendChild(cloudPayment);
-    this.b_text = this.btn_text; //this.updateData()
-
+    this.b_text = this.btn_text;
     this.onSubmit();
   },
   methods: {
@@ -3368,6 +3367,42 @@ __webpack_require__.r(__webpack_exports__);
         });
       }, timer);
     },
+    toPay: function toPay() {
+      var _this2 = this;
+
+      this.disabled = true;
+      this.updateData().then(function (response) {
+        _this2.payment = response.data.data.payment;
+        _this2.user = response.data.data.user;
+
+        _this2.charge();
+
+        _this2.disabled = false; // if (
+        //     response.data.data.hasOwnProperty("payed") &&
+        //     response.data.data.payed == 1
+        // ) {
+        //     this.$emit("isPaying", true);
+        // } else if (
+        //     this.method == "refund" ||
+        //     (response.data.data.hasOwnProperty("payment") &&
+        //         response.data.data.payment.hasOwnProperty("Status") &&
+        //         response.data.data.payment.Status != "Completed")
+        // ) {
+        //     this.payment = response.data.data.payment;
+        //     this.user = response.data.data.user;
+        //     this.charge();
+        // } else if (
+        //     response.data.data.hasOwnProperty("payment") &&
+        //     response.data.data.payment.Status == "Completed"
+        // ) {
+        //     this.$emit("isPaying", true);
+        // } else {
+        //     if (response.data.data.hasOwnProperty("errors"))
+        //         this.errors = response.data.data.errors;
+        //     this.disabled = false;
+        // }
+      });
+    },
     updateData: function updateData() {
       var data = new URLSearchParams();
       data.append("tarrif_id", this.tarrif.id);
@@ -3380,27 +3415,6 @@ __webpack_require__.r(__webpack_exports__);
 
       return axios.get("/api/v1/what_is_going_on", {
         params: data
-      });
-    },
-    toPay: function toPay() {
-      var _this2 = this;
-
-      this.disabled = true; //this.$emit('isPaying', this.data)
-
-      this.updateData().then(function (response) {
-        if (response.data.data.hasOwnProperty("payed") && response.data.data.payed == 1) {
-          _this2.$emit("isPaying", true);
-        } else if (_this2.method == "refund" || response.data.data.hasOwnProperty("payment") && response.data.data.payment.hasOwnProperty("Status") && response.data.data.payment.Status != "Completed") {
-          _this2.payment = response.data.data.payment;
-          _this2.user = response.data.data.user;
-
-          _this2.charge();
-        } else if (response.data.data.hasOwnProperty("payment") && response.data.data.payment.Status == "Completed") {
-          _this2.$emit("isPaying", true);
-        } else {
-          if (response.data.data.hasOwnProperty("errors")) _this2.errors = response.data.data.errors;
-          _this2.disabled = false;
-        }
       });
     },
     init: function init() {
@@ -3428,8 +3442,6 @@ __webpack_require__.r(__webpack_exports__);
 
       }, {
         onSuccess: function onSuccess(options) {
-          // success
-          console.log("success", options);
           $this.$emit("isPaying", true);
         },
         onFail: function onFail(reason, options) {
@@ -3483,22 +3495,13 @@ __webpack_require__.r(__webpack_exports__);
             },
             //онлайн-чек
             recurrent: {
-              interval: this.tarrif.period,
-              period: this.tarrif.interval,
+              interval: "month",
+              period: this.tarrif.period === "month" ? 1 : 12,
+              //this.tarrif.interval,
               amount: this.tarrif.price
             }
           }
-        }; //console.log(data);
-        // console.log({ // options
-        //   publicId: this.api, //id из личного кабинета
-        //   description: (this.tarrif) ? this.tarrif.name : this.title, //назначение
-        //   amount: this.tarrif.price, //сумма
-        //   currency: 'RUB', //валюта
-        //   skin: "mini", //дизайн виджета
-        //   invoiceId: this.payment,
-        //   accountId: 'user' + this.user.id + '@client.com', //идентификатор плательщика (обязательно для создания подписки)
-        // });
-
+        };
         var $this = this;
         widget.pay("charge", {
           // options
@@ -5573,6 +5576,8 @@ __webpack_require__.r(__webpack_exports__);
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mixins_FluidState__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../mixins/FluidState */ "./resources/js/mixins/FluidState.js");
+//
+//
 //
 //
 //
@@ -11661,7 +11666,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.polis-house-accordion__text[data-v-824b96e0] {\n    line-height: 1.5;\n}\n", ""]);
+exports.push([module.i, "\n.polis-house-accordion__text[data-v-824b96e0] {\r\n    line-height: 1.5;\n}\r\n", ""]);
 
 // exports
 
@@ -11756,7 +11761,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.step-form-card.j_card[data-v-6686a801] {\n    margin-left: 0;\n    margin-right: 0;\n}\n.subscribe-form[data-v-6686a801] {\n    display: inline-block;\n    margin-top: 40px;\n}\n.subscribe-form button[data-v-6686a801] {\n    margin-top: 35px;\n}\n", ""]);
+exports.push([module.i, "\n.step-form-card.j_card[data-v-6686a801] {\r\n    margin-left: 0;\r\n    margin-right: 0;\n}\n.subscribe-form[data-v-6686a801] {\r\n    display: inline-block;\r\n    margin-top: 40px;\n}\n.subscribe-form button[data-v-6686a801] {\r\n    margin-top: 35px;\n}\r\n", ""]);
 
 // exports
 
@@ -11775,7 +11780,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 exports.push([module.i, "@import url(/css/datepicker.minimal.css);", ""]);
 
 // module
-exports.push([module.i, "\n", ""]);
+exports.push([module.i, "\r\n", ""]);
 
 // exports
 
@@ -11813,7 +11818,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.for-mobile-inline-flex li[data-v-2a3f323a]:nth-child(1) {\n    flex: 1 1 25% !important;\n}\n", ""]);
+exports.push([module.i, "\n.for-mobile-inline-flex li[data-v-2a3f323a]:nth-child(1) {\r\n    flex: 1 1 25% !important;\n}\r\n", ""]);
 
 // exports
 
@@ -70705,9 +70710,11 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _vm._l(_vm.errors, function(value) {
-                          return _c("div", { staticClass: "error" }, [
-                            _vm._v(_vm._s(_vm.showError(value)))
-                          ])
+                          return _c(
+                            "div",
+                            { key: value, staticClass: "error" },
+                            [_vm._v(_vm._s(_vm.showError(value)))]
+                          )
                         }),
                         _vm._v(" "),
                         _c(
@@ -87987,7 +87994,7 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/arrow.svg?09c32db6e9932baa9f02c472cf1c565b";
+module.exports = "/images/arrow.svg?aa4808b11ea4f511f6f71fee40fe192a";
 
 /***/ }),
 
@@ -87998,7 +88005,7 @@ module.exports = "/images/arrow.svg?09c32db6e9932baa9f02c472cf1c565b";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/checked.svg?6008eb02d16935762ade68bbd97e3257";
+module.exports = "/images/checked.svg?8f6595e9a4691d4dcaae5505430901d9";
 
 /***/ }),
 
@@ -88009,7 +88016,7 @@ module.exports = "/images/checked.svg?6008eb02d16935762ade68bbd97e3257";
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "/images/union.svg?7b6eb4d9a7e3d32c1a7af44c04b4e599";
+module.exports = "/images/union.svg?bb40dbd0609a4231e44fc8b9254d43f5";
 
 /***/ }),
 
@@ -91118,8 +91125,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/hlogeon/Work/inapp/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/hlogeon/Work/inapp/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\OSPanel\domains\inapp\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\OSPanel\domains\inapp\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
