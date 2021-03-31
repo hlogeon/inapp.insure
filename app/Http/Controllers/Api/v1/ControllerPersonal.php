@@ -19,6 +19,7 @@ use App\Models\System;
 use App\Models\InsuranceLists;
 use Carbon\Carbon;
 use App\Myclasses\SmsSender;
+use App\Myclasses\Unicom;
 use App\Myclasses\PolisPDF;
 use App\Myclasses\Client;
 use Illuminate\Support\Facades\Http;
@@ -39,6 +40,14 @@ class ControllerPersonal extends Controller
 
     public function landingBonuses()
     {
+        $clickId = request()->session()->get('unicom_click_id');
+        $u = new Unicom();
+        if ($clickId) {
+            $u->send($clickId, 'receive');
+            if ($user = $this->getUser()) {
+                $u->findOrSaveClickId($clickId, $user->id);
+            }
+        }
         $bonuses = FlocktoryCashback::where([
             'deleted_at' => null,
             'landing' => true,

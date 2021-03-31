@@ -6,8 +6,10 @@ use App\Http\Controllers\Controller;
 use App\Models\Bso;
 use App\Models\BsoIndexes;
 use App\Myclasses\Client;
+use App\Myclasses\Unicom;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Clicks;
 use App\Models\Payments;
 use App\Models\Polisies;
 use App\Models\Tarrifs;
@@ -323,6 +325,11 @@ class ControllerPayment extends Controller
                             if ($res['Success'] && ($res['Model']['Status'] === 'Active' || $res['Model']['Status'] === 'Completed')){
                                 $response['payed'] = 1;
                                 $payment->update($this->getData($res['Model']));
+                                $click = Clicks::where(['user_id' => $user->id])->first();
+                                if ($click && $click->click_id) {
+                                    $u = new Unicom();
+                                    $u->send($click->click_id, 'approved');
+                                }
                             }
                             else {
                                 $response['payed'] = 0;
