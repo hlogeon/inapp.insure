@@ -40,7 +40,7 @@ class ControllerPersonal extends Controller
 
     public function landingBonuses()
     {
-        $clickId = request()->session()->get('unicom_click_id');
+        $clickId = $_COOKIE['unicom_click_id'];
         Log::info('Got click id: ', [$clickId]);
         $u = new Unicom();
         if ($clickId) {
