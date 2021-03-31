@@ -38,9 +38,9 @@ class ControllerPersonal extends Controller
         return $user->currentUser();
     }
 
-    public function landingBonuses()
+    public function landingBonuses(Request $request)
     {
-        $clickId = $_COOKIE['unicom_click_id'];
+        $clickId = $request->cookie('unicom_click_id');
         Log::info('Got click id: ', [$clickId]);
         $u = new Unicom();
         if ($clickId) {
